@@ -1,0 +1,7 @@
+{% if content.main_options.data_type == 'post' %}
+	%%SSR%%
+{% else %}
+   <{{ content.main_options.tag }} class="de-reading-time-wrapper">
+    {{ content.main_options.text_before_minutes }}<span class="de-reading-minutes"></span>{{ content.main_options.text_after_minutes }}
+  </{{ content.main_options.tag }}>
+{% endif %}

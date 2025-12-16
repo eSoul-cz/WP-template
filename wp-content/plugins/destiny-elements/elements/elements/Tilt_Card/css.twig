@@ -1,0 +1,15 @@
+%%SELECTOR%% { 
+display: flex;
+flex-direction: row;
+background-color: {{ design.container.background }};
+width: {{ design.container.width.style }};
+height: {{ design.container.heght.style }};
+{{ macros.simpleLayout(design.layout, breakpoint) }};
+{{ macros.spacing_all(design.container.margin_padding) }}
+{{ macros.borders(design.container.borders) }}
+}
+
+%%SELECTOR%% .de-tilt {
+  width: 100%;
+  height: 100% 
+}

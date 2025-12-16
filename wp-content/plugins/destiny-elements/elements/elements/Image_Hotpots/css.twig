@@ -1,0 +1,200 @@
+%%SELECTOR%% {
+  width: {{ design.image.width.style }};
+}
+
+%%SELECTOR%%  * {
+  margin: 0;
+  padding: 0;
+}
+
+%%SELECTOR% .de-hotspots-wrapper {
+    position: relative;
+}
+
+%%SELECTOR%% .de-hotspot-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: {{design.hotspots.size.width.style}};
+  height: {{design.hotspots.size.width.style}};
+}
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary {
+  width: {{design.hotspots_secondary.size.width.style}};
+  height: {{design.hotspots_secondary.size.width.style}};
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: {{ design.hotspots.background_color }};
+  width:  {{ design.hotspots.size.width.style }};
+  height: {{ design.hotspots.size.height.style }};
+  {{ macros.borders(design.hotspots.borders) }}
+  transition: 20ms;
+  scale: {{ design.hotspots.size.scale }};
+  cursor: pointer;
+  {% if design.hotspots.effects.animation == 'pulse' %}
+  	animation: depulse-%%ID%%  {{ design.hotspots.effects.pulse.duration.style }} ease-out infinite;
+  {% endif %}
+  {{ macros.typography(design.hotspots.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-wrapper.secondary .de-hotspot {
+  background-color: {{ design.hotspots_secondary.background_color }};
+  width: {{ design.hotspots_secondary.size.width.style }};
+  height: {{ design.hotspots_secondary.size.height.style }};
+  {{ macros.borders(design.hotspots_secondary.borders) }}
+  transition: 20ms;
+  scale: {{ design.hotspots_secondary.size.scale }};
+  cursor: pointer;
+  {% if design.hotspots_secondary.effects.animation == 'pulse' %}
+  	animation: depulse-%%ID%% {{ design.hotspots_secondary.effects.pulse.duration.style }} ease-out infinite;
+  {% else %}
+	animation: none;
+  {% endif %}
+  {{ macros.typography(design.hotspots_secondary.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspot.rotate {
+ rotate: {{ design.hotspots.effects.active_rotate.style }};
+}
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary .de-hotspot.rotate {
+ rotate: {{ design.hotspots_secondar.effects.active_rotate.style }};
+}
+
+
+%%SELECTOR%% .de-hotspots .de-hotspot-content {
+    display: none;
+	position: absolute;
+    width: {{ design.hotspot_content.width.style }};
+  	min-width: {{ design.hotspot_content.min_width.style }};
+	max-width: {{ design.hotspot_content.max_width.style }};
+    background-color: {{ design.hotspot_content.background_color }};
+    {{ macros.borders(design.hotspot_content.borders) }}
+    {{ macros.spacing_padding_all(design.hotspot_content.padding) }}
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-wrapper.secondary .de-hotspot-content {
+    width: {{ design.hotspot_content_secondary.width.style }};
+  	min-width: {{ design.hotspot_content_secondary.min_width.style }};
+	max-width: {{ design.hotspot_content_secondary.max_width.style }};
+    background-color: {{ design.hotspot_content_secondary.background_color }};
+    {{ macros.borders(design.hotspot_content_secondary.borders) }}
+    {{ macros.spacing_padding_all(design.hotspot_content_secondary.padding) }}
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-content a {
+  {{ macros.typography(design.hotspot_content.typography.links, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-wrapper.secondary .de-hotspot-content a {
+  {{ macros.typography(design.hotspot_content_secondary.typography.links, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-content.show {
+  display: flex;
+  flex-direction: column;
+  gap: {{ design.hotspot_content.gap.style }};
+}
+
+%%SELECTOR%% .de-hotspots .de-hotspot-wrapper.secondary .de-hotspot-content.show {
+  display: flex;
+  flex-direction: column;
+  gap: {{ design.hotspot_content_secondary.gap.style }};
+}
+
+%%SELECTOR%% .price {
+  color: white;
+  font-size: 20px;
+  background-color: orange;
+  border-radius: 7px;
+  margin-top: 5px;
+  padding: 2px 15px;
+  width: fit-content;
+}
+
+%%SELECTOR%% .heading {
+  {{ macros.typography(design.hotspot_content.typography.heading, globalSettings) }}
+}
+
+%%SELECTOR%% .text {
+ {{ macros.typography(design.hotspot_content.typography.text, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary .heading {
+  {{ macros.typography(design.hotspot_content_secondary.typography.heading, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary .text {
+ {{ macros.typography(design.hotspot_content_secondary.typography.text, globalSettings) }}
+}
+
+
+%%SELECTOR%% .de-hs-close {
+ position: absolute;
+ top: 0px;
+ right: 0px;
+ padding: 4px 8px;
+ background-color: transparent;
+ border: none;
+ appearance: none; 
+ cursor: pointer;
+ {{ macros.typography(design.hotspot_content.typography.close_button, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary .de-hs-close {
+   {{ macros.typography(design.hotspot_content_secondary.typography.close_button, globalSettings) }}
+}
+
+%%SELECTOR%% .de-hotspot-icon {
+    color:  {{ design.hotspots.icon.color }};
+    font-size: {{ design.hotspots.icon.size.style }};
+}
+
+
+%%SELECTOR%% .de-hotspot-wrapper.secondary .de-hotspot-icon {
+    color:  {{ design.hotspots_secondary.icon.color }};
+    font-size: {{ design.hotspots_secondary.icon.size.style }};
+}
+
+{% if design.hotspots.effects.pulse.shadow_color %}
+
+@keyframes depulse-%%ID%% {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 {{ design.hotspots.effects.pulse.shadow_color }};
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+{% else %}
+@keyframes depulse-%%ID%% {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, .8);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+{% endif %}

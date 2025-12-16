@@ -1,0 +1,45 @@
+.breakdance .de-gf {
+width: 100%;
+}
+
+.breakdance .gform_wrapper.gravity-theme .ginput_complex fieldset, .gform_wrapper.gravity-theme .ginput_complex span {
+  flex: 1;
+}
+
+.breakdance .de-gf .gchoice input,
+.breakdance .de-gf .gchoice label,
+.breakdance .de-gf .ginput_container_select select{
+  cursor: pointer;
+}
+
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield input.large, 
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield select.large,
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield textarea{
+  width: 100%;
+}
+
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield input, 
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield select {
+  max-width: 100%;
+}
+
+.breakdance .de-gf .gform_wrapper.gravity-theme .ginput_complex {
+  gap: 10px;
+}
+
+.breakdance .de-gf .gform_wrapper.gravity-theme .gfield-choice-input + label {
+  margin-bottom: 0;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+
+.breakdance .gform_wrapper.gravity-theme .ginput_container_time {
+  flex-basis: min-content;
+  max-width: 80px;
+  min-width: 80px;
+}
+
+.breakdance .gform_ajax_spinner {
+   margin-left: 20px;
+}

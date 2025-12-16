@@ -1,0 +1,117 @@
+{% if content.options.player == 'default' or content.options.data_type == 'acf' or content.options.data_type == 'metabox' %}
+%%SSR%%
+{% elseif content.options.player == 'custom' and content.options.data_type != 'acf' and content.options.data_type != 'metabox' %}
+    {% set audioSrc = content.audio.mp3_file.url is defined ? content.audio.mp3_file.url : content.audio.mp3_file %}
+	<audio class="audio-file" src="{{ audioSrc }}" preload="metadata"></audio>
+    <button class="play-icon">
+      <div class="play-icon-svg" title="Play">
+       {{ design.play_pause_button.play_icon.icon.svgCode }}
+      </div>
+       <div class="pause-icon-svg hide" title="Pause">
+       {{ design.play_pause_button.pause_icon.icon.svgCode }}
+      </div>
+      <div class="loading-indicator hide"></div>
+    </button>
+    
+    <div class="time-wrapper">
+      <span class="progress-before" style="--seek-before-width: 3%;">
+      	<input type="range" class="seek-slider" max="100" value="0">
+      </span>
+      <span class="current-time time">00:00</span>
+      <span class="dur-seperator">/</span>
+      <span class="duration time">00:00</span>
+    </div>
+
+	<div class="volume-wrapper">
+      <output style="display: none;" class="volume-output">100</output>
+      <button class="mute-icon" title="Mute">
+         <div class="mute-icon-svg">
+       		{{ design.volume.volume_icon.svgCode }}
+     	 </div>
+        <div class="muted-icon-svg hide" title="Unmute">
+       		{{ design.volume.unmute_icon.svgCode }}
+     	 </div>
+      </button>
+      <input style="display: none" type="range" class="volume-slider" max="100" value="100">
+    </div>
+
+  {% if design.download.enable_download %}
+      <div class="download-wrapper">
+          <a href="{{ audioSrc }}" class="download-icon" download>
+              {{ design.download.download_icon.svgCode }}
+          </a>
+      </div>
+  {% endif %}
+{% elseif content.options.player == 'playlist' and content.options.data_type != 'acf' and content.options.data_type != 'metabox' %}
+{% if content.playlist.audio_files %}
+<audio class="audio-file" src="{{ content.playlist.audio_files[0].audio_file.url }}" preload="metadata"></audio>
+<p class="main-song-name">{{ content.playlist.audio_files[0].song_name }}</p>
+{% endif %}
+<div class="player-wrapper">
+    <div class="player-buttons">
+  	<button class="prev-song disabled">{{ design.next_previous_button.previous_icon.icon.svgCode }}</button>
+    <button class="play-icon">
+      <div class="play-icon-svg" title="Play">
+       {{ design.play_pause_button.play_icon.icon.svgCode }}
+      </div>
+       <div class="pause-icon-svg hide" title="Pause">
+       {{ design.play_pause_button.pause_icon.icon.svgCode }}
+      </div>
+      <div class="loading-indicator hide"></div>
+    </button>
+  <button class="next-song">{{ design.next_previous_button.next_icon.icon.svgCode }}</button>
+  </div>
+  <div class="rest-controls">
+    <div class="time-wrapper">
+      <span class="progress-before" style="--seek-before-width: 3%;">
+      	<input type="range" class="seek-slider" max="100" value="0">
+      </span>
+      <span class="current-time time">00:00</span>
+      <span class="dur-seperator">/</span>
+      <span class="duration time">00:00</span>
+    </div>
+	<div class="volume-wrapper">
+      <output style="display: none;" class="volume-output">100</output>
+      <button class="mute-icon" title="Mute">
+         <div class="mute-icon-svg">
+       		{{ design.volume.volume_icon.svgCode }}
+     	 </div>
+        <div class="muted-icon-svg hide" title="Unmute">
+       		{{ design.volume.unmute_icon.svgCode }}
+     	 </div>
+      </button>
+      <input style="display: none" type="range" class="volume-slider" max="100" value="100">
+    </div>
+  </div>
+</div>
+
+<div class="playlist-wrapper">
+  {% for item in content.playlist.audio_files %}
+  {% set active = loop.index == 1 ? ' active' : '' %}
+  <div role="button" class="playlist-item {{active}}" tabindex="0">
+    {% if content.options.include_counter %}
+   	 <span class="counter">{{ loop.index }}</span>
+    {% endif %}
+	{% if content.playlist.song_name == 'filename' %}
+		<div class="song-name">{{ item.audio_file.filename|replace({'.mp3': ''}) }}</div>
+	{% elseif content.playlist.song_name == 'title' %}
+    	<div class="song-name">{{ item.audio_file.caption }}</div>
+    {% else %}
+		<div class="song-name">{{ item.song_name }}</div>
+	{% endif %}
+     <div class="time-wrapper">
+      <span class="duration time">00:00</span>
+    </div>
+      {% if design.download.enable_download %}
+      <div class="download-wrapper">
+          <a href="{{ item.audio_file.url }}" class="download-icon" download>
+              {{ design.download.download_icon.svgCode }}
+          </a>
+      </div>
+  {% endif %}
+    <audio src="{{ item.audio_file.url }}"></audio>
+  </div>
+  {% endfor %}
+</div>
+
+{% endif %}

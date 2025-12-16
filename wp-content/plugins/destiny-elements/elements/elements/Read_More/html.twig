@@ -1,0 +1,11 @@
+{% if content.options.button_above_text %}
+<button class="de-read-more-button" data-selector="%%SELECTOR%%" data-id="%%ID%%" data-open-name="{{ content.content.open_button_name ? content.content.open_button_name : 'Read More' }}" data-close-name="{{ content.content.close_button_name ? content.content.close_button_name : 'Read Less' }}">{{ content.content.open_button_name ? content.content.open_button_name : 'Read More' }}</button>
+<div class="de-read-more-content">
+  {{ content.content.content }}
+</div>
+{% else %}
+<div class="de-read-more-content">
+  {{ content.content.content }}
+</div>
+<button class="de-read-more-button" data-selector="%%SELECTOR%%" data-id="%%ID%%" data-open-name="{{ content.content.open_button_name ? content.content.open_button_name : 'Read More' }}" data-close-name="{{ content.content.close_button_name ? content.content.close_button_name : 'Read Less' }}">{{ content.content.open_button_name ? content.content.open_button_name : 'Read More' }}</button>
+{% endif %}

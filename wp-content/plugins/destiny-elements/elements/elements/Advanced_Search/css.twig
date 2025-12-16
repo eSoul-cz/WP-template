@@ -1,0 +1,197 @@
+%%SELECTOR%% {
+ width: {{ design.container.wdith.style }};
+ max-width:  {{ design.container.max_width.style }};
+}
+
+%%SELECTOR%% .de-search-wrapper:first-child {
+ flex-grow: 1;
+}
+
+%%SELECTOR%% .de-search-input, 
+%%SELECTOR%% .de-dropdown-input, 
+%%SELECTOR%% .de-advanced-search-button{
+  width: 100%;
+  {{ macros.typography(design.input.typography, globalSettings) }}
+  background-color: {{ design.input.background.color }};
+  {{ macros.border_complex(design.input.borders.border) }}
+  {{ macros.border_radius(design.input.borders.border_radius) }}
+  {{ macros.spacing_all(design.input.spacing) }}
+  white-space: nowrap;
+}
+
+%%SELECTOR%% .de-dropdown-input {
+  {{ macros.borders(design.dropdown.borders) }}
+}
+
+%%SELECTOR%% .de-search-results-wrapper {
+ 	top: {{ design.results.offset_top.style }};
+}
+%%SELECTOR%% .de-search-results {
+ 	background-color: {{ design.results.background_color }};
+  	{{ macros.borders(design.results.borders) }}
+  	max-height:  {{ design.results.max_height.style }};
+  	overflow-y:auto;
+}
+
+%%SELECTOR%% .de-search-result {
+  {{ macros.borders(design.results.single_item.borders) }}
+  background-color: {{ design.results.single_item.background_color }};
+  {{ macros.spacing_padding_all(design.results.single_item.padding) }}
+}
+
+%%SELECTOR%% .de-search-result:hover {
+  background-color: {{ design.results.single_item.background_color_hover }};
+}
+
+%%SELECTOR%% .de-search-input {
+  width:  {{ design.input.width.width.style }};
+  max-width: 100%;
+}
+
+%%SELECTOR%% .de-search-input:hover, 
+%%SELECTOR%% .de-dropdown-input:hover {
+ background-color: {{ design.input.background.color_hover }};
+{{ macros.border_radius(design.input.borders.border_radius_hover) }}
+}
+
+%%SELECTOR%% .de-advanced-search-button {
+  background-color: {{ design.button.background_color }};
+  width: {{ design.button.width.style }};
+  {{ macros.border_radius(design.button.border.border_radius) }}
+  {{ macros.border_complex(design.button.border.border) }}
+  {{ macros.typography(design.button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.button.spacing) }}
+}
+
+%%SELECTOR%% .de-advanced-search-button:hover{
+  background-color: {{ design.button.background_color_hover }} !important;
+  {{ macros.border_complex(design.button.border.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.button.typography) }}
+}
+
+%%SELECTOR%% .de-dropdown-input{
+  {{ macros.spacing_padding_all(design.input.select.padding) }}
+   width: {{ design.dropdown.width.style }};
+}
+
+
+
+%%SELECTOR%% .de-search-input:focus {
+  border-color: {{ design.input.border.border_focus }};
+  background-color: {{ design.input.background.focus_color }}
+}
+
+%%SELECTOR%% .de-search-content h3 {
+{{ macros.typography(design.results.title, globalSettings) }}
+}
+
+%%SELECTOR%% .de-search-content .excerpt {
+{{ macros.typography(design.results.excerpt, globalSettings) }}
+}
+
+%%SELECTOR%% .de-search-content .price {
+{{ macros.typography(design.results.excerpt, globalSettings) }}
+}
+
+%%SELECTOR%% .de-search-content .de-sale-price {
+{{ macros.typography(design.results.price.sale_price_, globalSettings) }}
+}
+
+%%SELECTOR%% .de-search-content .de-current-price {
+{{ macros.typography(design.results.price.current_price, globalSettings) }}
+}
+
+
+%%SELECTOR%% .de-search-content {
+ display: flex; 
+ flex-direction: column;
+ justify-content: {{design.results.align_content}};
+}
+
+%%SELECTOR%% .de-search-featured-img img {
+ width: {{ design.results.image.width.style }};
+ height: {{ design.results.image.height.style }};
+ {{ macros.borders(design.results.image.borders) }}
+}
+
+%%SELECTOR%% .de-show-all-results {
+  background-color: {{ design.results.show_all_button.background_color }};
+  width: {{ design.button.width.style }};
+  {{ macros.border_radius(design.results.show_all_button.border.border_radius) }}
+  {{ macros.border_complex(design.results.show_all_button.border.border) }}
+  {{ macros.typography(design.results.show_all_button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.results.show_all_button.spacing) }}
+}
+
+%%SELECTOR%% .dde-show-all-results:hover{
+  background-color: {{ design.results.show_all_button.background_color_hover }} !important;
+  {{ macros.border_complex(design.results.show_all_button.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.results.show_all_button.typography) }}
+}
+
+%%SELECTOR%% .de-results-top {
+  background-color: {{ design.top_bar.background_color }};
+  {{ macros.spacing_all(design.top_bar.spacing) }}
+}
+
+%%SELECTOR%% .de-results-top .de-results-count {
+  {{ macros.typography(design.top_bar.results_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-dropdown-icon {
+  right:  {{ design.dropdown.icon.right_position.style }};
+  top: {{ design.dropdown.icon.top_position.style }};;
+  color:  {{ design.dropdown.icon.color }};
+  font-size: {{ design.dropdown.icon.size.style }};
+}
+
+%%SELECTOR%% .de-search-tax-wrapper {
+  background-color: {{ design.dropdown.background_color }};
+  {{ macros.spacing_all(design.dropdown.spacing) }};
+}
+
+
+%%SELECTOR%% .de-search-tax-wrapper .de-option {
+  background-color: {{ design.dropdown.single_item.background_color }};
+  {{ macros.spacing_padding_all(design.dropdown.single_item.padding) }}
+  {{ macros.borders(design.dropdown.single_item.borders) }}
+  {{ macros.typography(design.dropdown.single_item.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-search-tax-wrapper .de-option:hover,
+%%SELECTOR%% .de-search-tax-wrapper .de-option:focus {
+   background-color: {{ design.dropdown.single_item.background_color_hover }};
+   {{ macros.typographyWithHoverableColorAndEffects(design.dropdown.single_item.typography) }}
+}
+
+%%SELECTOR%% .de-advanced-search-icon {
+    color: {{ design.button.icon.color }};
+    font-size: {{ design.button.icon.size.style }};
+}
+
+
+%%SELECTOR%% .tax-count {
+   {{ macros.typography(design.dropdown.count.typography, globalSettings) }}
+   margin-left: {{ design.dropdown.count.space.style }};
+}
+
+%%SELECTOR%% .de-search-tax-wrapper .de-option:hover .tax-count {
+   {{ macros.typographyWithHoverableColorAndEffects(design.dropdown.count.typography) }}
+}
+
+{% if design.spinner.show_spinner_inside_builder and isBuilder %}
+%%SELECTOR%%  .de-ajax-spinner  {
+	display: block;
+}
+{% endif %}
+
+%%SELECTOR%%  .de-ajax-spinner  {
+  top:  {{ design.spinner.position_top.style|default(design.spinner.positioon_top.style) }};
+  right: {{ design.spinner.positon_right.style }};
+  {% if design.spinner.spinner_color.secondary %}
+  border: 3px solid  {{ design.spinner.spinner_color.secondary }};
+  {% endif %}
+  {% if design.spinner.spinner_color.primary %}
+  border-left: 3px solid {{ design.spinner.spinner_color.primary }};
+  {% endif %}
+}

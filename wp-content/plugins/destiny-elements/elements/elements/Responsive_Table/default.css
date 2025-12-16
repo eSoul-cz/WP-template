@@ -1,0 +1,70 @@
+.de-advanced-table {
+  display: block;
+  overflow-y: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.de-col-wrapper {
+  display: table-row; 
+
+}
+
+.de-cell, 
+.de-col-header, 
+.de-row-header{
+  display: table-cell;
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  width: 1%;
+}
+
+
+.de-advanced-table .de-col-header,
+.de-advanced-table .de-row-header,
+.de-advanced-table .de-cell{
+ padding: 10px 20px;
+ border: 1px solid black;
+}
+
+.de-advanced-table .de-col-header,
+.de-advanced-table .de-row-header {
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.de-advanced-table .de-col-headers {
+  z-index: 5;
+}
+
+.de-advanced-table .de-col-header.hidden {
+    display: block !important;
+	visibility: hidden;
+}
+
+/* put this in your default CSS */
+.de-advanced-table .de-adv-table-open-icon,
+.de-advanced-table .de-adv-table-close-icon { 
+    display: none;
+    font-size: 24px;
+  	pointer-events: none;
+}
+
+.de-advanced-table .de-adv-table-open-icon > svg, 
+.de-advanced-table .de-adv-table-close-icon > svg{ 
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.de-advanced-table .de-res-btn {
+ text-decoration: none;
+ appearance: none;
+ white-space: nowrap;
+}

@@ -1,0 +1,244 @@
+%%SELECTOR%% {
+  width:  {{ design.container.width.style }};
+}
+
+%%SELECTOR%% .de-cols {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+%%SELECTOR%% .de-col {
+  position: relative;
+  {{ macros.spacing_complex(design.content.spacing.margin, 'margin') }}
+}
+
+%%SELECTOR%% .de-date {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  {% if design.layout.position_content == 'left' %}
+  width: calc(90% - {{ design.content.width.style }});
+  {% elseif design.layout.position_content == 'right' %}
+  width: calc(90% - {{ design.content.width.style }});
+  {% elseif design.layout.position_content == null %}
+  width: {{ design.content.width.style }};
+  {% endif %}
+}
+
+%%SELECTOR%% .de-date .de-date-heading {
+  position: absolute;
+  {{ macros.typography(design.date.typography, globalSettings) }}
+  top: {{ design.date.top.style }};
+  {{ macros.spacing_complex(design.date.margin, 'margin') }}
+}
+
+%%SELECTOR%% .de-content {
+  position: relative;
+  width: {{ design.content.width.style }};
+  background-color: {{ design.content.background_color }};
+  z-index: 1;
+  {{ macros.borders(design.content.borders) }}
+}
+
+%%SELECTOR%% .de-content:hover {
+  background-color: {{ design.content.background_color_hover }}
+}
+
+%%SELECTOR%% .de-content::before {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  top: calc({{ design.timeline.pointer.top.style }} - {{ design.timeline.pointer.size.style }});
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width:  {{ design.timeline.pointer.size.style }} 15px {{ design.timeline.pointer.size.style }} 0;
+  border-color: transparent {{ design.timeline.pointer.colour }} transparent transparent;
+  z-index: -1;
+}
+
+{% if design.layout.position_content == 'left' %}
+  %%SELECTOR%% .de-cols {
+    flex-direction: row-reverse !important;
+  }
+  %%SELECTOR%% .de-cols:nth-child(2n-1) .de-date {
+    justify-content: flex-start !important;
+  }
+  %%SELECTOR%% .de-cols .de-content::before {
+    right: -15px;
+    rotate: 180deg;
+  }
+{% elseif design.layout.position_content == 'right' %}
+  %%SELECTOR%% .de-cols {
+    flex-direction: row !important;
+  }
+
+  %%SELECTOR%% .de-cols:nth-child(2n-1) .de-date {
+    justify-content: flex-start;
+  }
+  %%SELECTOR%% .de-cols .de-content::before {
+    left: -15px;
+  }
+  %%SELECTOR%% .de-cols:nth-child(2n) .de-content::before {
+    right: -15px;
+    rotate: 0deg;
+  }
+{% elseif design.layout.position_content == 'center' %}
+
+{% else %}
+  %%SELECTOR%% .de-cols:nth-child(2n) {
+    flex-direction: row-reverse;
+  }
+  %%SELECTOR%% .de-cols:nth-child(2n-1) .de-date {
+    justify-content: flex-end;
+  }
+  %%SELECTOR%% .de-cols:nth-child(2n) .de-content::before {
+    right: -15px;
+    rotate: 180deg;
+  }
+  %%SELECTOR%% .de-cols:nth-child(2n-1) .de-content::before {
+    left: -15px;
+  }
+{% endif %}
+
+%%SELECTOR%% .de-line {
+  {% if design.timeline.line_margin == null %}
+  	{% if design.layout.position_content == 'left' %}
+  		margin: 0 0 0 auto;
+    {% elseif design.layout.position_content == 'right' %}
+        margin: 0 auto 0 0;
+    {% else %}
+        margin: 0 auto;
+    {% endif %}
+  {% endif %}
+}
+
+%%SELECTOR%% .de-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  {{ macros.spacing_margin_x(design.timeline.line_margin) }}
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: {{ design.timeline.line_width.style }};
+  background-color:  {{ design.timeline.line_colour }};
+}
+
+
+%%SELECTOR%% .de-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: {{ design.timeline.fill_effect.line_colour }};
+  width: 100%;
+  height: var(--defill);
+  transition-duration: 10ms;
+}
+
+
+{% if design.timeline.endings == 'end_on_points' %}
+  %%SELECTOR%% .de-cols:first-of-type .de-line {
+    bottom: 0;
+    height: 50%;
+  }
+
+  %%SELECTOR%% .de-cols:first-of-type .de-dot {
+    transform: translateY(-50%);
+    top: 0;
+  }
+
+  %%SELECTOR%% .de-cols:last-of-type .de-line {
+    top: 0;
+    height: 50%;
+  }
+
+  %%SELECTOR%% .de-cols:last-of-type .de-dot {
+    transform: translateY(50%);
+    bottom: 0;
+    top: unset;
+  }
+{% endif %}
+
+%%SELECTOR%% .de-line .de-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: calc({{ design.timeline.dot.top.style }} - ({{ design.timeline.dot.size.style }} / 2));
+  width:  {{ design.timeline.dot.size.style }};
+  height:  {{ design.timeline.dot.size.style }};
+  background-color: {{ design.timeline.dot.colour }};
+  {{ macros.borders(design.timeline.dot.borders) }}
+  z-index: 1;
+}
+
+%%SELECTOR%% .de-timeline-icon {
+  color: {{ design.timeline.icon.colour }};
+  font-size:  {{ design.timeline.icon.size.style }};
+  z-index: 2;
+}
+
+{% if design.timeline.dot.effects.enable_pulse %}
+  %%SELECTOR%% .de-line .de-dot {
+    animation: de-pulse 2s infinite;
+  }
+  @keyframes de-pulse {
+    0% {
+      box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+  }
+{% endif %}
+
+
+%%SELECTOR%% .de-text-content {
+  {{ macros.spacing_complex(design.content.spacing.padding, 'padding') }}
+  {{ macros.typography(design.content.description.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-text-content p {
+  {{ macros.spacing_complex(design.content.description.margin, 'margin') }}
+
+}
+
+%%SELECTOR%% .de-content img {
+  border-radius: inherit; 
+  height: {{ design.content.image.height.style }};
+  width: 100%;
+  object-fit: cover;
+}
+
+%%SELECTOR%% .de-text-content .de-heading {
+  {{ macros.spacing_complex(design.content.heading.margin, 'margin') }}
+  {{ macros.typography(design.content.heading.typography, globalSettings) }}
+}
+
+{% if design.layout.position_content == 'center' %}
+%%SELECTOR%% .de-cols {
+	flex-direction: column !important;
+    align-items: center;
+}
+
+%%SELECTOR%% .de-date {
+  width: 100% !important;
+  {{ macros.spacing_complex(design.date.margin, 'margin') }};
+  justify-content: {{  design.date.position_date }};
+  z-index: 1;
+}
+
+%%SELECTOR%% .de-cols:nth-child(2n-1) .de-date {
+    justify-content: {{  design.date.position_date }};
+}
+
+%%SELECTOR%% .de-date-heading {
+   position: relative !important;
+   left: 0 !important;
+}
+{% endif %}

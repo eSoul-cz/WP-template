@@ -1,0 +1,14 @@
+{% if content.button.text_before %}
+  <div class="">{{ content.button.text_before }}</div>
+{% endif %}
+  <div class="de-icon {{content.button.button_type == 'mouse' ? 'mouse' : '' }}">      
+    {% if content.button.button_type == 'mouse' %}
+    	<div class="scroll"></div>
+  	{% else %}
+    	{{ content.button.scroll_icon.svgCode }}
+    {% endif %}
+  </div>
+{% if content.button.text_after %}
+	<div class="">{{ content.button.text_after }}</div>
+{% endif %}
+

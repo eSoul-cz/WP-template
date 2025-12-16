@@ -1,0 +1,97 @@
+%%SELECTOR%% {
+  background-color: {{ design.container.background_color }};
+  width: {{ design.container.width.style }};
+  max-width:  {{ design.container.max_width.style }};
+  {{ macros.spacing_all(design.container.spacing) }}
+  {{ macros.borders(design.container.borders) }}
+}
+
+%%SELECTOR%% .frm_form_title {
+  {{ macros.typography(design.title.typography, globalSettings) }}
+  {{ macros.spacing_all(design.title.spacing) }}
+}
+
+%%SELECTOR%% .frm_form_fields fieldset > .frm_description p {
+  {{ macros.typography(design.description.typography, globalSettings) }}
+  {{ macros.spacing_all(design.description.spacing) }}
+}
+
+%%SELECTOR%% .frm_primary_label {
+  {{ macros.typography(design.labels.typography, globalSettings) }}
+  {{ macros.spacing_all(design.labels.spacing) }}
+}
+
+%%SELECTOR%% .frm_required {
+  {{ macros.typography(design.required_asterisk.typography, globalSettings) }}
+}
+
+
+%%SELECTOR%% div.frm_form_field.form-field input, 
+%%SELECTOR%% div.frm_form_field.form-field textarea,
+%%SELECTOR%% div.frm_form_field.form-field select{
+  {{ macros.typography(design.inputs.typography, globalSettings) }}
+  background-color: {{ design.inputs.background.color }};
+  {{ macros.border_complex(design.inputs.borders.border) }}
+  {{ macros.border_radius(design.inputs.borders.border_radius) }}
+  {{ macros.spacing_all(design.inputs.spacing) }}
+}
+
+%%SELECTOR%% .frm_form_field input:hover, 
+%%SELECTOR%% .frm_form_field textarea:hover,
+%%SELECTOR%% .frm_form_field select:hover {
+ background-color: {{ design.inputs.background.color_hover }};
+{{ macros.border_radius(design.inputs.borders.border_radius_hover) }}
+}
+
+%%SELECTOR%% .frm_inline_box {
+  {{ macros.typography(design.prefix_and_suffix.typography, globalSettings) }}
+  background-color: {{ design.prefix_and_suffix.background_color }};
+  {{ macros.borders(design.prefix_and_suffix.borders) }};
+  {{ macros.spacing_all(design.prefix_and_suffix.spacing) }};
+}
+
+%%SELECTOR%% .frm_form_fields .frm_fields_container .form-field input:focus,
+%%SELECTOR%% .frm_form_fields .frm_fields_container .form-field textarea:focus,
+%%SELECTOR%% .frm_form_fields .frm_fields_container .form-field select:focus {
+  {{ macros.border_complex(design.inputs.borders.focus_border) }}
+}
+
+%%SELECTOR%% .frm_submit button.frm_button_submit.frm_final_submit,
+%%SELECTOR%% .frm_submit button.frm_button_submit {
+  background-color: {{ design.buttons.submit_button.background_color }} !important;
+  width: {{ design.buttons.submit_button.width.style }} !important;
+  {{ macros.border_radius(design.buttons.submit_button.border.border_radius) }}
+  {{ macros.border_complex(design.buttons.submit_button.border.border) }}
+  {{ macros.typography(design.buttons.submit_button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.buttons.submit_button.spacing) }}
+  cursor: pointer;
+  
+}
+
+%%SELECTOR%% .frm_submit button.frm_button_submit.frm_final_submit:hover,
+%%SELECTOR%% .frm_submit button.frm_button_submit:hover{
+  background-color: {{ design.buttons.submit_button.background_color_hover }} !important;
+  {{ macros.border_complex(design.buttons.submit_button.border.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.buttons.submit_button.typography) }}
+}
+
+%%SELECTOR%% .frm_radio, 
+%%SELECTOR%% .frm_checkbox
+{
+  display: flex;
+  {% if design.checkboxes_radios.display == 'columns' %}
+  flex-direction: column;
+  {% elseif design.checkboxes_radios.display == 'row' %}
+  flex-direction: row;
+  {% else %}
+   flex-direction: column;
+  {% endif %}
+  gap: {{ design.checkboxes_radios.gap.style }};
+  {{ macros.typography(design.checkboxes_radios.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .frm_opt_container input {
+  accent-color: {{ design.checkboxes_radios.checkbox_radio_button.checked_color }};
+  width:  {{ design.checkboxes_radios.checkbox_radio_button.size.style }};
+  height:  {{ design.checkboxes_radios.checkbox_radio_button.size.style }};
+}

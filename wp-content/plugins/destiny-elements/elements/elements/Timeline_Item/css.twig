@@ -1,0 +1,26 @@
+%%SELECTOR%% .de-content {
+  background-color: {{ design.content.background_color }};
+  {{ macros.borders(design.content.borders) }}
+}
+
+%%SELECTOR%% .de-content .de-text-content {
+  {{ macros.spacing_all(design.content.spacing) }}
+}
+
+{% if design.timeline.pointer.colour %}
+%%SELECTOR%% .de-content::before {
+  border-color: transparent {{ design.timeline.pointer.colour }} transparent transparent;
+}
+{% endif %}
+
+%%SELECTOR%% .de-line .de-dot {
+  width:  {{ design.timeline.dot.size.style }};
+  height:  {{ design.timeline.dot.size.style }};
+  background-color: {{ design.timeline.dot.colour }};
+  {{ macros.borders(design.timeline.dot.borders) }}
+}
+
+%%SELECTOR%% .de-timeline-icon {
+  color: {{ design.timeline.icon.colour }};
+  font-size:  {{ design.timeline.icon.size.style }};
+}

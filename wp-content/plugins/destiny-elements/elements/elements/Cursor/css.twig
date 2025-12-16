@@ -1,0 +1,26 @@
+{% if content.options.enable_default_cursor %}
+{% else %}
+    * {
+    cursor: none !important; 
+    }
+{% endif %}
+
+
+
+.custom-cursor-outter {
+    transition: {{ design.outter_cursor.effects.transiiton_duration.style }};
+ }
+
+{% if content.outter_cursor.type == 'magnetic' %}
+{% elseif content.outter_cursor.type == 'scale' %}
+.custom-cursor-overlay {
+  display: none
+}
+{% endif %}
+
+{% if content.outter_cursor.disable_outter_cursor %}
+.custom-cursor-outter {
+ display: none; 
+}
+
+{% endif %}

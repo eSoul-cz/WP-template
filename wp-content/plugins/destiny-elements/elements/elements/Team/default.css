@@ -1,0 +1,20 @@
+.de-icon-svg {
+    display: flex;
+    font-size: 24px;
+}
+
+.de-icon-svg > svg { 
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.breakdance .de-team .de-person-container a {
+  text-decoration: none;
+}
+
+
+

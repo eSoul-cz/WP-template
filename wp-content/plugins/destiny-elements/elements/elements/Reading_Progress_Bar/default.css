@@ -1,0 +1,6 @@
+.de-progrss-bar-fill {
+  background-color: #fc7904;
+  height: 100%;
+  width: 0%;
+  transition: 0.1s linear;
+}

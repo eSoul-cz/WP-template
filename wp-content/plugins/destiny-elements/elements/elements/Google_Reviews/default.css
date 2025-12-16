@@ -1,0 +1,23 @@
+.breakdance .de-google-reviews {
+   text-decoration: none; 
+   border-radius: 5px;
+   padding: 5px 10px;
+}
+
+.breakdance .de-stars-wrapper,
+.breakdance .de-testimonail{
+  margin: 0;
+}
+
+.breakdance .de-star{
+   fill: #6c6962;
+}
+
+.breakdance .de-star.active {
+   fill: #fece3c;
+}
+
+.breakdance .de-google-reviews-grid__google-logo {
+  right: 15px;
+  top: 15px;
+}

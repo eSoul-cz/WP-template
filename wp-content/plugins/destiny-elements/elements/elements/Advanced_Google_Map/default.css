@@ -1,0 +1,24 @@
+.gm-style-iw h1, 
+.gm-style-iw h2,
+.gm-style-iw h3,
+.gm-style-iw h4,
+.gm-style-iw h5,
+.gm-style-iw p {
+  margin: 0;
+}
+
+.breakdance .de-google-map .de-agm-wrapper .wp-post-image {
+  max-width: 100px;
+  max-height: 100px;
+}
+.breakdance .de-google-map .de-agm-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .breakdance .de-google-map .de-agm-wrapper {
+    flex-wrap: wrap;
+  }
+}

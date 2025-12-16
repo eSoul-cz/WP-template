@@ -1,0 +1,165 @@
+%%SELECTOR%% {
+  background-color: {{ design.button.background_colour }};
+  {{ macros.borders(design.button.borders) }}
+{% if design.layout.align == 'flex-start' %}
+    left: {{ design.layout.left_offset.style }};
+{% elseif design.layout.align == 'center' %}
+  left: 0;
+  right: 0;
+  margin: auto;
+  {% if design.button.padding.padding_right_left.style %}
+   	width: calc( {{ design.icon.size.style }} + {{ design.button.padding.padding_right_left.style }});
+  {% else %}
+  	width: {{ design.icon.size.style }};
+  {% endif %}
+{% elseif design.layout.align == 'flex-end' %}
+    right:  {{ design.layout.right_offset.style }};
+{% else %}
+    width: 50px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+{% endif %}
+  
+{% if design.layout.vertical_align == 'flex-start' %}
+	top:  {{ design.layout.top_offset.style }};
+{% elseif design.layout.vertical_align == 'center' %}
+	top: 0;
+  	bottom: 0;
+  	margin-top: auto;
+    margin-bottom: auto;
+  	height: 30px;
+{% elseif design.layout.vertical_align == 'flex-end' %}
+	bottom: {{ design.layout.bottom_offset.style }};
+{% else %}
+	bottom: calc(75px / 2);
+{% endif %}
+  {{ macros.typography(design.typography, globalSettings) }}
+  padding-right: {{ design.button.padding.padding_right_left.style }};
+  padding-left: {{ design.button.padding.padding_right_left.style }};
+  padding-top: {{ design.button.padding.padding_top_bottom.style }};
+  padding-bottom: {{ design.button.padding.padding_top_bottom.style }};
+}
+
+{% if content.button.button_type == 'mouse' %}
+
+%%SELECTOR%% .de-icon.mouse {
+ 	position: absolute;
+    width: {{ design.icon.size ? design.icon.size.style : '30px' }};
+  	height: {{ design.icon.size ? 'calc(20px + ' ~ design.icon.size.style ~ ')' : '50px' }};
+  	bottom: 40px ;
+    border-radius:  {{ design.icon.border_radius ? design.icon.border_radius.style : '15px' }};
+    border: 2px solid  {{ design.icon.colour ? design.icon.colour : '#fff' }};
+    -webkit-animation: demouse 1.2s;
+    animation: demouse 1.2s;
+    cursor: pointer;
+    z-index: 10; 
+}
+
+%%SELECTOR%%:hover .de-icon.mouse {
+    border: 2px solid {{ design.icon.colour_hover ? design.icon.colour_hover : '#fff' }};
+}
+
+%%SELECTOR%% .de-icon.mouse .scroll {
+  	display: block;
+    width: 3px;
+    height: 8px;
+    margin: 6px auto;
+    border-radius: 4px;
+  	background: {{ design.icon.mouse_scroll_colour ? design.icon.mouse_scroll_colour : '#fff' }};
+    -webkit-animation: demousescroll {{ design.effects.bounce_duration ? design.effects.bounce_duration.style :  '1.2s' }} infinite;
+    animation: demousescroll demousescroll {{ design.effects.bounce_duration ? design.effects.bounce_duration.style :  '1.2s' }} infinite;
+}
+
+%%SELECTOR%%:hover .de-icon.mouse .scroll {
+  background: {{ design.icon.mouse_scroll_colour_hover }};
+}
+
+@keyframes demouse {
+  0% {
+      opacity: 0;
+      transform: translateY(40px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes demousescroll {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+}
+
+
+{% else %}
+
+%%SELECTOR%% .de-icon {
+  	color: {{ design.icon.colour }};
+    font-size: {{ design.icon.size.style }};
+  	{% if design.effects.icon_effect == 'bounce' %}
+   	-webkit-animation: de-icon-bounce  {{ design.effects.bounce_duration.style }} ease infinite;
+  	moz-animation: de-icon-bounce  {{ design.effects.bounce_duration.style }} ease infinite;
+	{% elseif design.effects.icon_effect == 'fade' %}
+	-webkit-animation: de-icon-fade  {{ design.effects.fade_duration.style }} ease infinite;
+  	moz-animation: de-icon-fade  {{ design.effects.fade_duration.style }} ease infinite;
+	{% endif %}
+}
+
+%%SELECTOR%%:hover .de-icon {
+	color: {{ design.icon.colour_hover }}
+}
+
+@-webkit-keyframes de-icon-fade {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  } 
+}
+@keyframes de-icon-fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes de-icon-bounce {
+  0% {
+    translate: 0 5px;
+  }
+  50% {
+    translate: 0 0;
+  }
+  100% {
+    translate: 0 5px;
+  }
+}
+@keyframes de-icon-bounce {
+  0% {
+    translate: 0 5px;
+  }
+  50% {
+    translate: 0 0;
+  }
+  100% {
+    translate: 0 5px;
+  }
+}
+
+{% endif %}

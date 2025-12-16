@@ -1,0 +1,54 @@
+.breakdance .de-accordion {
+   width: 100%; 
+   max-width: 600px;
+}
+
+.breakdance .de-accordion .de-accordion-panel.hidden {
+  display: none;
+}
+
+.breakdance .de-accordion .de-accordion-panel {
+ position: relative;
+ background-color: #fff;
+ padding: 0 20px;
+ margin: 0;
+ overflow: hidden;
+}
+
+.breakdance .de-accordion .de-accordion-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid var(--bde-brand-primary-color);
+  cursor: pointer;
+  background-color: var(--bde-brand-primary-color);
+  color: #fff;
+  margin-top: 5px;
+  text-align: left;
+  font-weight: 700;
+}
+  
+.breakdance .de-accordion .de-accordion-trigger .trigger-text {
+  flex-grow: 1; 
+}
+.breakdance .de-accordion h3 {
+   margin: 0;
+   font-size: 18px;
+}
+
+.acc-icon {
+    display: flex;
+    font-size: 24px;
+  	transition: 400ms;
+}
+
+.acc-icon > svg { 
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}

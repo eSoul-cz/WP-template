@@ -1,0 +1,11 @@
+{% if content.main_options.display_format == 'currentyear' %}
+	Copyright © {{ 'now' | date('Y') }}. {{ content.main_options.company_name }}. All rights reserved.
+{% elseif content.main_options.display_format == 'startandcurrentyear' %}
+  	Copyright ©  {{ content.main_options.start_year }} - {{ 'now' | date('Y') }}. {{ content.main_options.company_name }}. All rights reserved.
+{% elseif content.main_options.display_format == 'custom' %}
+	{% if content.main_options.include_start_year %}
+	     {{ content.main_options.text_before_year }}{{ content.main_options.start_year }} - {{ 'now' | date('Y') }}{{ content.main_options.text_after_year }}
+	{% else %}
+	     {{ content.main_options.text_before_year }}{{ 'now' | date('Y') }}{{ content.main_options.text_after_year }}
+	{% endif %}
+{% endif %}

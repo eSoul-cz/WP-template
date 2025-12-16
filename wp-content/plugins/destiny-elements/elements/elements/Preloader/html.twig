@@ -1,0 +1,9 @@
+<div class="de-preloader-element">  
+  {% if content.element.preloader_source == 'advanced' %}
+  	%%CHILDREN%%
+  {% elseif content.element.preloader_source == 'default' %}
+    <div class="de-svg-preloader"> 
+      {{ content.element.select_preloader }}
+    </div>
+  {% endif %}
+</div>

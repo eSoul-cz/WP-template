@@ -1,0 +1,156 @@
+%%SELECTOR%% {
+ max-height: {{ design.table.max_height.style }}; 
+ max-width: {{ design.table.max_width.style }}; 
+ {{ macros.borders(design.table.borders) }}
+}
+
+%%SELECTOR%% .de-col-header {
+ 	background-color: {{ design.column_headers.background_color }};
+    {{ macros.typography(design.column_headers.typography, globalSettings) }}
+    {{ macros.borders(design.column_headers.borders) }}
+    {{ macros.spacing_padding_all(design.column_headers.padding) }}
+	{% if design.column_headers.enable_sticky_headers %}
+    	position: sticky;
+  		top: 0;
+    {% endif %}
+}
+
+%%SELECTOR%% .de-col-header:hover {
+	background-color: {{ design.column_headers.background_color_hover }};
+  	{{ macros.typographyWithHoverableColorAndEffects(design.column_headers.typography) }}
+}
+
+%%SELECTOR%% .de-row-header {
+ 	background-color: {{ design.row_headers.background_color }};
+    {{ macros.typography(design.row_headers.typography, globalSettings) }}
+    {{ macros.borders(design.row_headers.borders) }}
+    {{ macros.spacing_padding_all(design.row_headers.padding) }}
+}
+
+
+%%SELECTOR%% .de-cell {
+ 	background-color: {{ design.table_cells.background_color }};
+    {{ macros.typography(design.table_cells.typography, globalSettings) }}
+    {{ macros.borders(design.table_cells.borders) }}
+    {{ macros.spacing_padding_all(design.table_cells.padding) }}
+}
+
+{% if content.table_options.sticky_row_headers %}
+  %%SELECTOR%% .de-row-header {
+          position: sticky;
+          left: 0;
+  }
+{% endif %}
+
+
+{% if content.table_options.sticky_column_headers %}
+%%SELECTOR%% .de-col-headers {
+  position: sticky;
+  top: 0;
+}
+{% endif %}
+
+%%SELECTOR%% .de-row-header:hover {
+	background-color: {{ design.row_headers.background_color_hover }};
+  	 {{ macros.typographyWithHoverableColorAndEffects(design.row_headers.typography) }}
+}
+
+{% if content.accordion_options.enable_accordion_on  == 'land' %}
+{% set debp = '767px' %}
+{% elseif content.accordion_options.enable_accordion_on  == 'port' %}
+{% set debp = '479px' %}
+{% endif %}
+
+{% if content.accordion_options.enable_accordion_on  == 'land' or content.accordion_options.enable_accordion_on  == 'port' %}
+@media only screen and (max-width: {{ debp }}) {
+  
+  %%SELECTOR%% .hidden {
+    display: none;
+   }
+  
+  %%SELECTOR%% .de-table-acc-cells, 
+  %%SELECTOR%% .de-table-acc-row-headers{
+    overflow-x: auto;
+  }
+  %%SELECTOR%% .de-col-header {
+   cursor: pointer; 
+  }
+  %%SELECTOR%% .de-col-header:not(:first-child) {
+     margin-top: {{ design.accordion.spacing.style }};
+  }
+  
+  {% if content.table_options.disable_row_headers %}
+    %%SELECTOR%% .de-col-wrapper {
+     display: grid; 
+     grid-template-columns: 1fr;
+    }
+    %%SELECTOR%% .de-table-acc-panel {
+     display: none;
+     grid-template-columns: 1fr; 
+     }
+  {% else %}
+    %%SELECTOR%% .de-col-wrapper {
+     display: grid; 
+     grid-template-columns: 1fr 1fr;
+    }
+  
+    %%SELECTOR%% .de-table-acc-panel {
+       display: none;
+       grid-template-columns: repeat(2,1fr); 
+      }
+  {% endif %}
+  %%SELECTOR%% .de-col-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+
+  }
+ 
+  
+  %%SELECTOR%% .de-table-acc-panel.active {
+    display: grid;
+  }
+  
+  %%SELECTOR%% .de-cell, 
+  %%SELECTOR%% .de-row-header, 
+  %%SELECTOR%% .de-col-wrapper{
+   display: block;
+   width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+  
+  %%SELECTOR%% .de-col-wrapper.de-col-headers {
+    display: grid;
+  }
+  
+  %%SELECTOR%% .de-adv-table-open-icon,
+  %%SELECTOR%% .de-adv-table-close-icon{
+    color:  {{ design.accordion.icon.color }};
+    font-size: {{ design.accordion.icon.size.style }};
+   }
+  
+  %%SELECTOR%% .de-adv-table-open-icon,
+  %%SELECTOR%% .de-col-header.active .de-adv-table-close-icon{
+   	display: flex;
+  }
+  
+  %%SELECTOR%% .de-col-header.active .de-adv-table-open-icon {
+   display: none; 
+  }
+
+}
+{% endif %}
+
+%%SELECTOR%% .de-res-btn {
+   background-color: {{ design.link_button.background_color }};
+  {{ macros.spacing_padding_all(design.link_button.padding) }}
+  {{ macros.typography(design.link_button.typography, globalSettings) }}
+  {{ macros.borders(design.link_button.borders) }}
+}
+
+%%SELECTOR%% .de-res-btn:hover {
+   background-color: {{ design.link_button.background_color_hover }};
+   {{ macros.typographyWithHoverableColorAndEffects(design.link_button.typography) }}
+}

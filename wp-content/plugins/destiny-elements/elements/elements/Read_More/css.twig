@@ -1,0 +1,118 @@
+%%SELECTOR%% button {
+  background-color: {{ design.button.background_color }};
+  width: {{ design.button.width.style }};
+  {{ macros.border_radius(design.button.border.border_radius) }}
+  {{ macros.border_complex(design.button.border.border) }}
+  {{ macros.typography(design.button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.button.spacing) }}
+}
+
+%%SELECTOR%% button.active {
+  background-color: {{ design.button.active_background_color }};
+}
+
+%%SELECTOR%% button:hover{
+  background-color: {{ design.button.background_color_hover }} !important;
+  {{ macros.border_complex(design.button.border.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.button.typography) }}
+}
+
+
+{% if content.options.hide_content_by == 'height' %}
+%%SELECTOR%% .de-read-more-content {
+  max-height:  {{ design.content.max_height.style }};
+  overflow-y: hidden;
+}
+%%SELECTOR%% .de-read-more-content.active {
+  max-height: 100%;
+}
+{% endif %}
+
+%%SELECTOR%% {
+  background-color: {{ design.container.background_color }};
+  {{ macros.spacing_all(design.container.spacing) }};
+  {{ macros.spacing_margin_y(design.content.spacing.wrapper) }}
+  {{ macros.typography(design.content.typography.default, globalSettings)  }}
+}
+
+%%SELECTOR%% a {
+  {{ macros.typography(design.typography.link, globalSettings)  }}
+}
+
+%%SELECTOR%% a:hover {
+  {{ macros.typographyWithHoverableEverything(design.typography.link) }}
+}
+
+
+%%SELECTOR%% h1 {
+  {{ macros.typography(design.content.typography.h1, globalSettings)  }}
+  margin-block-start: {{ design.content.spacing.h1.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.h1.margin_block_end.style }};
+}
+
+%%SELECTOR%% h2 {
+  {{ macros.typography(design.content.typography.h2, globalSettings)  }}
+  margin-block-start: {{ design.content.spacing.h2.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.h2.margin_block_end.style }};
+}
+
+%%SELECTOR%% h3 {
+  {{ macros.typography(design.content.typography.h3, globalSettings)  }}
+  margin-block-start: {{ design.content.spacing.h3.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.h3.margin_block_end.style }};
+}
+
+%%SELECTOR%% h4 {
+  {{ macros.typography(design.content.typography.h4, globalSettings)  }}
+  margin-block-start: {{ design.content.spacing.h4.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.h4.margin_block_end.style }};
+}
+
+%%SELECTOR%% p {
+  {{ macros.typography(design.content.typography.paragraph, globalSettings)  }}
+  margin-block-start: {{ design.content.spacing.paragraph.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.paragraph.margin_block_end.style }};
+}
+
+%%SELECTOR%% ul, %%SELECTOR%% ol{
+  margin-block-start: {{ design.content.spacing.list.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.list.margin_block_end.style }};
+  padding-inline-start: {{ design.content.spacing.list.padding_inline_start.style }};
+}
+
+%%SELECTOR%% ul, %%SELECTOR%% ul *, %%SELECTOR%% ol,  %%SELECTOR%% ol * {
+  {{ macros.typography(design.content.typography.list, globalSettings)  }}
+}
+
+%%SELECTOR%% ul p, %%SELECTOR%% ol p {
+  margin-block-start: {{ design.content.spacing.list.list_item_p.margin_block_start.style }};
+  margin-block-end: {{ design.content.spacing.list.list_item_p.margin_block_end.style }};
+}
+
+{% if (content.options.hide_content_by == "lines") %}
+
+%%SELECTOR%% .de-read-more-content p {
+ display: none;
+}
+
+%%SELECTOR%% .de-read-more-content p:first-child {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: {{ content.options.max_lines_of_text }};
+  -webkit-line-clamp: {{ content.options.max_lines_of_text }};
+}
+
+%%SELECTOR%% .de-read-more-content.active p {
+  display: revert;
+  -webkit-box-orient: default;
+  overflow: visible;
+  text-overflow: default;
+  line-clamp: default;
+  -webkit-line-clamp: default;
+}
+
+{% endif %}
+
+

@@ -1,0 +1,17 @@
+<div class="de-col de-date"> 
+    {% if content.custom_field.field %} 
+    	{{ content.custom_field.field }}
+    {% endif %} 
+  </div>
+  <div class="de-line">
+    <div class="de-dot"> 
+      {% if content.icon.icon %} 
+      <div class="de-timeline-icon">
+        {{ content.icon.icon.svgCode }}
+      </div> {% endif %} </div>
+  </div>
+  <div class="de-col de-content"> 
+    <div class="de-text-content">
+      %%CHILDREN%%
+    </div>
+  </div>

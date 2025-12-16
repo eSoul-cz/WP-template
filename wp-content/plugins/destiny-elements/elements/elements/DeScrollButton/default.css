@@ -1,0 +1,24 @@
+.breakdance .de-scroll-button {
+   	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+    position: absolute;
+    cursor: pointer;
+  	z-index: 3;
+}
+
+.breakdance .de-scroll-button .de-icon { /* prefix with element classname, i.e. .element-classname .some-class-to-wrap-the-icon */
+    display: flex;
+  	flex-direction: column;
+ 	align-items: center;
+    transition-duration: 200ms;
+}
+
+.breakdance .de-scroll-button .de-icon > svg { /* also, prefix with element classname */
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}

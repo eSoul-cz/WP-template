@@ -1,0 +1,1 @@
+<div de-add-to-cart-button-id="<?= get_the_ID() ?>"></div>

@@ -1,0 +1,121 @@
+/* Style ogólne */
+.breakdance .de-lang-switcher {
+  max-width:100%
+}
+
+ul.my-custom-switcher {
+  padding: 0;
+  margin: 0;
+}
+
+.breakdance .de-lang-switcher .my-custom-switcher-dropdown {
+  cursor: pointer;
+}
+
+.breakdance .de-lang-switcher ul.my-custom-switcher-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.breakdance .de-lang-switcher li {
+  display:inline;
+  list-style:none;
+  line-height:1;
+  display: flex;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.wpml-ls-item a,
+.lang-item a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breakdance .de-lang-switcher .wpml-ls-item img,
+.breakdance .de-lang-switcher .lang-item img {
+  width: 32px !important;
+  height: auto !important;
+  object-fit: cover;
+  object-position: center center;
+}	
+
+.language-switcher {
+    position: relative;
+    width: 200px;
+    font-size: 1rem;
+    color: #000;
+}
+
+.switcher-button {
+    width: 100%;
+    background-color: #fff;
+    padding: 0.5em 1em;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-language {
+    display: flex;
+  	gap: 4px;
+    align-items: center;
+}
+
+.arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #000;
+    transition: transform ease-in-out 0.3s;
+}
+
+.language-dropdown {
+    position: absolute;
+    list-style: none;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    transition: 0.5s ease;
+    transform: scaleY(0);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.language-switcher.active .arrow {
+    transform: rotate(180deg);
+} 
+
+.language-switcher.active .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+
+
+.language-dropdown li {
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.language-dropdown li:hover,
+.language-dropdown li[aria-selected="true"] {
+    background-color: #f2f2f2;
+}
+
+.language-dropdown img {
+    margin-right: 8px;
+}

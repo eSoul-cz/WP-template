@@ -1,0 +1,29 @@
+<h3>
+  <button id="de-accordion-%%ID%%" class="de-accordion-trigger" type="button" aria-expanded="{{ariaOpen}}" aria-controls="de-acc-%%ID%%">
+    {% if content.tab_content.icon_position == 'Left' %}
+        {% if content.tab_content.tab_icon != "" %}
+          <span class="acc-icon">
+            {{ content.tab_content.tab_icon.svgCode }}
+          </span>
+        {% endif %}
+        {% if content.tab_content.number_counter_custom_field %}
+        	<span class="trigger-number">{{ content.tab_content.number_counter_custom_field }}</span>
+        {% endif %}
+    	<span class="trigger-text">{{ content.tab_content.tab_heading }}</span>
+    {% else %}
+    	{% if content.tab_content.number_counter_custom_field %}
+        	<span class="trigger-number">{{ content.tab_content.number_counter_custom_field }}</span>
+        {% endif %}
+      <span class="trigger-text">{{ content.tab_content.tab_heading }}</span>
+      {% if content.tab_content.tab_icon != "" %}
+        <span class="acc-icon">
+         	{{ content.tab_content.tab_icon.svgCode }}
+        </span>
+      {% endif %}
+    {% endif %}
+  </button>
+</h3>
+
+<div id="de-acc-%%ID%%" class="de-accordion-panel" role="region" aria-labelledby="de-accordion-%%ID%%" style="height: 100%">
+  %%CHILDREN%%
+</div>

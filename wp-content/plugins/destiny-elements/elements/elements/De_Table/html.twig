@@ -1,0 +1,52 @@
+{% set isLeftPosition = design.head.position == 'left' %}
+{% set header_length = content.table.table | length -1 %}
+{% set col_length = content.table.table[0].table_data | length -1 %}
+
+<table>
+    {% if content.table.caption %}
+        <caption>{{ content.table.caption }}</caption>
+    {% endif %}
+    
+    {% if not isLeftPosition %}
+        <thead>
+            <tr>
+                {% for item in content.table.table %}
+                    {% set active = item.enable_sort ? ' de-sort' : '' %}
+                    <th class="de-table-head{{ active }}" {{ dataContentEditablePropertyPath('content.table.table['~ loop.index0 ~ '].header') }}>
+                        {{ item.header }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+    {% endif %}
+    
+    <tbody>
+        {% if isLeftPosition %}
+            {% for item in content.table.table %}
+                <tr>
+                    <th {{ dataContentEditablePropertyPath('content.table.table['~ loop.index0 ~ '].header') }}>{{ item.header }}</th>
+                    {% for dataItem in item.table_data %}
+                        <td>{{ dataItem.data }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for x in range(0, col_length) %}
+                <tr>
+                    {% for i in range(0, header_length) %}
+                        {% set table_data_item = content.table.table[i].table_data[x] %}
+                        <td>
+                            {% if table_data_item.link %}
+                                {{ macros.linkStart(table_data_item.link) }}
+                                {{ table_data_item.data }}
+                                {{ macros.linkEnd() }}
+                            {% else %}
+                                {{ table_data_item.data }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

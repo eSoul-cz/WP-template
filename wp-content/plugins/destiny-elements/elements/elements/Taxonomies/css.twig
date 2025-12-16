@@ -1,0 +1,137 @@
+%%SELECTOR%% {
+  {% if design.layout.display == 'grid' %}
+     display: grid;
+     {% if design.layout.grid_columns and design.layout.min_grid_width.style == null %}
+     grid-template-columns: repeat({{ design.layout.grid_columns }},1fr);
+     {% elseif design.layout.min_grid_width.style and  design.layout.grid_columns == null%}
+     grid-template-columns: repeat(auto-fit, minmax({{ design.layout.min_grid_width.style }}, 1fr));
+     {% elseif design.layout.min_grid_width.style and design.layout.grid_columns %}
+      grid-template-columns: repeat({{ design.layout.grid_columns }}, minmax({{ design.layout.min_grid_width.style }}, 1fr));
+     {% else %}
+     {% endif %}
+      {% if design.layout.grid_rows %}
+      grid-template-rows: repeat({{ design.layout.grid_rows }} ,1fr);
+      {% endif %}
+  {% elseif design.layout.display == 'list' %}
+    display:flex;
+    flex-direction: column;
+  {% else %}
+   display: flex;
+    {% if design.layout.layout == 'vertical' %}
+    flex-direction: column;
+    {% elseif design.layout.layout == 'horizontal' %}
+    flex-direction: row;
+    {% endif %}
+  flex-wrap: wrap;
+  {% endif %}
+  gap: {{ design.layout.gap.style }};
+  background-color: {{ design.container.background_color }};
+  {{ macros.size(design.container.size) }}
+  {{ macros.spacing_all(design.container.spacing) }}
+  {{ macros.borders(design.container.borders) }}
+}
+
+%%SELECTOR%% .de-taxonomy {
+  background-color: {{ design.taxonomy_name.background_color }};
+  margin: 0;
+  {{ macros.spacing_all(design.taxonomy_name.spacing) }}
+  {{ macros.typography(design.taxonomy_name.typography, globalSettings) }}
+  {{ macros.borders(design.taxonomy_name.borders) }}
+}
+
+%%SELECTOR%% .de-taxonomy-container {
+  position: relative;
+  background-color: {{ design.taxonomy_box.baackground_color }};
+  background-color: {{ design.taxonomy_box.background_color }};
+  {{ macros.spacing_all(design.taxonomy_box.spacing) }}
+  {{ macros.borders(design.taxonomy_box.borders) }}
+  max-width: {{ design.taxonomy_box.max_width.style }};
+  {% if design.layout.flex_grow %}
+  flex-grow: 1;
+  max-height:  {{ design.taxonomy_box.max_height.style }};
+  overflow: auto;
+  {% endif %}
+}
+
+%%SELECTOR%% .de-taxonomy-container:hover {
+  background-color: {{ design.taxonomy_box.background_color_hover }};
+  background-color: {{ design.taxonomy_box.baackground_color_hover }};
+}
+
+%%SELECTOR%% .de-taxonomy-container:hover .de-taxonomy {
+  {{ macros.typographyWithHoverableColorAndEffects(design.taxonomy_name.typography) }} 
+  background-color: {{ design.taxonomy_name.background_color_hover }};
+}
+
+%%SELECTOR%% .de-taxonomy-description {
+  background-color: {{ design.taxonomy_description.background_color }};
+  {{ macros.typography(design.taxonomy_description.typography, globalSettings) }}	
+  {{ macros.spacing_all(design.taxonomy_description.spacing) }}
+  {{ macros.borders(design.taxonomy_description.borders) }}
+}
+
+%%SELECTOR%% .de-taxonomy-container:hover .de-taxonomy-description {
+ background-color: {{ design.taxonomy_description.background_color_hover }};
+ {{ macros.typographyWithHoverableColorAndEffects(design.taxonomy_description.typography) }}
+}
+
+%%SELECTOR%% .de-taxonomy-child{
+  display: block;
+  {{ macros.typography(design.taxonomy_child.typography, globalSettings) }}
+  background-color: {{ design.taxonomy_child.background_color }};
+  {{ macros.spacing_all(design.taxonomy_child.spacing) }}
+  {{ macros.borders(design.taxonomy_child.borders) }}
+}
+
+%%SELECTOR%% .de-taxonomy-child:hover {
+  {{ macros.typographyWithHoverableColorAndEffects(design.taxonomy_child.typography) }}
+  background-color: {{ design.taxonomy_child.background_color_hover }};
+}
+
+%%SELECTOR%% .de-taxonomy-child-wrapper {
+  background-color: {{ design.taxonomy_child_box.background_color }};
+  {{ macros.spacing_all(design.taxonomy_child_box.spacing) }}
+  {{ macros.borders(design.taxonomy_child_box.borders) }}
+  max-width:  {{ design.taxonomy_child_box.max_width.style }};
+}
+
+%%SELECTOR%% .de-taxonomy-child-wrapperr:hover {
+  background-color: {{ design.taxonomy_box.baackground_color_hover }};
+  background-color: {{ design.taxonomy_box.background_color_hover }};
+}
+
+{% if content.children.include_dropdown %}
+%%SELECTOR%% .de-taxonomy-container .de-taxonomy-child-wrapper {
+  display: none;
+}
+
+%%SELECTOR%% .de-taxonomy-container.active .de-taxonomy-child-wrapper {
+  display: block;
+}
+
+%%SELECTOR%% .de-dropdown {
+   color:  {{ design.dropdown.icon_color }};
+   font-size:  {{ design.dropdown.icon_size.style }};
+   right: {{ design.dropdown.icon_position_right }}px;
+   top: {{ design.dropdown.icon_position_top }}px;
+   {{ macros.spacing_padding_all(design.dropdown.padding) }}
+}
+
+{% endif %}
+
+%%SELECTOR%% .de-taxonomy-container.active .de-taxonomy {
+  background-color: {{ design.taxonomy_name.actrive_background_color }};
+  background-color: {{ design.taxonomy_name.active_background_color }};
+  color: {{ design.taxonomy_name.active_text_color }};
+}
+
+%%SELECTOR%% .de-taxonomy-child.active {
+  color:  {{ design.taxonomy_child.active_text_color }};
+}
+
+%%SELECTOR%% .de-taxonomy-count {
+  background-color: {{ design.taxonomy_count.background_colour }};
+  {{ macros.typography(design.taxonomy_count.typography, globalSettings) }}
+  {{ macros.spacing_padding_all(design.taxonomy_count.padding) }}
+  {{ macros.borders(design.taxonomy_count.borders) }}
+}

@@ -1,0 +1,28 @@
+{% macro DestinyElements_TaxonomySharedCss(selector, design, globalSettings, isBaseBreakpoint, breakpoint, isBuilder) %}
+  {{ selector }} {
+    width: {{ design.list.width.style }};
+  }
+  
+  {{ selector }} > .de-taxonomies {
+    --bde-items-gap: {{ design.list.space_between_items.style }};
+    {{ _self.spacing_margin_y(design.spacing) }}
+    {% if design.list.layout != 'list' %}
+      --bde-items-per-row: {{ design.list.items_per_row }};
+    {% endif %}
+  }
+
+  {% if design.list.layout == 'slider' %}
+    {% if design.list.slider.arrows.overlay %}
+      {{ selector }} .breakdance-swiper-wrapper {
+        padding: 0;
+      }
+    {% endif %}
+
+    {{ selector }} .swiper-slide {
+      height: auto;
+    }
+
+    {{ _self.AtomV1SwiperCss(design.list.slider, selector, globalSettings, isBaseBreakpoint) }}
+  {% endif %}
+
+{% endmacro %}

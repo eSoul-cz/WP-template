@@ -1,0 +1,43 @@
+{% if content.options.data_type == 'bre' %}
+  
+{% elseif content.options.data_type == 'adv' %}
+ %%CHILDREN%%
+{% elseif content.options.data_type == 'acf' %}
+  %%SSR%%
+{% elseif content.options.data_type == 'metabox' %}
+  %%SSR%%
+{% endif %}
+
+{% if content.options.data_type == 'bre' or content.options.data_type == null %}
+{% for item in content.content.items %}
+<{{ content.options.heading_tag|default('h3') ?: 'h3' }} class="de-accordion-trigger-heading">
+  <button id="de-accordion-%%ID%%-{{ loop.index0 + 1 }}" class="de-accordion-trigger" type="button" aria-expanded="{{ariaOpen}}" aria-controls="de-acc-%%ID%%-{{ loop.index0 + 1 }}">
+    {% if design.trigger.icon.position == 'left' %}
+        {% if design.trigger.icon.disable_icon == "" %}
+          <span class="acc-icon">
+            {{ design.trigger.icon.icon.svgCode }}
+          </span>
+        {% endif %}
+        {% if content.options.enable_number_count %}
+        	<span class="trigger-number">{{ loop.index0 + 1 }}</span>
+        {% endif %}
+    	<span class="trigger-text">{{ item.heading }}</span>
+    {% else %}
+    	{% if content.options.enable_number_count %}
+        	<span class="trigger-number">{{ loop.index0 + 1 }}</span>
+        {% endif %}
+      <span class="trigger-text">{{ item.heading }}</span>
+      {% if design.trigger.icon.disable_icon == "" %}
+        <span class="acc-icon">
+          {{ design.trigger.icon.icon.svgCode }}
+        </span>
+      {% endif %}
+    {% endif %}
+  </button>
+</{{ content.options.heading_tag|default('h3') ?: 'h3' }}>
+
+  <div id="de-acc-%%ID%%-{{ loop.index0 + 1 }}" class="de-accordion-panel" role="region" aria-labelledby="de-accordion-%%ID%%-{{ loop.index0 + 1 }}" style="height: 100%">
+      {{ item.content }}
+  </div>
+{% endfor %}
+{% endif %}

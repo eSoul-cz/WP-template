@@ -1,0 +1,318 @@
+%%SELECTOR%% {
+  background-color: {{ design.container.background_color }};
+  width: {{ design.container.width.width.style }};
+  max-width:  {{ design.container.width.max_width.style }};
+  height: {{ design.container.height.height.style }};
+  min-height: {{ design.container.height.min_height.style }};
+  max-height: {{ design.container.height.max_height.style }};
+  {{ macros.border_radius(design.container.border_radius) }}
+  {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+  {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  {{ macros.border_radius(design.container.border.border_radius) }}
+  {{ macros.border_complex(design.container.border.border) }}
+}
+
+{% if isBuilder %}
+%%SELECTOR%% .gform_wrapper {
+	display: block !important;
+}
+{% endif %}
+
+%%SELECTOR%% * {
+{% if design.effects.transition_duration.style %}
+ transition-duration: {{ design.effects.transition_duration.style }};
+{% else %}
+  transition-duration: 300ms;
+{% endif %}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_heading { 
+  background-color: {{ design.form_header.container.background_color }};
+  {{ macros.spacing_complex(design.form_header.container.margin, 'margin') }}
+  {{ macros.spacing_complex(design.form_header.container.padding, 'padding') }}
+  border-radius:  {{ design.form_header.container.border_radius.style }};
+  {{ macros.border_complex(design.form_header.container.border) }}
+}
+
+%%SELECTOR%%  .gform_wrapper .gform_heading .gform_title { 
+ {{ macros.typography(design.form_header.title.typography, globalSettings) }}
+ {{ macros.spacing_complex(design.form_header.title.margin, 'margin') }}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_heading .gform_description {
+  {{ macros.typography(design.form_header.description.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_wrapper .gf_progressbar_wrapper .gf_progressbar_title {
+  {{ macros.typography(design.progress_bar.progress_title.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.progress_bar.progress_title.margin, 'margin') }}
+}
+
+%%SELECTOR%% .gform_wrapper .gf_progressbar_wrapper .gf_progressbar {
+  background-color:  {{ design.progress_bar.background_color }};
+  width:  {{ design.progress_bar.width.style }};
+  {{ macros.spacing_complex(design.progress_bar.spacing.margin, 'margin') }}
+  overflow: hidden;
+  {{ macros.border_radius(design.progress_bar.border.border_radius) }}
+  {{ macros.border_complex(design.progress_bar.border.border) }}
+  
+}
+
+%%SELECTOR%% .gform_wrapper .gf_progressbar .gf_progressbar_percentage {
+  display: flex;
+  flex-direction: column;
+  align-items: {{ design.progress_bar.percentage_position }};
+  background-color: {{ design.progress_bar.progress_fill }};
+  {{ macros.spacing_complex(design.progress_bar.spacing.padding, 'padding') }}
+  {{ macros.typography(design.progress_bar.perecentage_typography, globalSettings) }}
+  height: auto;
+  border-radius: 0;
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield .gfield_label {
+  display: block;
+  {{ macros.typography(design.labels.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.labels.margin, 'margin') }}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield input:not([type="checkbox"]):not([type="radio"]), 
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield textarea,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield select{
+  background-color: {{ design.inputs.background.color }};
+  {{ macros.spacing_complex(design.inputs.spacing.padding, 'padding') }}
+  {{ macros.border_radius(design.inputs.border.border_radius) }}
+  {{ macros.border_complex(design.inputs.border.border) }}
+  appearance: none;
+  {% if design.inputs.border.disable_outline_ %}
+	outline: none !important;
+  {% endif %}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield .ginput_container_select select {
+	background-image: url('data:image/svg+xml;utf8,{{ design.inputs.dropdown_icon.icon.svgCode }}');
+    background-repeat: no-repeat;
+    background-position: right .5em center;
+    background-size:  {{ design.inputs.dropdown_icon.size.style }} auto;
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield [type="checkbox"] {
+  width: {{ design.checkboxes.checkbox_size.style }};
+  height: {{ design.checkboxes.checkbox_size.style }};
+  accent-color: {{ design.checkboxes.checked_colour }};
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield [type="radio"] {
+  width: {{ design.radios.radio_button_size.style }};
+  height: {{ design.radios.radio_button_size.style }};
+  accent-color: {{ design.radios.checked_colour }};
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield input, 
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield textarea,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield select,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield input::placeholder, 
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield textarea::placeholder,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield select::placeholder{
+  {{ macros.typography(design.inputs.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield input:hover, 
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield textarea:hover,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield select:hover {
+ background-color: {{ design.inputs.background.color_hover }};
+ {{ macros.border_complex(design.inputs.border.border_hover) }}
+}
+
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield input:focus,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield textarea:focus,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield select:active{
+  border-color: {{ design.inputs.border.border_focus }};
+}
+
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_button,
+%%SELECTOR%% .gform_button {
+  	background: {{ design.buttons.submit_button.color }} !important;
+    {{ macros.typography(design.buttons.submit_button.typography, globalSettings) }}
+  	width: {{ design.buttons.submit_button.width.style }};
+  	{{ macros.border_radius(design.buttons.submit_button.border.border_radius) }}
+ 	{{ macros.border_complex(design.buttons.submit_button.border.border) }}
+	{{ macros.spacing_complex(design.buttons.submit_button.spacing.padding, 'padding') }}
+  	{{ macros.spacing_complex(design.buttons.submit_button.spacing.margin, 'margin') }}
+ 	cursor: pointer;
+  
+}
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_button:hover,
+%%SELECTOR%% .gform_button:hover{
+  	background-color: {{ design.buttons.submit_button.color_hover }};
+  	{{ macros.border_complex(design.buttons.submit_button.border_hover) }}
+   	{{ macros.typographyWithHoverableColorAndEffects(design.buttons.submit_button.typography) }}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_next_button {
+    background-color: {{ design.buttons.next_button.color }};
+    {{ macros.typography(design.buttons.next_button.typography, globalSettings) }}
+  	width: {{ design.buttons.next_button.width.style }};
+  	{{ macros.border_radius(design.buttons.next_button.border.border_radius) }}
+ 	{{ macros.border_complex(design.buttons.next_button.border.border) }}
+	{{ macros.spacing_complex(design.buttons.next_button.spacing.padding, 'padding') }}
+  	{{ macros.spacing_complex(design.buttons.next_button.spacing.margin, 'margin') }}
+ 	cursor: pointer;
+  	
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_next_button:hover {
+ 	background-color: {{ design.buttons.next_button.color_hover }};
+  	{{ macros.border_complex(design.buttons.next_button.border_hover) }}
+   	{{ macros.typographyWithHoverableColorAndEffects(design.buttons.next_button.typography) }}
+}
+
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_previous_button {
+    background-color: {{ design.buttons.previous_button.color }};
+    {{ macros.typography(design.buttons.previous_button.typography, globalSettings) }}
+  	width: {{ design.buttons.previous_button.width.style }};
+  	{{ macros.border_radius(design.buttons.previous_button.border.border_radius) }}
+ 	{{ macros.border_complex(design.buttons.previous_button.border.border) }}
+	{{ macros.spacing_complex(design.buttons.previous_button.spacing.padding, 'padding') }}
+  	{{ macros.spacing_complex(design.buttons.previous_button.spacing.margin, 'margin') }}
+ 	cursor: pointer;
+  	transition-duration: 0.3s;
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_page_footer .gform_previous_button:hover {
+  background-color: {{ design.buttons.previous_button.color_hover }};
+  {{ macros.border_complex(design.buttons.previous_button.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.buttons.previous_button.typography) }}
+
+}
+
+%%SELECTOR%% fieldset {
+  border: none;
+  padding: 0;
+}
+
+%%SELECTOR%% .ginput_container_checkbox .gfield_checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  {% if design.checkboxes.display == 'columns' %}
+  flex-direction: column;
+  {% elseif design.checkboxes.display == 'row' %}
+  flex-direction: row;
+  {% endif %}
+  gap: {{ design.checkboxes.gap.style }};
+  {{ macros.spacing_complex(design.checkboxes.margin, 'margin') }}
+}
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .gfield .gfield_checkbox .gchoice{
+  {{ macros.typography(design.checkboxes.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .ginput_container_checkbox .gfield_checkbox .gfield-choice-input {
+ width:  {{ design.checkboxes.cehckbox_size.style }};
+ height:  {{ design.checkboxes.cehckbox_size.style }};
+}
+
+
+%%SELECTOR%% .ginput_container_radio .gfield_radio {
+  display: flex;
+  flex-wrap: wrap;
+  {% if design.radios.display == 'columns' %}
+  flex-direction: column;
+  {% elseif design.radios.display == 'row' %}
+  flex-direction: row;
+  {% endif %}
+  gap: {{ design.radios.gap.style }};
+  {{ macros.spacing_complex(design.radios.margin, 'margin') }}
+}
+
+%%SELECTOR%% .gform_body .gform_fields .gfield .gfield_radio label {
+  {{ macros.typography(design.radios.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .ginput_container_radio .gfield_radio .gfield-choice-input {
+ width:  {{ design.radios.radio_button_size.style }};
+ height:  {{ design.radios.radio_button_size.style }};
+}
+
+%%SELECTOR%% .ginput_container_consent {
+  display: flex;
+  align-items: center;
+  background-color: {{ design.consent.background_color }}
+  {{ macros.spacing_complex(design.consent.margin, 'margin') }}
+  {{ macros.spacing_complex(design.consent.padding, 'margin') }}
+}
+
+%%SELECTOR%% .ginput_container_consent label {
+  padding-left: {{ design.consent.gap.style }};
+}
+
+%%SELECTOR%% .ginput_container_consent label {
+  {{ macros.typography(design.consent.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .ginput_container_consent input {
+  width: {{ design.consent.checkbox_size.style }};
+  height: {{ design.consent.checkbox_size.style }};
+}
+
+%%SELECTOR%% .ginput_container_consent {
+  {{ macros.spacing_complex(design.consent.margin, 'margin') }}
+  {{ macros.spacing_complex(design.consent.padding, 'padding') }}
+}
+
+%%SELECTOR%% .gform_wrapper.gravity-theme .ginput_complex label, 
+%%SELECTOR%% .gform_wrapper.gravity-theme .ginput_complex legend,
+%%SELECTOR%% .gform_fileupload_rules {
+  display: block;
+  {{ macros.typography(design.sub_labels.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.sub_labels.margin, 'margin') }}
+}
+
+
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .ginput_container_fileupload .large {
+   background-color: {{ design.files.background_color }};
+  {{ macros.borders(design.files.borders) }}
+  {{ macros.spacing_margin_all(design.files.spacing.margin) }}
+  {{ macros.spacing_padding_all(design.files.spacing.padding) }}
+  {{ macros.typography(design.files.typography, globalSettings) }}
+}
+
+
+%%SELECTOR%% .ginput_container_fileupload .gform_drop_area {
+   background-color: {{ design.files.background_color }};
+   {{ macros.spacing_margin_all(design.files.spacing.margin) }}
+   {{ macros.spacing_padding_all(design.files.spacing.padding) }}
+   {{ macros.borders(design.files.borders) }}
+}
+
+%%SELECTOR%% .ginput_container_fileupload .gform_button_select_files, 
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .ginput_container_fileupload .large::file-selector-button{
+  background-color: {{ design.files.button.color }};
+  {{ macros.typography(design.files.button.typography, globalSettings) }}
+  width: {{ design.files.button.width.style }};
+  {{ macros.border_radius(design.files.button.border.border_radius) }}
+  {{ macros.border_complex(design.files.button.border.border) }}
+  {{ macros.spacing_complex(design.files.button.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.files.button.spacing.margin, 'margin') }}
+  cursor: pointer;
+}
+
+%%SELECTOR%% .ginput_container_fileupload  .gform_drop_instructions {
+  {{ macros.typography(design.files.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_body .ginput_preview {
+  {{ macros.typography(design.files.preview_file.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_delete_file {
+  color: {{ design.files.preview_file.icon_color }};
+}
+
+%%SELECTOR%% .ginput_container_fileupload .gform_button_select_files:hover,
+%%SELECTOR%% .gform_wrapper .gform_body .gform_fields .ginput_container_fileupload .large::file-selector-button:hover{
+  	background-color: {{ design.files.button.color_hover }};
+    {{ macros.typographyWithHoverableColorAndEffects(design.file.button.typography) }}
+}

@@ -1,0 +1,52 @@
+{% if content.options.data_type == 'metabox' %}
+	%%SSR%%
+{% endif %}
+
+{% if content.options.data_type == 'acf' %}
+	%%SSR%%
+{% endif %}
+
+{% if content.options.data_type == 'query' %}
+	%%SSR%%
+{% endif %}
+
+
+{% if content.options.data_type == 'adv' %}
+	%%CHILDREN%%
+{% endif %}
+
+{% if content.options.data_type == 'bde' or content.options.data_type == null %}
+{% for item in content.timeline.content %}
+		<div class="de-cols">
+  		 <div class="de-col de-date">
+           {% if content.options.enable_date %}
+           <h3 class="de-date-heading">{{ item.date }}</h3>
+           {% endif %}
+ 	    </div>
+ 		 <div class="de-line">
+          	<div class="de-dot">
+            {% if content.options.enable_custom_icons %}
+           	<div class="de-timeline-icon">
+            	{{ item.icon.svgCode }}
+            </div>
+            {% endif %}
+           </div>
+          </div>
+       <div class="de-col de-content">
+         {% if content.options.enable_images and item.image %}
+          {{ macros.getMedia(item.image, content.content.size, content.content.lazyLoad) }}
+          {% endif %}
+         {% if item.heading and item.description %}
+         <div class="de-text-content">
+            {% if item.heading %}
+           <h4 class="de-heading">{{ item.heading }}</h4>
+           {% endif %}
+           {% if item.description %}
+           {{ item.description }}
+           {% endif %}
+         </div>
+         {% endif %}
+ 	    </div>
+         </div>
+{% endfor %}
+{% endif %}

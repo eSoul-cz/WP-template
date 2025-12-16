@@ -1,0 +1,30 @@
+.breakdance .de_categories a{
+ color: inherit;
+ text-decoration: none;
+}
+
+.breakdance .de_categories a:hover {
+  color: inherit;
+}
+
+.breakdance .de_categories .de-dropdown { 
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.breakdance .de_categories .de-dropdown > svg { 
+ 	font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.breakdance .de-taxonomy-container.active .de-dropdown > svg {
+ rotate: 180deg; 
+}

@@ -1,0 +1,163 @@
+{% if content.options.enable_acf %}
+ %%SSR%%
+{% else %}
+
+{% if content.options.enable_tabs %}
+<div class="menu-tabs">
+     {% for item in content.menu_items.menu_category %}
+        <button data-menu-cat="{{ item.category_name|replace({' ': '', '&': 'and'})|lower }}" class="menu-tab">{{ item.category_name }}</button>
+    {% endfor %}
+  
+    {% for item in content.drink_items.drinks_category %}
+         <button data-menu-cat="{{ item.category_name|replace({' ': '', '&': 'and'})|lower }}" class="menu-tab">{{ item.category_name }}</button>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+  {% for item in content.menu_items.menu_category %}
+          <h3 id="{{ item.category_name|replace({' ': '', '&': 'and'})|lower }}">{{ item.category_name }}</h3>
+		  <div class="category-des">{{ item.category_description }}</div>
+          {% if design.category.line.enable_line %}
+          <div class="line"></div>
+          {% endif %}
+          <div class="menu-items">
+              {% for item in item.menu_items %}
+              {% if content.options.enable_images == 'yes' %}
+                      {% if design.image.object_fit == 'fill' %}
+                      <div class="menu-item img-active fill">
+                      {% elseif design.image.object_fit == 'contain' %}
+                      <div  class="menu-item img-active contain">
+                      {% elseif design.image.object_fit == 'cover' %}
+                      <div class="menu-item img-active cover">
+                      {% elseif design.image.object_fit == 'scale' %}
+                      <div class="menu-item img-active scale">
+                      {% elseif design.image.object_fit == 'none' %}
+                       <div class="menu-item img-active none">
+                      {% else %}
+                       <div class="menu-item img-active cover">
+                      {% endif %}
+                      {{ macros.image(item.image, content.content.size, alt, lazyLoad) }}
+                  {% elseif content.options.enable_images == 'no' %}
+                       <div class="menu-item">
+                  {% else %}
+                       <div class="menu-item">
+                {% endif %}
+                  <div class="menu-text-content">
+                  <div class="menu-heading">
+                   <div>
+                      <h4 class="menu-name">{{ item.menu_item_name }}</h4>
+                      {% if content.options.enable_alergens %}  
+                        {% if content.alergens_info.display_location == 'below' %}
+                        <p class="alergens" >
+                           {% elseif content.alergens_info.display_location == 'beside' %}
+                          	<p style="display: inline" class="alergens">
+                            {% endif %}
+                              	{% if content.alergens_info.separator == 'brackets' %}
+                      				 {% for item in item.allergens %}({{ item.no }}){% endfor %}       
+                            	{% elseif content.alergens_info.separator == 'comma' %}
+                              		{% set items = [] %}
+                                      {% for item in item.allergens %}
+                              			 {% set items = items|merge([item.no]) %}
+                                      {% endfor %}  
+                              		{{ items|join(', ') }}
+                            	{% elseif content.alergens_info.separator == 'custom' %}
+                              		{% set items = [] %}
+                                      {% for item in item.allergens %}
+                              			 {% set items = items|merge([item.no]) %}
+                                      {% endfor %}  
+                              		{{ items|join(content.alergens_info.custom_seperator) }}
+                            	{% endif %}          
+                        	</p>
+                        {% endif %}
+                    </div>
+                      <p class="menu-price">
+                          {{ item.price }}
+                       </p>
+                  </div>
+                    <div {{ dataContentEditablePropertyPath('content.menu_items.menu_category[2].menu_items['~ loop.index0 ~ '].item.menu_description') }}>{{ item.menu_description }}</div>
+                  </div>
+                </div>
+           {% endfor %}	
+          </div>
+          {% if item.notes %}
+          <div class="menu-note">{{ item.notes }}</div>
+          {% endif %}
+   {% endfor %}
+                         
+{% if content.options.enable_drinks %}
+{% for item in content.drink_items.drinks_category %}
+        <div class="menu-sizes__heading-wrapper">
+        	<h3 id="{{ item.category_name|replace({' ': ''})|lower }}">{{ item.category_name }}</h3>
+            {% if item.size_1_name %}
+            <div class="menu-sizes__headings">
+                <p class="menu-size__heading">{{ item.size_1_name }}</p>
+              	{% if item.size_2_name %}
+                <p class="menu-size__heading">{{ item.size_2_name }}</p>
+                {% endif %}
+              	{% if item.size_3_name %}
+                <p class="menu-size__heading">{{ item.size_3_name }}</p>
+              	{% endif %}
+            </div>
+           {% endif %}
+        </div>
+       	{% if design.category.line.enable_line %}
+        <div class="line"></div>
+        {% endif %}
+		<div class="menu-items coffee-items">
+        {% set drink_size_two = item.size_2_name %}
+        {% set drink_size_three = item.size_3_name %}
+       	{% for item in item.drink_items %}
+			<div class="menu-item">
+               <div class="menu-text-content">
+              		<div class="menu-heading">
+                       	<h4 class="menu-name">{{ item.menu_item_name }}</h4>
+                        <div class="menu-prices__drinks">
+                      	<p class="menu-price menu-price__drinks">
+                          {{ item.price_1 }}
+                       	</p>
+                       	{% if drink_size_two %}
+                       	<p class="menu-price menu-price__drinks">
+                          {{ item.price_2 }}
+                       	</p>
+                        {% endif %}
+                        {% if drink_size_three %}
+                      	<p class="menu-price menu-price__drinks">
+                          {{ item.price_3 }}
+                       	</p>
+                        {% endif %}
+                      	</div>
+                	</div>
+                    <div {{ dataContentEditablePropertyPath('content.menu_items.menu_category[2].menu_items['~ loop.index0 ~ '].item.menu_description') }}>{{ item.menu_description }}</div>
+              	</div>
+          	</div>
+   		{% endfor %}
+		</div>
+     	{% if item.notes %}
+          	<div class="menu-note">{{ item.notes }}</div>
+        {% endif %}
+{% endfor %}
+{% endif %}
+                         
+  {% if content.options.enable_alergens %}         
+      <div class="alergens-info">
+        <h3 class="allergen-title">{{ content.alergens_info.heading_name }}</h3>
+        	<div class="alergens-info-block">
+            {% for item in content.alergens_info.alergens %}
+                <div class="alergen-info-blocks">
+                  {% if content.alergens_info.separator == 'brackets' %}
+                	<span class="alergen-no">({{ item.no }})</span> {{ item.description }}
+                  {% elseif content.alergens_info.separator == 'comma' %}
+        			<span class="alergen-no">{{ item.no }},</span> {{ item.description }}
+                  {% elseif content.alergens_info.separator == 'custom' %}
+                  	<span class="alergen-no">{{ item.no }}{{ content.alergens_info.custom_seperator_info_box }}</span>{{ item.description }}
+				  {% else %}
+                   	<span class="alergen-no">({{ item.no }})</span> {{ item.description }}
+                  {% endif %}
+                </div>
+             {% endfor %}
+        	</div>
+          </div>
+      {% else %}
+  {% endif %}
+{% endif %}

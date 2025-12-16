@@ -1,0 +1,1 @@
+<div de-quickview-button-id="<?= get_the_ID() ?>"></div>

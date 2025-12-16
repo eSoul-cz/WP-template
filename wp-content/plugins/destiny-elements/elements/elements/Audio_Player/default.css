@@ -1,0 +1,143 @@
+.breakdance .de-audio-player .play-icon,
+.breakdance .de-audio-player .mute-icon,
+.breakdance .de-audio-player .download-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.breakdance .de-audio-player .play-icon .hide {
+ display: none; 
+}
+
+.breakdance .de-audio-player .muted-icon-svg.hide,
+.breakdance .de-audio-player .mute-icon-svg.hide{
+ display: none; 
+}
+
+
+.breakdance .de-audio-player .play-icon-svg,
+.breakdance .de-audio-player .pause-icon-svg,
+.breakdance .de-audio-player .mute-icon-svg, 
+.breakdance .de-audio-player .muted-icon-svg, 
+.breakdance .de-audio-player .next-song,
+.breakdance .de-audio-player .prev-song, 
+.breakdance .de-audio-player .download-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    appearance: none;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.breakdance .de-audio-player .dsiabled,
+.breakdance .de-audio-player .disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.breakdance .de-audio-player .play-icon-svg  > svg,
+.breakdance .de-audio-player .pause-icon-svg  > svg,
+.breakdance .de-audio-player .mute-icon-svg > svg, 
+.breakdance .de-audio-player .muted-icon-svg > svg,
+.breakdance .de-audio-player .next-song > svg,
+.breakdance .de-audio-player .prev-song > svg,
+.breakdance .de-audio-player .download-icon > svg{
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+
+.breakdance .de-audio-player .time-wrapper, 
+.breakdance .de-audio-player .volume-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breakdance .de-audio-player .volume-slider {
+ max-width: 70px; 
+}
+
+.breakdance .de-audio-player .player-wrapper,
+.breakdance .de-audio-player .playlist-item{
+  display: flex;
+}
+
+.breakdance .de-audio-player .playlist-item {
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.breakdance .de-audio-player .song-name {
+  width: 100%;
+}
+
+.breakdance .de-audio-player .counter {
+  min-width: 10px;
+}
+
+.breakdance .de-audio-player .progress-before {
+ width: 100%; 
+}
+
+.breakdance .de-audio-player .player-buttons,
+.breakdance .de-audio-player .rest-controls {
+ display: flex;
+ align-items: center;
+}
+
+.breakdance .de-audio-player .rest-controls {
+ width: 100%; 
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.breakdance .de-audio-player .time-wrapper .time{
+  margin-left: auto;
+}
+ 
+ 
+.breakdance .de-audio-player .time-wrapper { 
+  width: 100%; 
+}
+
+.breakdance .de-audio-player .playlist-wrapper .time-wrapper { 
+  width: auto; 
+}

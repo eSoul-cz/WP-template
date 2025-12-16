@@ -1,0 +1,20 @@
+%%SELECTOR%% { 
+  left: 0;
+  width: 100%;
+  background-color: {{ design.bar_styles.background_colour }};
+  height: {{ design.bar_styles.bar_height.style }};
+  {% if content.main_options.position == 'top' %}
+  position: fixed;
+  {{ content.main_options.position }}: 0;
+  {% elseif content.main_options.position == 'bottom' %}
+   position: fixed;
+  {{ content.main_options.position }}: 0;
+  {% elseif content.main_options.position == 'sticky' %}
+  position: sticky;
+  {% endif %}
+  z-index: 10;
+}
+
+%%SELECTOR%% .de-progrss-bar-fill {
+  background-color: {{ design.bar_styles.progress_bar_colour }};
+}

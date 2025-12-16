@@ -1,0 +1,12 @@
+{% set imgSize = content.content.image_size %}
+{% set lazyLoad = content.content.lazy_load %}
+
+{% for item in content.content.main_items %}
+     <div class="image-box">
+         {{ macros.image(item.image, imgSize, content.content.image_options.alt, content.content.lazy_load) }}
+       <div class="overlay">
+         <h3>{{ item.caption }}</h3>
+         {{ item.description }}
+       </div>
+      </div>
+{% endfor %}

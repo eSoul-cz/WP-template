@@ -1,0 +1,132 @@
+%%SELECTOR%% {
+  width:  {{ design.table.width.style }};
+  overflow: {{ design.table.overflow }};
+}
+
+%%SELECTOR%% * {
+ transition-duration: {{ design.effects.hover_transition.style }}; 
+ {{ macros.spacing_complex(design.caption.spacing.padding, 'margin') }}
+}
+
+%%SELECTOR%% table {
+  {{ macros.borders(design.table.borders) }};
+  border-collapse: separate;
+  border-spacing: 0;
+  width: {{ design.table.width.style }};
+  overflow: hidden;
+}
+
+%%SELECTOR%% caption {
+  background-color: {{ design.caption.baackground_color }};
+  {{ macros.borders(design.caption.borders) }}
+  {{ macros.typography(design.caption.typography, globalSettings) }}
+  {{ macros.spacing_padding_all(design.caption.padding_) }}
+}
+
+{% if design.head.position == 'left' %}
+%%SELECTOR%% th {
+  background-color: {{ design.head.background_color }};
+}
+
+%%SELECTOR%% th:hover {
+	background-color: {{ design.head.background_color_hover }};
+}
+
+
+%%SELECTOR%% tbody td:nth-child(odd) {
+	background-color: {{ design.columns.odd_background_color }};
+    {{ macros.typography(design.columns.odd_typography, globalSettings) }}
+}
+
+%%SELECTOR%% tbody td:nth-child(odd):hover {
+	background-color: {{ design.columns.odd_background_color_hover }};
+	{{ macros.typographyWithHoverableColorAndEffects(design.rows.odd_typography) }}
+}
+
+%%SELECTOR%% tbody td:nth-child(even) {
+  	background-color:  {{ design.columns.even_background_color }}; 
+  	{{ macros.typography(design.columns.even_typography, globalSettings) }}
+}
+
+%%SELECTOR%% tbody td:nth-child(even):hover {
+	background-color: {{ design.columns.even_background_color_hover }};
+	{{ macros.typographyWithHoverableColorAndEffects(design.columns.even_typography) }}
+}
+{% else %}
+%%SELECTOR%% thead {
+  background-color: {{ design.head.background_color }};
+}
+
+%%SELECTOR%% thead:hover {
+	background-color: {{ design.head.background_color_hover }};
+}
+
+
+%%SELECTOR%% tbody tr:nth-child(odd) {
+	background-color: {{ design.rows.odd_background_color }};
+    {{ macros.typography(design.rows.odd_typography, globalSettings) }}
+}
+
+%%SELECTOR%% tbody tr:nth-child(odd):hover {
+	background-color: {{ design.rows.odd_background_color_hover }};
+	{{ macros.typographyWithHoverableColorAndEffects(design.rows.odd_typography) }}
+}
+
+%%SELECTOR%% tbody tr:nth-child(even) {
+  	background-color:  {{ design.rows.even_background_color }}; 
+  	{{ macros.typography(design.rows.even_typography, globalSettings) }}
+}
+
+%%SELECTOR%% tbody tr:nth-child(even):hover {
+	background-color: {{ design.rows.even_background_color_hover }};
+	{{ macros.typographyWithHoverableColorAndEffects(design.rows.even_typography) }}
+}
+{% endif %}
+
+
+%%SELECTOR%% th {
+  width: {{ design.body.cell_width.style }};
+  {{ macros.borders(design.head.borders) }}
+  {{ macros.typography(design.head.typography, globalSettings) }}
+  {{ macros.spacing_padding_all(design.head.padding) }}
+}
+%%SELECTOR%% tbody {
+   background-color: {{ design.body.background_color }};
+}
+
+%%SELECTOR%% tbody:hover {
+  background-color: {{ design.body.background_color_hover }};
+}
+
+%%SELECTOR%% td {
+  width: {{ design.body.cell_width.style }};
+  {{ macros.borders(design.body.borders) }}
+  {{ macros.typography(design.body.typography, globalSettings) }}
+  {{ macros.spacing_padding_all(design.body.padding) }}
+}
+
+%%SELECTOR%% .de-sort { 
+	padding-right: 18px;
+	position: relative;
+  	cursor: pointer;
+}
+
+%%SELECTOR%% .de-sort::before,
+%%SELECTOR%% .de-sort::after {
+	border: {{ design.sort_icon.size.style }} solid transparent;
+	content: "";
+	display: block;
+	height: 0;
+	right: {{ design.sort_icon.right_gap.style }};
+	top: 50%;
+	position: absolute;
+	width: 0;
+}
+%%SELECTOR%% .de-sort::before {
+	border-bottom-color: {{ design.sort_icon.color }};
+	margin-top: calc(-1px - ( {{ design.sort_icon.size.style }} + {{ design.sort_icon.size.style }}));
+}
+%%SELECTOR%% .de-sort::after {
+	border-top-color: {{ design.sort_icon.color }};
+	margin-top: 1px;
+}

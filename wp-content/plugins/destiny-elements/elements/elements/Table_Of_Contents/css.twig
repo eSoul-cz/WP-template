@@ -1,0 +1,37 @@
+%%SELECTOR%% {
+  position: relative;
+  width:  {{ design.container.width.style }};
+  background-color: {{ design.container.color }};
+  {{ macros.spacing_complex(design.container.margin.margin, 'margin') }}
+  {{ macros.border_radius(design.container.border.border_radius) }}
+  {{ macros.border_complex(design.container.border.border) }}
+}
+
+%%SELECTOR%% .de-toc-list, %%SELECTOR%% .de-toc-list.is-collapsible {
+  display: flex;
+  flex-direction: column;
+  row-gap: {{ design.list.gap.style }};
+  {{ macros.spacing_complex(design.container.padding.padding, 'padding') }}
+  list-style-type: {{ content.options.list_style }}
+}
+
+%%SELECTOR%% .de-toc-link{
+  {{ macros.typography(design.typography.links, globalSettings) }}
+}
+
+%%SELECTOR%% .de-toc-active-link {
+ {{ macros.typography(design.typography.active_links, globalSettings) }}
+}
+
+%%SELECTOR%% .de-toc-link:hover{
+   {{ macros.typographyWithHoverableColorAndEffects(design.typography.links) }}
+}
+
+%%SELECTOR%% .de-toc-is-collapsed{ 
+{% if content.options.collapse_subheadings %}
+  display: none !important;
+  {% else %}
+  display: flex;
+{% endif %}
+    transition-duration: 0.3s;
+}

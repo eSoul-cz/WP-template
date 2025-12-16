@@ -1,0 +1,22 @@
+%%SELECTOR%% { 
+   width: {{ design.container.width.style }};
+  {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+}
+
+%%SELECTOR%% p{ 
+  margin: 0;
+  {{ macros.typography(design.typograhpy.text, globalSettings) }}
+}
+
+%%SELECTOR%% .de-bt {
+  {{ macros.typography(design.typograhpy.before_text, globalSettings) }}
+}
+
+%%SELECTOR%% .de-date {
+  {{ macros.typography(design.typograhpy.date, globalSettings) }}
+}
+
+%%SELECTOR%% .de-time {
+   {{ macros.typography(design.typograhpy.time, globalSettings) }}
+}

@@ -1,0 +1,66 @@
+%%SELECTOR%% {
+	width: {{ design.container.width.style }};
+  	{{ macros.borders(design.container.borders) }}
+  	background-color: {{ design.container.color }}
+}
+
+%%SELECTOR%% .de-filter-buttons {
+    display: flex;
+	{% if design.tabs.position == 'full' %}
+  	flex-wrap: nowrap;
+  	{% else %}
+  	flex-wrap: wrap;
+	{% endif %}
+    gap: {{ design.tabs.space_between.style }};
+    justify-content: {{ design.tabs.position }};
+    background-color: {{ design.tabs.color }};
+    width: 100%;
+  	min-width: 100%;
+    {{ macros.spacing_padding_all(design.tabs.space.padding) }}
+    {{ macros.spacing_margin_all(design.tabs.space.margin) }}
+    {{ macros.border_radius(design.tabs.border.border_radius) }}
+    {{ macros.border_complex(design.tabs.border.border) }}
+  }
+
+%%SELECTOR%% .de-filter-tab {
+   	background-color: {{ design.single_tab.color }};
+  	{{ macros.spacing_complex(design.single_tab.spacing.padding, 'padding') }}
+  	{{ macros.spacing_complex(design.single_tab.spacing.margin, 'margin') }}
+  	{{ macros.border_radius(design.single_tab.border.border_radius) }}
+  	{{ macros.border_complex(design.single_tab.border.border) }}
+    {{ macros.typography(design.single_tab.typography, globalSettings) }}
+  	cursor: pointer;
+	white-space: nowrap;
+  	{% if design.tabs.position == 'full' %}
+  		width: 100%;
+  	{% else %}
+  		width:  {{ design.single_tab.width.style }};
+	{% endif %}
+}
+
+%%SELECTOR%% .de-filter-tab:hover {
+   	background-color: {{ design.single_tab.color_hover }};
+    {{ macros.typographyWithHoverableColorAndEffects(design.single_tab.typography) }}
+}
+
+
+%%SELECTOR%% .de-filter-tab.de-active {
+   	background-color: {{ design.single_tab.active_color }};
+  	{{ macros.typography(design.single_tab.active_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-filter-content-child {
+    background-color: {{ design.content.background.color }};
+ 	 width: {{ design.content.container.width.style }};
+
+  	{% if content.layout.layout_mode == 'masonry' %}
+  	{% else %}
+    height: {{ design.content.container.height.style }};
+  	{% endif %}
+    {{ macros.spacing_padding_all(design.content.container.padding) }}
+    {{ macros.borders(design.content.container.borders) }}
+	margin-bottom: {{ design.content.gap_px_ }}px;
+  	overflow: hidden;
+  	{{ macros.simpleLayout(design.content.layout, breakpoint) }}
+}
+

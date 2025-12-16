@@ -1,0 +1,31 @@
+%%SELECTOR%% {
+  display: flex;
+  {% if design.layout.layout == 'vertical' %}
+  flex-direction: column;
+  {% elseif design.layout.layout == 'horizontal' %}
+  flex-direction: row;
+  {% endif %}
+  flex-wrap: wrap;
+  gap: {{ design.layout.gap.style }};
+  background-color: {{ design.container.baackground_color }};
+  {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }};
+  {{ macros.border_radius(design.container.border.border_radius) }};
+  {{ macros.border_complex(design.container.border.border) }};
+}
+
+%%SELECTOR%% .de-taxomony {
+  background-color: {{ design.taxomony.baackground_color }};
+  {{ macros.spacing_complex(design.taxomony.spacing.padding, 'padding') }}
+  margin: 0;
+  {{ macros.spacing_complex(design.taxomony.spacing.margin, 'margin') }};
+  {{ macros.typography(design.typography.typography, globalSettings) }}
+  {{ macros.border_radius(design.taxomony.border.border_radius) }}
+  {{ macros.border_complex(design.taxomony.border.border) }}
+}
+
+
+%%SELECTOR%% .de-taxomony:hover {
+  background-color: {{ design.taxomony.baackground_color_hover }};
+ {{ macros.typographyWithHoverableColorAndEffects(design.typography.typography) }}
+}

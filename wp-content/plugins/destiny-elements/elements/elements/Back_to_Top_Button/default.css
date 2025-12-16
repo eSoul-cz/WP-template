@@ -1,0 +1,7 @@
+.destiny-bttb svg { /* also, prefix with element classname */
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    fill: #fff;
+}

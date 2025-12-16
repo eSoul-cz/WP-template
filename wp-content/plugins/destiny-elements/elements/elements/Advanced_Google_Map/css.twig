@@ -1,0 +1,101 @@
+%%SELECTOR%%, %%SELECTOR%% #de-map {
+  width: {{ design.map_size.width.style }};
+  height: {{ design.map_size.height.style }};
+}
+
+%%SELECTOR%% svg { /* also, prefix with element classname */
+    font-size: 24px !important;
+    width: 30px !important;
+    height: 30px !important;
+    stroke-width: 0;
+    stroke: red;
+    fill: red;
+}
+
+%%SELECTOR%% .gm-style-iw, 
+%%SELECTOR%% .gm-style-iw-d {
+    background-color: {{ design.tooltip.background_color }} !important;
+	{{ macros.spacing_all(design.tooltip.spacing) }}
+ 	{{ macros.borders(design.tooltip.borders) }}
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+} 
+
+%%SELECTOR%% .gm-style-iw-tc::after {
+  background-color: {{ design.tooltip.background_color }} !important;
+}
+
+%%SELECTOR%% .gm-style-iw h1 {
+{{ macros.typography(design.tooltip.typography.h1, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw h2 {
+{{ macros.typography(design.tooltip.typography.h2, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw h3 {
+{{ macros.typography(design.tooltip.typography.h3, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw h4 {
+{{ macros.typography(design.tooltip.typography.h4, globalSettings) }}
+}
+%%SELECTOR%% .gm-style-iw h5 {
+{{ macros.typography(design.tooltip.typography.h5, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw p {
+{{ macros.typography(design.tooltip.typography.text, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw a {
+{{ macros.typography(design.tooltip.typography.link, globalSettings) }}
+}
+
+%%SELECTOR%% .gm-style-iw-d {
+  {{ macros.typography(design.tooltip.typography, globalSettings) }}
+}
+
+
+%%SELECTOR%% .de-agm-btn,
+%%SELECTOR%% .de-agm-btn {
+  display: block;
+  width: fit-content;
+  background-color: {{ design.tooltip.button.background_color }} !important;
+  width: {{ design.tooltip.button.width.style }};
+  {{ macros.border_radius(design.tooltip.button.border.border_radius) }}
+  {{ macros.border_complex(design.tooltip.button.border.border) }}
+  {{ macros.typography(design.tooltip.button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.tooltip.button.spacing) }}
+  cursor: pointer;
+  
+}
+
+%%SELECTOR%% .de-agm-btn:hover,
+%%SELECTOR%% .de-agm-btn:hover{
+  background-color: {{ design.tooltip.button.background_color_hover }} !important;
+  {{ macros.border_complex(design.tooltip.button.border.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.tooltip.button.typography) }}
+}
+
+%%SELECTOR%% .de-agm-exc {
+  {{ macros.typography(design.tooltip.excerpt.typography, globalSettings) }}
+  {{ macros.spacing_margin_all(design.tooltip.excerpt.margin) }}
+}
+
+
+%%SELECTOR%% .de-extra-fields-wrapper {
+  {{ macros.spacing_all(design.tooltip.additional_data.container.spacing) }}
+}
+
+%%SELECTOR%% .de-extra-fields {
+{{ macros.typography(design.tooltip.additional_data.typography, globalSettings) }}
+{{ macros.spacing_margin_all(design.tooltip.additional_data.margin) }}
+}
+
+
+%%SELECTOR%% .de-agm-wrapper .wp-post-image {
+  max-width: {{ design.tooltip.featured_image.max_height.style }};
+  max-height:  {{ design.tooltip.featured_image.max_width.style }};
+  {{ macros.borders(design.tooltip.featured_image.borders) }}
+}

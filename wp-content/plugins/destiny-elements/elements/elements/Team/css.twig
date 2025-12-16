@@ -1,0 +1,208 @@
+%%SELECTOR%% {
+  display: grid;
+  {% if design.layout.columns == 'one' %}
+  grid-template-columns: 1fr;
+  {% elseif design.layout.columns == 'two' %}
+  grid-template-columns: 1fr 1fr;
+  {% elseif design.layout.columns == 'three' %}
+  grid-template-columns: 1fr 1fr 1fr;
+  {% elseif design.layout.columns == 'four' %}
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  {% elseif design.layout.columns == 'five' %}
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  {% else %}
+  grid-template-columns: 1fr 1fr 1fr;
+  {% endif %}
+  width:  100%;
+  height:  {{ design.container.height.style }};
+  column-gap:  {{ design.layout.column_gap.style }};
+  row-gap: {{ design.layout.row_gap.style }};
+  {{ macros.spacing_all(design.container.spacing) }}
+  {{ macros.borders(design.container.borders) }}
+  overflow: hidden;
+}
+
+
+%%SELECTOR%%  .de-person-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: {{design.person_container.vertical_align|default('flex-end')}};
+ position: relative;
+ width: 100%;
+  {% if design.person_container.position == 'outside' %}
+   height: {{ design.container.height.style }};
+	{% elseif design.person_container.position == 'inside' %}
+   height: {{ design.image.height.style }};
+   {%  else %}
+   height: {{ design.container.height.style }};
+  {% endif %}
+ {{ macros.borders(design.person_container.borders) }}
+ overflow: hidden;
+}
+
+
+%%SELECTOR%%  .de-person-container img {
+	{% if design.person_container.position == 'outside' %}
+		position: relative;
+	{% elseif design.person_container.position == 'inside' %}
+	  	position: absolute;
+	{% endif %}
+  	width: 100%;
+  	{% if design.image.height.style %}
+  	height: {{ design.image.height.style }};
+  	{% else %}
+  	height: 100%;
+  	{% endif %}
+  	object-fit: cover;
+  	{% if design.image.position == 'center' %}
+		object-position: center center;
+	{% elseif design.image.position == 'top-left' %}
+	 	object-position: top left;
+	{% elseif design.image.position == 'top-right' %}
+		object-position: top right;
+	{% elseif design.image.position == 'bottom-left' %}
+		object-position: bottom left;
+	{% elseif design.image.position == 'bottom-right' %}
+		object-position: bottom right;
+	{% endif %}
+  	{{ macros.borders(design.image.borders) }}
+    	z-index: 0;
+  		transition-duration:  {{ design.effects.img_transition_duration_ms_ }}ms;
+}
+
+{% if design.effects.image_zoom_on_hover %}
+%%SELECTOR%% .de-person-container:hover img {
+  scale: 1.1;
+}
+{% endif %}
+
+%%SELECTOR%% .de-person-container .de-content .de-name {
+{{ macros.typography(design.typography.name_typography, globalSettings) }}
+ margin: 0;
+}
+
+%%SELECTOR%% .de-person-container .de-content .de-pos {
+ {{ macros.typography(design.typography.position_typography, globalSettings) }}
+  margin: 0;
+}
+
+%%SELECTOR%% .de-person-container .de-content {
+ display: flex;
+ flex-direction: column;
+ align-items: {{ design.person_container.align }};
+ {% if design.person_container.position == 'outside' %}
+ position: relative;
+ {% elseif design.person_container.position == 'inside' %}
+  position: absolute;
+ {% endif %}
+ {% if design.effects.hover_reveal %}
+  	{% if design.effects.transition_from == 'left' %}
+	left: -100%;
+  {% elseif design.effects.transition_from == 'right' %}
+	right: -100%;
+  {% elseif design.effects.transition_from == 'up' %}
+  	top: -100%;
+	{% elseif design.effects.transition_from == 'down' %}
+  	  bottom: -100%;
+  {% else %}
+   bottom: -100%;
+	{% endif %}
+
+  {% endif %}
+ background-color: {{ design.person_container.color }};
+ {{ macros.spacing_all(design.person_container.spacing) }}
+ height: {{ design.person_container.height.style }};
+ width: 100%;
+ {% if design.effects.glass_effect %}
+ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+ backdrop-filter: blur({{ design.effects.glass_effect_blur }}px);
+ -webkit-backdrop-filter: blur({{ design.effects.glass_effect_blur }}px);
+ {% endif %}
+ z-index: 1;
+ transition-duration: {{design.effects.transition_duration_ms_ }}ms;
+}
+
+{% if design.effects.hover_reveal %}
+%%SELECTOR%% .de-person-container:hover .de-content { 
+  	 {% if design.effects.hover_reveal %}
+  	{% if design.effects.transition_from == 'left' %}
+	left: 0%;
+  {% elseif design.effects.transition_from == 'right' %}
+	right: 0%;
+  {% elseif design.effects.transition_from == 'up' %}
+  	top: 0%;
+	{% elseif design.effects.transition_from == 'down' %}
+  	  bottom: 0%;
+  	{% else %}
+  	bottom: 0%;
+	{% endif %}
+  {% endif %}
+}
+{% endif %}
+
+%%SELECTOR%% .de-icon-svg {
+    color:  {{ design.social_icons.custom_color }};
+    font-size: {{ design.social_icons.size.style }};
+  	background-color: {{ design.social_icons.background_color }};
+  	{{ macros.spacing_padding_all(design.social_icons.spacing.padding) }}
+    transition-duration:  {{design.effects.transition_duration_ms_}}ms;
+  	{{ macros.borders(design.social_icons.borders) }}
+}
+
+%%SELECTOR%% .de-icon-svg:hover {
+color: {{ design.social_icons.custom_color_hover }};
+background-color: {{ design.social_icons.background_color_hover }};
+}
+
+
+%%SELECTOR%% .de-social-links {
+	display: flex;
+  	flex-wrap: wrap;
+  	gap: {{ design.social_icons.gap.style }};
+  	{{ macros.spacing_margin_all(design.social_icons.spacing.margin) }}
+}
+
+{% if design.social_icons.brand_colors %}
+.breakdance .de-team .de-svg-facebook {
+  fill: #4267b2;
+}
+
+.breakdance .de-team .de-svg-twitter {
+  fill: #1da1f2;
+}
+
+.breakdance .de-team .de-svg-twitter {
+  fill: #1da1f2;
+}
+
+.breakdance .de-team .de-svg-instagram {
+  fill: #1da1f2;
+}
+
+.breakdance .de-team .de-svg-youtube {
+  fill: #ff0000;
+}
+
+.breakdance .de-team .de-svg-dribble {
+  fill: #ea4c89;
+}
+
+.breakdance .de-team .de-svg-behance {
+  fill: #053eff;
+}
+
+.breakdance .de-team .de-svg-github {
+  fill: #24292e;
+}
+
+.breakdance .de-team .de-svg-linkedin {
+  fill: #0077b5;
+}
+
+.breakdance .de-team .de-svg-vimeo {
+  fill: #19b7ea;
+}
+{% else %}
+
+{% endif %}
+

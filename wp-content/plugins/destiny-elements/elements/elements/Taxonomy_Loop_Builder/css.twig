@@ -1,0 +1,22 @@
+{{ macros.DestinyElements_TaxonomySharedCss('%%SELECTOR%%', design, globalSettings, isBaseBreakpoint, breakpoint, isBuilder) }}
+
+%%SELECTOR%% {
+  width: {{ design.list.width.style }};
+  background-color: {{ design.container.background }};
+  {{ macros.borders(design.container.borders) }}
+  {{ macros.spacing_all(design.container.spacing) }}
+}
+
+{% if design.list.layout == 'list' %}
+%%SELECTOR%% .de-taxonomies {
+  display: flex; 
+  flex-direction: column;
+  gap: {{ design.list.space_between_items.style }};
+}
+{% endif %}
+
+%%SELECTOR%% .de-taxonomy-item {
+  background-color: {{ design.single.background }};
+  {{ macros.borders(design.single.borders) }}
+  {{ macros.spacing_padding_all(design.single.padding) }}
+}

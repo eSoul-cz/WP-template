@@ -1,0 +1,126 @@
+%%SELECTOR%% {
+  position: fixed;
+  {% if design.effects.open_direction == 'left' %}
+  top: 0;
+  right: -{{design.container.width.style}};
+  height: 100vh;
+  width: {{ design.container.width.style }};
+  {% elseif design.effects.open_direction == 'right' %}
+  top: 0;
+  left: -{{design.container.width.style}};
+  height: 100vh;
+  width: {{ design.container.width.style }};
+  {% elseif design.effects.open_direction == 'up' %}
+  bottom: -{{ design.container.height.style }};
+  left: 0;
+  height: {{ design.container.height.style }};
+  width: 100%;
+  {% elseif design.effects.open_direction == 'down' %}
+  top: -{{ design.container.height.style }};
+  left: 0;
+  height: {{ design.container.height.style }};
+  width: 100%;
+  {% else %}
+  top: 0;
+  right: -{{design.container.width.style}};
+  height: 100vh;
+  width: {{ design.container.width.style }};
+  {% endif %}
+  {{ macros.backgroundColor(design.container.background) }}
+  {{ macros.borders(design.container.borders) }}
+  {{ macros.spacing_margin_y(design.spacing) }}
+  transition-duration: {{ design.effects.duration_ms_ }}ms;
+  z-index: {{ content.advanced_options.z_index|default(1000000) }};
+}
+%%SELECTOR%%.active {	
+  {% if design.effects.open_direction == 'left' %}
+  top: 0;
+  {% if content.options.move_body %}
+  right: -{{design.container.width.style}};
+  {%else%}
+  right: 0; 
+  {% endif %}
+  {% elseif design.effects.open_direction == 'right' %}
+  top: 0;
+  {% if content.options.move_body %}
+  left: -{{design.container.width.style}};
+  {%else%}
+  left: 0; 
+  {% endif %}
+  /* Off Canvas Goes Up */
+  {% elseif design.effects.open_direction == 'up' %}
+    bottom: 0; 
+    left: 0;
+  /* Off Canvas Goes Down */
+  {% elseif design.effects.open_direction == 'down' %}
+    top: 0; 
+    left: 0;
+  {% else %}
+  top: 0;
+  {% if content.options.move_body %}
+  right: -{{design.container.width.style}};
+  {%else%}
+  right: 0; 
+  {% endif %}
+  {% endif %}
+}
+%%SELECTOR%% .de-off-canvas-content {
+  display: flex;
+  {{ macros.simpleLayout(design.layout, breakpoint) }}
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: fit-content;
+  min-height: 100%;
+  width: 100%;
+  {{ macros.spacing_padding_all(design.container.padding) }}
+  overflow-y: auto;
+  
+}
+
+{% if content.options.move_body %}
+body {
+  transition-duration:  {{ design.effects.duration_ms_ }}ms;
+}
+body.de-off-canvas-active{
+  {% if design.effects.open_direction == 'left' %}
+  top: 0;
+  transform: translateX(-{{ design.container.width.style }});
+  {% elseif design.effects.open_direction == 'right' %}
+  top: 0;
+  transform: translateX({{ design.container.width.style }});
+  {% elseif design.effects.open_direction == 'undefined' %}
+  top: 0;
+  transform: translateX(-{{ design.container.width.style }});
+  {% endif %}
+  overflow: hidden;
+}
+.body.de-off-canvas-active	#wpadminbar {
+  display: none;
+}
+{% endif %}
+{{ macros.fancyBackgroundCss('%%SELECTOR%%', design.background, breakpoint, false, true) }}
+{# Text Colors #}
+%%SELECTOR%% {
+  {% if design.text_colors.text %}
+  color: {{ design.text_colors.text }};
+  {% endif %}
+  {% if design.text_colors.brand %}
+  --bde-brand-primary-color: {{ design.text_colors.brand }};
+  {% endif %}
+}
+{% if design.text_colors.headings %}
+%%SELECTOR%% h1, %%SELECTOR%% h2, %%SELECTOR%% h3, %%SELECTOR%% h4, %%SELECTOR%% h5, %%SELECTOR%% h6 {
+  color: {{ design.text_colors.headings }};
+}
+{% endif %}
+{% if design.text_colors.link %}
+%%SELECTOR%% a {
+  color: {{ design.text_colors.link }};
+}
+{% endif %}
+{% if design.text_colors.link_hover %}
+%%SELECTOR%% a:hover {
+  color: {{ design.text_colors.link_hover }};
+}
+{% endif %}

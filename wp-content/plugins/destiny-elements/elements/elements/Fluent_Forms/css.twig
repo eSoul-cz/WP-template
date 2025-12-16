@@ -1,0 +1,116 @@
+%%SELECTOR%% {
+  background-color: {{ design.container.background_color }};
+  width: {{ design.container.width.style }};
+  max-width:  {{ design.container.max_width.style }};
+  {{ macros.spacing_all(design.container.spacing) }}
+  {{ macros.borders(design.container.borders) }}
+}
+
+%%SELECTOR%% .ff-el-input--label label {
+  {{ macros.typography(design.labels.typography, globalSettings) }}
+  {{ macros.spacing_all(design.labels.spacing) }}
+}
+
+%%SELECTOR%% .ff-el-input--content input, 
+%%SELECTOR%% .ff-el-input--content textarea,
+%%SELECTOR%% .ff-el-input--content select{
+  {{ macros.typography(design.inputs.typography, globalSettings) }}
+  background-color: {{ design.inputs.background.color }};
+  {{ macros.border_complex(design.inputs.borders.border) }}
+  {{ macros.border_radius(design.inputs.borders.border_radius) }}
+  {{ macros.spacing_all(design.inputs.spacing) }}
+}
+
+%%SELECTOR%% .ff-el-input--content input:hover, 
+%%SELECTOR%% .ff-el-input--content textarea:hover,
+%%SELECTOR%% .ff-el-input--content select:hover {
+ background-color: {{ design.inputs.background.color_hover }};
+{{ macros.border_radius(design.inputs.borders.border_radius_hover) }}
+}
+
+%%SELECTOR%% .ff_input-group-prepend .ff_input-group-text {
+  {{ macros.typography(design.prefix.typography, globalSettings) }}
+  background-color: {{ design.prefix.background_color }};
+  {{ macros.borders(design.prefix.borders) }};
+  {{ macros.spacing_all(design.prefix.spacing) }};
+}
+
+%%SELECTOR%% .ff_input-group-append .ff_input-group-text {
+  {{ macros.typography(design.suffix.typography, globalSettings) }}
+  background-color: {{ design.suffix.background_color }};
+  {{ macros.borders(design.suffix.borders) }};
+  {{ macros.spacing_all(design.suffix.spacing) }};
+}
+
+
+
+%%SELECTOR%% .ff-el-input--content input:focus,
+%%SELECTOR%% .ff-el-input--content textarea:focus,
+%%SELECTOR%% .ff-el-input--content select:focus{
+  border-color: {{ design.inputs.border.border_focus }};
+  background-color: {{ design.inputs.background.focus_color }}
+}
+
+
+%%SELECTOR%% .ff-btn-submit,
+%%SELECTOR%% .ff-btn-submit {
+  background-color: {{ design.buttons.submit_button.background_color }} !important;
+  width: {{ design.buttons.submit_button.width.style }};
+  {{ macros.border_radius(design.buttons.submit_button.border.border_radius) }}
+  {{ macros.border_complex(design.buttons.submit_button.border.border) }}
+  {{ macros.typography(design.buttons.submit_button.typography, globalSettings) }} 	
+  {{ macros.spacing_all(design.buttons.submit_button.spacing) }}
+  cursor: pointer;
+  
+}
+
+%%SELECTOR%% .ff-btn-submit:hover,
+%%SELECTOR%% .ff-btn-submit:hover{
+  background-color: {{ design.buttons.submit_button.background_color_hover }} !important;
+  {{ macros.border_complex(design.buttons.submit_button.border.border_hover) }}
+  {{ macros.typographyWithHoverableColorAndEffects(design.buttons.submit_button.typography) }}
+}
+
+%%SELECTOR%% fieldset {
+  border: none;
+  padding: 0;
+}
+
+%%SELECTOR%% .ff-el-input--content {
+  display: flex;
+  {% if design.checkboxes_radios.display == 'columns' %}
+  flex-direction: column;
+  {% elseif design.checkboxes_radios.display == 'row' %}
+  flex-direction: row;
+  {% else %}
+   flex-direction: column;
+  {% endif %}
+  gap: {{ design.checkboxes_radios.gap.style }};
+}
+
+%%SELECTOR%% .ff-el-form-check-label {
+{{ macros.typography(design.checkboxes_radios.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .ff-el-form-check-label input {
+  accent-color: {{ design.checkboxes_radios.checkbox_radio_button.checked_color }};
+  width:  {{ design.checkboxes_radios.checkbox_radio_button.size.style }};
+  height:  {{ design.checkboxes_radios.checkbox_radio_button.size.style }};
+}
+
+%%SELECTOR%% .ff-el-input--content::before {
+	display: none;
+}
+
+%%SELECTOR%% .ff-el-tooltip svg {
+ 	fill: {{ design.tooltip.info_icon.color }};
+  	width: {{ design.tooltip.info_icon.size.style }};
+  	height: {{ design.tooltip.info_icon.size.style }};
+}
+
+.ff-el-pop-content {
+  background-color: {{ design.tooltip.background_color }}
+  {{ macros.spacing_all(design.tooltip.spacing) }}
+  {{ macros.borders(design.tooltip.borders) }}
+  {{ macros.typography(design.tooltip.typography, globalSettings) }}
+}

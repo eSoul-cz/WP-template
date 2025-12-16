@@ -1,0 +1,35 @@
+.breakdance .de-flip-card, 
+.breakdance .de-flip-card .de-fc-front,
+.breakdance .de-flip-card .de-fc-back {
+  width: 100%;
+  height: 100%;
+}
+
+.breakdance .de-flip-card .de-heading,
+.breakdance  .de-text p {
+  margin: 0;
+}
+  
+
+.breakdance .de-flip-card .de-icon, 
+.breakdance .de-flip-card .de-indicator
+{
+    display: flex;
+    font-size: 24px;
+}
+
+.breakdance .de-flip-card .de-icon > svg, 
+.breakdance .de-flip-card .de-indicator > svg
+{
+    font-size: inherit;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.breakdance .de-flip-card .de-indicator
+{
+    position: absolute;
+}

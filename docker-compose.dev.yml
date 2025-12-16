@@ -1,0 +1,61 @@
+services:
+  wordpress:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+      - .env.secrets
+    volumes:
+      - wp_data:/var/www/html
+      - "./wp-admin:/var/www/html/wp-admin"
+      - "./wp-content:/var/www/html/wp-content"
+      - "./wp-includes:/var/www/html/wp-includes"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    mem_limit: 1024m
+    restart: unless-stopped
+  db:
+    image: mariadb:latest
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: root_password
+      MARIADB_DATABASE: wp_database
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    mem_limit: 512m
+    restart: unless-stopped
+  collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - "wp_data:/var/www/html:ro"
+      - ./wp-content:/var/www/html/wp-content:ro
+    depends_on:
+      - wordpress
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+volumes:
+  wp_data:
+  mariadb_data:

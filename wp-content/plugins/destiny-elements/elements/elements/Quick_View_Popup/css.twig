@@ -1,0 +1,39 @@
+%%SELECTOR%% { 
+	background-color: {{ design.popup.background_overlay }};
+    {{ macros.simpleLayout(design.popup.layout, breakpoint) }};
+}
+
+%%SELECTOR%% .de-quickview-popup-wrapper {
+  width: 100%;
+  height: 100%;
+  {{ macros.layout(design.popup.layout) }};
+}
+
+%%SELECTOR%% .de-quickview-popup-container {
+  	position: relative;
+  	background-color: {{ design.popup.background_content }};
+	{{ macros.size(design.popup.size) }};
+    {{ macros.spacing_padding_all(design.popup.spacing_padding_all) }};
+  	{{ macros.border_complex(design.popup.border.border) }};
+  	{{ macros.border_radius(design.popup.border.border_radius) }};
+  	overflow: scrol;;
+}
+
+%%SELECTOR%% .de-quickview-popup-close {
+    color: {{ design.close_button.color }};
+    font-size: {{ design.close_button.size.style }};
+    right: {{ design.close_button.position.right.style }};
+  	left: {{ design.close_button.position.left.style }};
+  	top: {{ design.close_button.position.top.style }};
+  	bottom: {{ design.close_button.position.bottom.style }};
+}
+
+{% if design.popup.disable_inside_builder and isBuilder %}
+%%SELECTOR%% {
+  display: none;
+} 
+{% elseif not isBuilder %}
+  %%SELECTOR%% {
+    display: none;
+  } 
+{% endif %}

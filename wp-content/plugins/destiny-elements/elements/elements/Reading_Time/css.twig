@@ -1,0 +1,16 @@
+%%SELECTOR%% {
+  background-color: {{ design.container.baackground_color }};
+  {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+  {{ macros.border_radius(design.container.border.border_radius) }}
+  {{ macros.border_complex(design.container.border.border) }}
+}
+
+%%SELECTOR%% .de-reading-time-wrapper {
+  {{ macros.typography(design.typography.text, globalSettings) }}
+}
+
+%%SELECTOR%% .de-reading-minutes {
+  {{ macros.typography(design.typography.minutes, globalSettings) }}
+}
+

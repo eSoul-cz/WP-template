@@ -1,0 +1,174 @@
+{% if design.layout.layout_type == 'badge' %}
+%%SELECTOR%% { 
+     display: flex;
+      {% if design.google_logo.position == 'left' %}
+      flex-direction: row;
+      align-items: center;
+      {% elseif design.google_logo.position == 'top' %}
+      flex-direction: column;
+      align-items: {{design.google_logo.align}};
+      {% else %}
+      flex-direction: row;
+      align-items: center;
+      {% endif %}
+      gap: {{ design.google_logo.space.style }};
+    
+      background-color: {{ design.container.baackground_color }};
+  	  {{ macros.borders(design.container.borders) }}
+      {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+      {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+      transition-duration: {{ design.effects.transition_duration.style }};
+      {% if content.options.google_link == 'a' %}
+      cursor: pointer;
+  	  {% endif %}
+}
+{% endif %}
+
+
+%%SELECTOR%% {
+  {% if design.layout.layout_type == 'grid' %}
+  position: relative;
+  display: grid;
+  width: 100%;
+  {% endif %}
+  {% if design.layout.columns == 'one' %}
+      grid-template-columns: 1fr;
+  {% elseif design.layout.columns == 'two' %}
+      grid-template-columns: 1fr 1fr;
+   {% elseif design.layout.columns == 'three' %}
+      grid-template-columns: 1fr 1fr 1fr;
+   {% elseif design.layout.columns == 'four' %}
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+   {% elseif design.layout.columns == 'five' %}
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+   {% else %}
+      grid-template-columns: 1fr 1fr 1fr;
+  {% endif %}
+  {% if design.layout.layout_type == 'grid' %}
+  column-gap:  {{ design.layout.gap.style }};
+  row-gap:  {{ design.layout.gap.style }};
+  background-color: {{ design.container.baackground_color }};
+  {{ macros.borders(design.container.borders) }}
+  {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+  {% endif %}
+}
+
+
+%%SELECTOR%% .de-google-reviews__grid {
+  position: relative;
+  background-color: {{ design.testimonial_box.baackground_color }};
+  {{ macros.spacing_all(design.testimonial_box.spacing) }}
+  gap:  {{ design.layout.gap.style }};
+  {{ macros.borders(design.testimonial_box.borders) }}
+    transition-duration: {{ design.effects.transition_duration.style }};
+}
+
+{% if design.effects.on_hover == 'move' %}
+%%SELECTOR%% .de-google-reviews__grid:hover {
+    translate: {{ design.effects.left.style }} {{ design.effects.top.style }};
+}
+{% endif %}
+
+%%SELECTOR%% .de-google-reviews__top-section {
+ display: flex; 
+ gap:   {{ design.testimonial_box.photo_and_author_name_and_date_gap.style }};
+}
+
+%%SELECTOR%% .de-google-reviews__author-photo {
+ width:  {{ design.author_photo.size.style }};
+ height:  {{ design.author_photo.size.style }};
+ object-fit: cover;
+}
+
+%%SELECTOR%% .de-google-reviews__top-section_author {
+ display: flex;
+ flex-direction: column;
+ justify-content: {{design.testimonial_box.vertical_align_name_date}};
+}
+
+%%SELECTOR%% .de-google-reviews__author-name {
+  {{ macros.typography(design.author_name.typography, globalSettings) }}
+  margin: 0;
+  {{ macros.spacing_all(design.author_name.spacing) }}
+}
+
+%%SELECTOR%% .de-google-reviews__date-posted {
+ margin: 0; 
+ {{ macros.typography(design.date_posted.typography, globalSettings) }}
+ {{ macros.spacing_all(design.date_posted.spacing) }}
+}
+
+%%SELECTOR%% .de-testimonail {
+  {{ macros.typography(design.review_text.typography, globalSettings) }}
+  height: {{ design.review_text.max_height.style }};
+  overflow: auto;
+  {{ macros.spacing_all(design.review_text.spacing) }}
+}
+
+{% if design.layout.layout_type == 'badge' %}
+{% if design.effects.on_hover == 'move' %}
+%%SELECTOR%%:hover {
+    translate: {{ design.effects.left.style }} {{ design.effects.top.style }};
+}
+{% endif %}
+{% endif %}
+
+%%SELECTOR%%  .de-google-reviews__google-logo {
+  	width: 100%;
+    height: 100%;
+  	max-height: {{ design.google_logo.size.style }};
+  	max-width: {{ design.google_logo.size.style }};
+}
+
+%%SELECTOR%% .de-google-reviews-grid__google-logo {
+ position: absolute; 
+ top:  {{ design.google_logo.absolute_position.top.style }};
+ right:  {{ design.google_logo.absolute_position.right.style }};
+ left:  {{ design.google_logo.absolute_position.bottom.style }};
+ bottom:  {{ design.google_logo.absolute_position.bottom.style }};
+ height: 100%;
+ max-height: {{ design.google_logo.size.style }};
+}
+
+
+%%SELECTOR%%  .de-google-reviews__title {
+    {{ macros.typography(design.rating_title.typography, globalSettings) }}
+    {{ macros.spacing_all(design.rating_title.spacing) }}
+}
+%%SELECTOR%%  .de-google-reviews__rating {
+	{{ macros.typography(design.rating_number.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-stars-wrapper {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+}
+
+
+%%SELECTOR%% {
+    --star-size: {{ design.stars.size.style }};
+    --star-color: {{ design.stars.inactive_color }};
+    --star-background: {{ design.stars.inactive_color }};
+}
+
+%%SELECTOR%% .de-stars {
+    --percent: calc(var(--rating) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size, 35px);
+    font-family: Times;
+    line-height: 1;
+  	{{ macros.spacing_complex(design.stars.spacing, 'margin') }}
+}
+
+%%SELECTOR%% .de-stars::before {
+    content: '★★★★★';
+    background: linear-gradient(90deg, 
+      var(--star-background, #fece3c) 
+      var(--percent), 
+      var(--star-color, #6c6962) 
+      var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+ }

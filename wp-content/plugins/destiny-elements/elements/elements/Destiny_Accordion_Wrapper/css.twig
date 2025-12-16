@@ -1,0 +1,66 @@
+%%SELECTOR%% {
+  width: {{ design.container.width.style }};
+  max-width: {{ design.container.max_width.style }};
+}
+
+%%SELECTOR%% .trigger-number {
+  background-color: {{ design.trigger.number_count.background_color }};
+  {{ macros.typography(design.trigger.number_count.typography, globalSettings) }}
+  {{ macros.spacing_all(design.trigger.number_count.spacing) }}
+}
+
+%%SELECTOR%% .de-accordion-trigger:hover .trigger-number {
+  {{ macros.typographyWithHoverableColorAndEffects(design.trigger.number_count.typography) }}
+  background-color: {{ design.trigger.number_count.background_color_hover }};
+}
+
+%%SELECTOR%% .de-accordion-trigger.active .trigger-number {
+  background-color: {{ design.trigger.number_count.active_background_color }};
+  {{ macros.typography(design.trigger.number_count.active_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .de-accordion-trigger.active:hover .trigger-number {
+  background-color: {{ design.trigger.number_count.active_background_color_hover }}
+  {{ macros.typography(design.trigger.number_count.active_typography, globalSettings) }}
+    {{ macros.typographyWithHoverableColorAndEffects(design.trigger.number_count.active_typography) }}
+
+}
+
+%%SELECTOR%% .de-accordion-trigger {
+  {% if design.trigger.icon.position == 'left' %}
+    justify-content: flex-start;
+  {% endif %}
+  gap: {{ design.trigger.gap.style }};
+  background-color: {{ design.trigger.background_color }};
+  {{ macros.borders(design.trigger.borders) }}
+  {{ macros.typography(design.trigger.typography, globalSettings) }}
+  {{ macros.spacing_all(design.trigger.spacing) }}
+}
+
+%%SELECTOR%% .de-accordion-trigger.active {
+  background-color: {{ design.trigger.active_background_color }};
+  {{ macros.borders(design.trigger.active_borders) }}
+  {{ macros.typography(design.trigger.active_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .acc-icon {
+   	color: {{ design.trigger.icon.color }};
+    font-size: {{ design.trigger.icon.size.style }};
+}
+
+%%SELECTOR%% .de-accordion-trigger.active .acc-icon {
+  color: {{ design.trigger.icon.active_color }};
+  {% if design.trigger.icon.effect == 'rotate' %}
+  	rotate: 180deg;
+  {% elseif design.trigger.icon.effect == 'flip' %}
+   	transform: scaleY(-1);
+  {% endif %}
+}
+
+%%SELECTOR%% .de-accordion-panel {
+  background-color: {{ design.content.background_color }};
+  transition: {{ design.content.effect.transition_duration.style }};
+  {{ macros.typography(design.content.typography, globalSettings) }}
+  {{ macros.spacing_all(design.content.spacing) }}
+  {{ macros.borders(design.content.borders) }}
+}

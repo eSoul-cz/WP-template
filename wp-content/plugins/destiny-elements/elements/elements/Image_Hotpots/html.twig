@@ -1,0 +1,122 @@
+<div class="de-hotspots-wrapper">
+  {{ macros.image(content.image.image, content.image.image_size, alt, lazyLoad) }}
+  <div class="de-hotspots">
+
+{# ***** Primary Hotspots ****** #}
+  {% set hs_width = design.hotspots.size.width.number / 2 %}
+  {% set hs_height = design.hotspots.size.height.number / 2 %}
+  {% for item in content.image_hotspots.hotspots %}
+      <div class="de-hotspot-wrapper" style="{{ item.display == 'bcenter' ? 'justify-content:center;' : '' }}{{ item.display == 'tcenter' ? 'justify-content:center;' : '' }}position: absolute;left: calc({{ item.spot_location_x }}% - {{ hs_width }}{{design.hotspots.size.width.unit}}); top: calc({{ item.spot_location_y }}% - {{ hs_height }}{{design.hotspots.size.height.unit}})">
+        <button tabindex="0" aria-label="{{ item.name }}" class="de-hotspot"{{content.image_hotspots_options.enable_open_on_hover ? ' data-hover="true"' : ''}}{{content.image_hotspots_options.hide_after_hover ? ' data-hover-hide="true"' : ''}}>
+          {% if content.image_hotspots.display == 'name' %}
+            {{ item.name }}
+          {% elseif content.image_hotspots.display == 'value' %}
+            {{ loop.index }}
+          {% elseif content.image_hotspots.display == 'icon' %}
+			<div class="de-hotspot-icon">
+            	{{ item.icon.svgCode }}
+            </div>
+          {% elseif content.image_hotspots.display == 'none' %}
+
+          {% else %}
+
+          {% endif %}
+        </button>
+        {% if content.image_hotspots_options.disable_tooltip %}
+        {% else %}
+        <div class="de-hotspot-content" 
+             style="
+          {% if item.display == 'Left' %}
+		 	right: calc({{design.hotspots.size.width.number}}px + {{design.hotspot_content.gap.style}});
+          {% elseif item.display == 'right' %}
+			left: calc({{design.hotspots.size.width.number}}px + {{design.hotspot_content.gap.style}});
+          {% elseif item.display == 'bottom' %}
+             top: calc(({{ design.hotspots.size.height.number }}px) + {{design.hotspot_content.gap.style}});left:0;
+          {% elseif item.display == 'top' %}
+             bottom: calc(({{ design.hotspots.size.height.number }}px) + {{design.hotspot_content.gap.style}});left:0;
+		  {% elseif item.display == 'bcenter' %}
+             top: calc(({{ design.hotspots.size.height.number }}px) + {{design.hotspot_content.gap.style}});
+		  {% elseif item.display == 'tcenter' %}
+             bottom: calc(({{ design.hotspots.size.height.number }}px) + {{design.hotspot_content.gap.style}});
+          {% else %}
+			 left: calc({{design.hotspots.size.width.number}}px + {{design.hotspot_content.gap.style}});
+          {% endif %}"
+             >
+          {% if item.name %}
+          <h3 class="heading">{{ item.name }}</h3>
+          {% endif %}
+          <div class="text">
+          {{ item.content }}
+		  {% set label = item.link_label|default('Click Here') %}
+            {% if item.link %}
+             <a target="_blank" href="{{ item.link.url }}" >{{label}}</a>
+            {% endif %}
+          </div>
+          {% if content.image_hotspots_options.disable_close_button %}
+          {% else %}
+      		<button class="de-hs-close" aria-label="Close Hotspot Popup">x</button>
+          {% endif %}
+        </div>
+        {% endif %}
+     </div>
+  {% endfor %}
+	
+  {# ***** Secondary Hotspots ****** #}
+  {% if content.image_hotspots_options.enable_secondary_style %}
+
+  {% set hs_width = design.hotspots_secondary.size.width.number / 2 %}
+  {% set hs_height = design.hotspots_secondary.size.height.number / 2 %}
+  {% for item in content.image_hotspots_secondary.hotspots %}
+      <div class="de-hotspot-wrapper secondary" style="{{ item.display == 'bcenter' ? 'justify-content:center;' : '' }}{{ item.display == 'tcenter' ? 'justify-content:center;' : '' }}position: absolute;left: calc({{ item.spot_location_x }}% - {{ hs_width }}{{design.hotspots.size.width.unit}}); top: calc({{ item.spot_location_y }}% - {{ hs_height }}{{design.hotspots.size.height.unit}})">
+        <button tabindex="0" class="de-hotspot"{{content.image_hotspots_options.enable_open_on_hover ? ' data-hover="true"' : ''}}{{content.image_hotspots_options.hide_after_hover ? ' data-hover-hide="true"' : ''}}>
+          {% if content.image_hotspots_secondary.display == 'name' %}
+            {{ item.name }}
+          {% elseif content.image_hotspots_secondary.display == 'value' %}
+            {{ loop.index }}
+          {% elseif content.image_hotspots_secondary.display == 'icon' %}
+			<div class="de-hotspot-icon">
+            	{{ item.icon.svgCode }}
+            </div>
+          {% elseif content.image_hotspots_secondary.display == 'none' %}
+
+          {% else %}
+
+          {% endif %}
+        </button>
+        {% if content.image_hotspots_options.disable_tooltip %}
+        {% else %}
+        <div class="de-hotspot-content" 
+             style="
+          {% if item.display == 'Left' %}
+		 	right:calc({{design.hotspots_secondary.size.width.number}}px + {{design.hotspot_content_secondary.gap.style}});
+          {% elseif item.display == 'right' %}
+			left: calc({{design.hotspots_secondary.size.width.number}}px + {{design.hotspot_content_secondary.gap.style}});
+          {% elseif item.display == 'bottom' %}
+             top: calc(({{ design.hotspots_secondary.size.height.number }}px) + {{design.hotspot_content_secondary.gap.style}});left:0;
+          {% elseif item.display == 'top' %}
+             bottom: calc(({{ design.hotspots_secondary.size.height.number }}px) + {{design.hotspot_content_secondary.gap.style}});left:0;
+          {% elseif item.display == 'bcenter' %}
+             top: calc(({{ design.hotspots_secondary.size.height.number }}px) + {{design.hotspot_content_secondary.gap.style}});
+		  {% elseif item.display == 'tcenter' %}
+             bottom: calc(({{ design.hotspots_secondary.size.height.number }}px) + {{design.hotspot_content_secondary.gap.style}});
+          {% else %}
+			left: calc({{design.hotspots_secondary.size.width.number}}px + {{design.hotspot_content_secondary.gap.style}});
+          {% endif %}"
+             >
+          {% if item.name %}
+          <h3 class="heading">{{ item.name }}</h3>
+          {% endif %}
+          <div class="text">
+          {{ item.content }}
+          </div>
+          {% if content.image_hotspots_options.disable_close_button %}
+          {% else %}
+      		<button class="de-hs-close">x</button>
+          {% endif %}
+        </div>
+        {% endif %}
+     </div>
+  {% endfor %}
+  {% endif %}
+  </div>
+</div>

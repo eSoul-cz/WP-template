@@ -1,0 +1,172 @@
+{# Common styles #}
+%%SELECTOR%% {
+  {{ macros.spacing_margin_y(design.spacing) }}
+  background-color: {{ design.container.background }};
+  {{ macros.spacing_padding_all(design.container.padding) }}
+  {{ macros.borders(design.container.borders) }}
+}
+
+%%SELECTOR%% ul {
+  gap: {{ design.layout.gap.style }};
+}
+
+%%SELECTOR%% .my-custom-switcher img
+{
+  width: {{ design.flag.width.style }} !important;
+  height: {{ design.flag.height.style }} !important;
+  object-fit: cover;
+  object-position: center center;
+  {{ macros.borders(design.flag.borders) }}
+}	
+
+{% if design.layout.position|lower == 'vertical' %}
+%%SELECTOR%% ul, 
+%%SELECTOR%% .my-custom-switcher {
+  display: flex;
+  flex-direction:column;
+}
+{% endif %}
+
+{% if design.layout.position|lower == 'horizontal' %}
+%%SELECTOR%% ul, 
+%%SELECTOR%% .my-custom-switcher {
+  display: flex;
+}
+{% endif %}
+
+%%SELECTOR%% a {
+  {{ macros.typography(design.name.default_typography, globalSettings) }}
+  {{ macros.background(design.single_element.default_background) }}
+}
+
+%%SELECTOR%% a:hover {
+  {{ macros.typographyWithHoverableColorAndEffects(design.name.default_typography) }}
+}
+
+%%SELECTOR%% .my-custom-switcher-current {
+	{{ macros.typography(design.name.default_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .wpml-ls-current-language a,
+%%SELECTOR%% .current-lang a {
+  {{ macros.typography(design.name.current_typography, globalSettings) }}
+  {{ macros.borders(design.single_element.current_borders) }}
+  {{ macros.background(design.single_element.current_background) }}
+}
+
+%%SELECTOR%% .wpml-ls-current-language a:hover,
+%%SELECTOR%% .current-lang a:hover {
+  {{ macros.typographyWithHoverableColorAndEffects(design.name.current_typography) }}
+}
+
+{# Dropdown Styles #}
+
+%%SELECTOR%% .my-custom-switcher-dropdown {
+  position: relative;
+  width: {{ design.dropdown.button.width.style|default('auto') }};
+  {{ macros.borders(design.dropdown.button.borders) }}
+  {{ macros.spacing_padding_all(design.dropdown.button.padding) }}
+}
+
+%%SELECTOR%% ul.my-custom-switcher-dropdown-list {
+  z-index: 10;
+  display: none;
+  width: max-content;
+  position: absolute;
+  top: calc(100% + {{ design.dropdown.wraper.offset.style|default('0px') }});
+  {{ macros.simpleLayout(design.dropdown.wraper.layout, breakpoint) }}
+  {{ macros.spacing_padding_all(design.dropdown.wraper.padding) }}
+  {{ macros.background(design.dropdown.wraper.background) }}
+  {{ macros.borders(design.dropdown.wraper.borders) }}
+}
+
+{% if content.content.show_dropdown_in_editor %}
+.language-switcher .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+{% endif %}     
+
+%%SELECTOR%% ul.my-custom-switcher-dropdown-list.show {
+  display: flex;
+}
+
+{% if content.content.show_dropdown_in_editor %}
+div.breakdance.canvas ul.my-custom-switcher-dropdown-list {
+  display: flex !important;
+}
+{% endif %}
+
+
+{{ macros.fancyBackgroundCss('%%SELECTOR%% ul.my-custom-switcher-dropdown-list', design.dropdown.wraper.background, breakpoint) }}
+
+%%SELECTOR%% ul.my-custom-switcher-dropdown-list li {
+  {{ macros.typography(design.dropdown.links.typography, globalSettings) }}
+  {{ macros.spacing_padding_all(design.dropdown.links.padding) }}
+  {{ macros.background(design.dropdown.links.background) }}
+  {{ macros.fancyBackgroundHtml(design.dropdown.links.background) }}
+}
+
+%%SELECTOR%% ul.my-custom-switcher-dropdown-list li:hover {
+  {{macros.typographyWithHoverableColorAndEffects(design.dropdown.links.typography)}}
+}
+
+{{ macros.fancyBackgroundCss('%%SELECTOR%% ul.my-custom-switcher-dropdown-list li', design.dropdown.links.background, breakpoint) }}
+
+
+
+{# End Styles #}
+
+.wpml-ls-item a,
+.lang-item a {
+  display: flex;
+  {{ macros.spacing_padding_all(design.single_element.paddings) }}
+  {{ macros.borders(design.single_element.default_borders) }}
+
+  gap: {{ design.name.gap.style }};
+  {% if design.name.position == 'top' %}
+  flex-direction: column-reverse;
+  {% elseif design.name.position == 'bottom' %}
+  flex-direction: column;
+  {% elseif design.name.position == 'left' %}
+  flex-direction: row-reverse;
+  {% elseif design.name.position == 'right' %}
+  flex-direction: row;
+  {% endif %}
+
+  {% if design.name.position == 'top' or design.name.position == 'bottom' %}
+  {% if design.name.align == 'left' %}
+  align-items: flex-start;
+  {% elseif design.name.align == 'center' %}
+  align-items: center;
+  {% elseif design.name.align == 'right' %}
+  align-items: flex-end;
+  {% endif %}
+  {% endif %}
+
+  {% if design.name.position == 'right' %}
+  align-items: center;
+  {% if design.name.align == 'left' %}
+  justify-content: flex-start;
+  {% elseif design.name.align == 'center' %}
+  justify-content: center;
+  {% elseif design.name.align == 'right' %}
+  justify-content: flex-end;
+  {% endif %}
+  {% endif %}
+
+  {% if design.name.position == 'left' %}
+  align-items: center;
+  {% if design.name.align == 'right' %}
+  justify-content: flex-start;
+  {% elseif design.name.align == 'center' %}
+  justify-content: center;
+  {% elseif design.name.align == 'left' %}
+  justify-content: flex-end;
+  {% endif %}
+  {% endif %}
+}
+
+
+

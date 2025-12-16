@@ -1,0 +1,60 @@
+<div class="{{ css_classes }} my-custom-switcher">
+	{% if dropdown_display %}
+		<select class="my-custom-switcher-select">
+			{% for code, language in languages %}
+				<option value="{{ language.url }}" {% if language.is_current %} selected {% endif %} data-flag="{{ language.flag_url }}" class="{{ language.css_classes }} my-custom-switcher-item">
+					{% if language_name_version == 'translated' %}
+						{{ language.display_name }}
+					{% elseif language_name_version == 'native'  %}
+						{{ language.native_name }}
+					{% else %}
+						{{ language.code }}
+					{% endif %}
+				</option>
+			{% endfor %}
+		</select>
+	{% else %}
+		<ul>
+			{% for code, language in languages %}
+
+				<li class="{{ language.css_classes }} my-custom-switcher-item">
+					<a href="{{ language.url }}">
+						{% if show_flags %}
+							{% if custom_flags is not empty %}
+								{% if custom_flags[language.code] %}
+								
+									<img src="{{ custom_flags[language.code] }}" alt="{{ language.code }}" title="{{ language.flag_title }}">
+								{% else %}
+									<img src="{{ language.flag_url }}" alt="{{ language.code }}" title="{{ language.flag_title }}">
+								{% endif %}
+							{% else %}
+								<img src="{{ language.flag_url }}" alt="{{ language.code }}" title="{{ language.flag_title }}">
+							{% endif %}
+						{% endif %}
+
+						{% if show_name %}
+							{% if language_name_version == 'translated' %}
+								{{ language.display_name }}
+							{% elseif language_name_version == 'native'  %}
+								{{ language.native_name }}
+							{% else %}
+								{{ language.code }}
+							{% endif %}
+						{% endif %}
+					</a>
+				</li>
+
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+
+<script>
+	const selectElement = document.querySelector('.my-custom-switcher-select');
+
+if (selectElement) {
+selectElement.addEventListener('change', function () {
+window.location.href = this.value;
+});
+}
+</script>

@@ -1,0 +1,243 @@
+%%SELECTOR%% {
+	height:  {{ design.container.heigth.style }}; 
+	width: {{ design.container.width.style }};
+  	max-width: 100%;
+  	max-height: 100%;
+	{{ macros.border_radius(design.container.border.border_radius) }}
+	{{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+  	{% if design.effects.disable_presepective %}
+    {% else %}
+    -webkit-perspective: 1000px;
+	perspective: 1000px;
+    {% endif %}
+}
+
+{% if design.effects.rotation_effect == 'default' %}
+
+{% elseif design.effects.rotation_effect == 'linear' %}
+   {% set effect = 'linear' %}
+{% elseif design.effects.rotation_effect == 'bounce' %}
+  {% set effect = 'cubic-bezier(0.200, 0.5, 0.5, 1.5)' %}
+{% endif %}
+
+%%SELECTOR%% .de-scene {
+  position: relative;
+  background-color: {{ design.container.background }};
+  height: 100%;
+  width: 100%;
+  transition-duration: {{ design.effects.rotation_speed_ms_ }}ms;
+  -webkit-transition-timing-function: {{ effect }};
+  -moz-transition-timing-function: {{ effect }};
+  -o-transition-timing-function: {{ effect }};
+  transition-timing-function: {{ effect }};
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: rotateX(0deg) rotateY(0deg);
+   -webkit-transform: rotateX(0deg) rotateY(0deg);
+  {{ macros.border_complex(design.container.border.border) }}
+  {{ macros.border_radius(design.container.border.border_radius) }}
+}
+
+%%SELECTOR%%:hover .de-scene {
+    {% if design.effects.flip_direction == 'Left' %}
+	transform: rotateX(0deg) rotateY(180deg);
+   	-webkit-transform: rotateX(0deg) rotateY(-180deg);
+    {% elseif design.effects.flip_direction == 'right' %}
+  	transform: rotateX(0deg) rotateY(180deg);
+   	-webkit-transform: rotateX(0deg) rotateY(180deg);
+    {% elseif design.effects.flip_direction == 'up' %}
+ 	transform: rotateX(0deg) rotateX(180deg);
+   	-webkit-transform: rotateX(0deg) rotateX(180deg);
+    {% elseif design.effects.flip_direction == 'down' %}
+	transform: rotateX(0deg) rotateX(-180deg);
+   	-webkit-transform: rotateX(0deg) rotateX(-180deg);
+  	{% else %}
+  	transform: rotateX(0deg) rotateY(180deg);
+   	-webkit-transform: rotateX(0deg) rotateY(180deg);
+    {% endif %}
+}
+
+%%SELECTOR%% .de-fc-front {
+  position: absolute;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: rotateY(0deg) translateZ(0px);
+  -webkit-transform: rotateY(0deg) translateZ(0px);
+  {{ macros.border_radius(design.container.border.border_radius) }}
+}
+
+%%SELECTOR%% .de-fc-back {
+   position: absolute;
+   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+   {% if design.effects.flip_direction == 'Left' %}
+	 transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+  	-webkit-transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+    {% elseif design.effects.flip_direction == 'right' %}
+  	 transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+  	-webkit-transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+    {% elseif design.effects.flip_direction == 'up' %}
+ 	 transform: rotate(180deg) rotateY(0deg) translateZ(-1px);
+  	-webkit-transform: rotate(180deg) rotateY(0deg) translateZ(-1px);
+    {% elseif design.effects.flip_direction == 'down' %}
+	 transform: rotate(180deg) rotateY(0deg) translateZ(-1px);
+  	-webkit-transform: rotate(180deg) rotateY(0deg) translateZ(-1px);
+  	{% else %}
+  	 transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+  	-webkit-transform: rotate(0deg) rotateY(0deg) translateZ(-1px);
+    {% endif %}
+  
+  {{ macros.border_radius(design.container.border.border_radius) }}
+}
+
+%%SELECTOR%% .de-fc-front .de-content {
+  	width: 100%;
+  {% if design.effects.text_space.style %}
+   transform: rotateY(0deg) translateZ({{ design.effects.text_space.style }});
+  -webkit-transform: rotateY(0deg) translateZ({{ design.effects.text_space.style }});
+	{% else %}
+     transform: rotateY(0deg) translateZ(50px);
+   -webkit-transform: rotateY(0deg) translateZ(50px);
+   	{% endif %}
+}
+
+%%SELECTOR%% .de-fc-back .de-content {
+    width: 100%;
+  	{% if design.effects.text_space.style %}
+    transform: rotate(0deg) rotateY(180deg) translateZ({{ design.effects.text_space.style }});
+  	 -webkit-transform: rotate(0deg) rotateY(180deg) translateZ({{ design.effects.text_space.style }});
+  	{% else %}
+      transform: rotate(0deg) rotateY(180deg) translateZ(50px);
+  	-webkit-transform: rotate(0deg) rotateY(180deg) translateZ(50px);
+  	{% endif %}
+}
+
+%%SELECTOR%% .de-scene img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    z-index: 0;
+  {{ macros.border_radius(design.container.border.border_radius) }}
+}
+
+%%SELECTOR%% .de-scene .de-overlay {
+  {{ macros.border_radius(design.container.border.border_radius) }}
+}
+
+
+%%SELECTOR%% .de-scene .de-fc-front .de-overlay{
+    position: absolute;
+    background-color: {{ design.front_overlay.color }};
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+
+%%SELECTOR%% .de-scene .de-fc-back .de-overlay{
+    position: absolute;
+    background-color: {{ design.back_overlay.color }};
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+%%SELECTOR%% .de-scene .de-content {
+  display: flex;
+  flex-direction: column;
+  {% if design.layout.align == 'left' %}
+ 	align-items: flex-start;
+	{% elseif design.layout.align == 'center' %}
+  	align-items: center;
+	{% elseif design.layout.align == 'right' %}
+ 	align-items: flex-end;
+  	{% else %}
+  	align-items: center;
+	{% endif %}
+  	{% if design.layout.vertical_align == 'left' %}
+  	justify-content: flex-start;
+	{% elseif design.layout.vertical_align == 'center' %}
+   	justify-content: center;
+	{% elseif design.layout.vertical_align == 'right' %}
+   	justify-content: flex-end;
+  	{% else %}
+  	justify-content: center;
+	{% endif %}
+  	position: absolute;
+  	{{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+  	height: 100%;
+   	z-index: 2;
+}
+
+%%SELECTOR%% .de-fc-front .de-heading {
+	{{ macros.typography(design.heading.typography_front, globalSettings) }}
+  	{{ macros.spacing_complex(design.heading.margin, 'margin') }}
+}
+
+%%SELECTOR%% .de-fc-back .de-heading {
+ 	{{ macros.typography(design.heading.typography_back, globalSettings) }}
+  	{{ macros.spacing_complex(design.heading.margin, 'margin') }}
+}
+
+%%SELECTOR%% .de-text p, 
+%%SELECTOR%% .de-heading{
+   {% if design.layout.align == 'left' %}
+ 	text-align: left;
+	{% elseif design.layout.align == 'center' %}
+  	text-align: center;
+	{% elseif design.layout.align == 'right' %}
+  	text-align: right;
+  	{% else %}
+  	text-align: center;
+	{% endif %}
+  	{{ macros.spacing_complex(design.text.margin, 'margin') }}
+} 
+
+%%SELECTOR%% .de-fc-front .de-text p {
+  {{ macros.typography(design.text.typography_front, globalSettings) }}
+}
+
+%%SELECTOR%% .de-fc-back .de-text p {
+  {{ macros.typography(design.text.typography_back, globalSettings) }}
+}
+
+%%SELECTOR%% .de-content .de-btn {
+  {{ macros.spacing_complex(design.button.spacing.margin, 'margin') }}
+}
+
+%%SELECTOR%% .de-content .de-btn a {
+  background-color: {{ design.button.color }};
+  {{ macros.border_radius(design.button.border.border_radius) }}
+  {{ macros.border_complex(design.button.border.border) }}
+  text-decoration: none;
+  {{ macros.typography(design.button.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.button.spacing.padding, 'padding') }}
+}
+
+%%SELECTOR%% .de-content .de-btn a:hover {
+  background-color: {{ design.button.color_hover }};
+}
+
+%%SELECTOR%% .de-fc-front .de-icon {
+    color:{{ design.icon.front.color }};
+    font-size: {{ design.icon.front.size.style }};
+  	{{ macros.spacing_margin_all(design.icon.front.margin) }}
+}
+
+%%SELECTOR%% .de-fc-back .de-icon {
+  	color:{{ design.icon.back.color }};
+   	font-size: {{ design.icon.back.size.style }};
+  	{{ macros.spacing_margin_all(design.icon.back.margin) }}
+}
+
+%%SELECTOR%% .de-indicator {
+  top: {{ design.flip_indicator_position.top.style }};
+  bottom: {{ design.flip_indicator_position.bottom.style }};
+  left: {{ design.flip_indicator_position.left.style }};
+  right: {{ design.flip_indicator_position.right.style }};
+  color:{{ design.flip_indicator_position.icon_styles.color }};
+  font-size: {{ design.flip_indicator_position.icon_styles.size.style }};
+}

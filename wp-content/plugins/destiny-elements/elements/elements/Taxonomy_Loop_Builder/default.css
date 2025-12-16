@@ -1,0 +1,34 @@
+.breakdance .de-taxonomyloopbuilder {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Grid Layout */
+.breakdance .de-taxonomyloopbuilder .de-taxonomies-grid {
+  --bde-items-per-row: 1;
+  --bde-items-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(var(--bde-items-per-row), minmax(0, 1fr));
+  gap: var(--bde-items-gap);
+  grid-auto-rows: auto;
+}
+
+/* List Layout */
+.breakdance .de-taxonomyloopbuilder .de-taxonomies-list {
+  --bde-items-per-row: 1;
+}
+
+/* Slider Layout */
+.breakdance .de-taxonomyloopbuilder .ee-posts-slider {
+  --bde-items-gap: 0px;
+  display: flex;
+  flex-wrap: nowrap!important;
+}
+
+.breakdance .de-taxonomyloopbuilder .swiper .de-taxonomy-item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+

@@ -1,0 +1,56 @@
+<div class="de-scene" tabindex="0">
+  <div class="de-fc-front">
+    {% if content.front.image %}
+    {{ macros.getMedia(content.front.image, content.content.size, content.content.lazyLoad) }}  	{% else %}
+    {% endif %}  
+    <div class="de-overlay"></div>
+    <div class="de-content">
+      {% if content.front.icon.svgCode %}
+      <div class="de-icon">
+        {{ content.front.icon.svgCode }}
+      </div>
+      {% endif %}
+      {% if content.front.heading %}
+      <{{content.front.heading_tag}} class="de-heading">{{ content.front.heading }} </{{content.front.heading_tag}}>
+      {% endif %}
+      {% if content.front.text %}
+      <div class="de-text">{{ content.front.text }}</div>
+      {% endif %}
+      {% if content.flip_indicator.enable_flip_indicator %}
+        <div class="de-indicator">
+          {{ content.flip_indicator.icon.svgCode }}
+        </div>
+      {% endif %}
+    </div>
+  </div> 
+
+  <div class="de-fc-back">
+    {% if content.back.image %}
+    {{ macros.getMedia(content.back.image, content.content.size, content.content.lazyLoad) }}
+    {% else %}
+    {% endif %}
+    <div class="de-overlay"></div>
+    <div class="de-content">
+      {% if content.back.icon.svgCode %}
+      <div class="de-icon">
+        {{ content.back.icon.svgCode }}
+      </div>
+      {% endif %}
+      {% if content.back.heading %}
+      <{{content.back.heading_tag}} class="de-heading">{{ content.back.heading }}</{{content.back.heading_tag}}>
+      {% endif %}
+      {% if content.back.text %}
+      <div class="de-text">{{ content.back.text }}</div>
+      {% endif %}
+      {% if content.back.include_button %}
+      <div class="de-btn">
+        {{ macros.linkStart(content.back.button_link) }}
+        {{ content.back.button_text }}
+        {{ macros.linkEnd() }}
+      </div>
+      {% else %}
+      {% endif %}
+
+    </div>
+  </div>
+</div>

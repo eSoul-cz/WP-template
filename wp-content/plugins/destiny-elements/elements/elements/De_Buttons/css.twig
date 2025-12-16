@@ -1,0 +1,206 @@
+%%SELECTOR%% {
+  position: relative;
+  {{ macros.spacing_margin_all(design.spacing.margin) }}
+  {{ macros.border_radius(design.border.border_radius) }}
+  overflow: hidden;
+}
+
+%%SELECTOR%% a {
+  text-decoration: none;
+}
+
+%%SELECTOR%% .de-btn-text {
+ position: relative;
+ z-index: 2; 
+}
+
+%%SELECTOR%% button { 
+  display: flex;
+  align-items: center;
+  gap: {{ design.download_icon.space.style }};
+  background-color: {{ design.button.background_color }};
+  {{ macros.spacing_padding_all(design.spacing.padding) }}
+  {{ macros.typography(design.button.typography, globalSettings) }}
+  {{ macros.border_complex(design.border.border) }}
+  cursor: pointer;
+}
+%%SELECTOR%% button:hover { 
+ 	background-color: {{ design.hover_effects.background_color }}
+}
+
+%%SELECTOR%% .de-btn-border {
+  position: absolute;
+  background-color: {{ design.hover_effects.border_color }};
+  pointer-events: none;
+  transition-duration: {{ design.hover_effects.transition_duration_ms_ }}ms;
+}
+
+%%SELECTOR%% .de-btn-border.bottom {
+   width: 0%;
+  bottom: 0;
+  height: {{ design.hover_effects.border_size.style }};
+  {% if design.hover_effects.animation_bottom.animate_direction == 'left' %}
+  right: 0;
+  {% elseif design.hover_effects.animation_bottom.animate_direction == 'right' %}
+  left: 0;
+  {% elseif design.hover_effects.animation_bottom.animate_direction == 'center' %}
+  scale: 0;
+  width: 100%;
+  {% endif %}
+  transition-delay: {{ design.hover_effects.animation_bottom.delay_ms_ }}ms; 
+}
+
+%%SELECTOR%% .de-btn-border.top {
+  width: 0%;
+  top: 0;
+  height: {{ design.hover_effects.border_size.style }};
+  {% if design.hover_effects.animation_top.animate_direction == 'left' %}
+  right: 0;
+  {% elseif design.hover_effects.animation_top.animate_direction == 'right' %}
+  left: 0;
+  {% elseif design.hover_effects.animation_top.animate_direction == 'center' %}
+  scale: 0;
+  width: 100%;
+  {% endif %}
+  transition-delay: {{ design.hover_effects.animation_top.delay_ms_ }}ms; 
+}
+
+%%SELECTOR%%:hover .de-btn-border.bottom, 
+%%SELECTOR%%:hover .de-btn-border.top {
+  width: 100%;
+  {% if design.hover_effects.animation_bottom.animate_direction == 'center' %}
+  scale: 1;
+  {% endif %}
+  {% if design.hover_effects.animation_top.animate_direction == 'center' %}
+  scale: 1;
+  {% endif %}
+}
+
+
+%%SELECTOR%% .de-btn-border.right {
+  width: {{ design.hover_effects.border_size.style }};
+  height: 0%;
+  right: 0;
+  {% if design.hover_effects.animation_right.animate_direction == 'top' %}
+  bottom: 0;
+  {% elseif design.hover_effects.animation_right.animate_direction == 'bottom' %}
+  top: 0;
+  {% else %}
+  top: 0;
+  {% endif %}
+  transition-delay: {{ design.hover_effects.animation_right.delay_ms_ }}ms; 
+
+}
+
+
+%%SELECTOR%% .de-btn-border.left {
+  width: {{ design.hover_effects.border_size.style }};
+  height: 0%;
+  left: 0;
+  {% if design.hover_effects.animation_left.animate_direction == 'top' %}
+  bottom: 0;
+  {% elseif design.hover_effects.animation_left.animate_direction == 'bottom' %}
+  top: 0;
+  {% else %}
+  top: 0;
+  {% endif %}
+  transition-delay: {{ design.hover_effects.animation_left.delay_ms_ }}ms; 
+}
+
+%%SELECTOR%%:hover .de-btn-border.right,
+%%SELECTOR%%:hover .de-btn-border.left {
+  height: 100%;
+}
+
+%%SELECTOR%% .de-download-button {
+  width: {{ design.download_icon.size.style }};
+  height: {{ design.download_icon.size.style }};
+  fill:  {{ design.download_icon.color }};
+}
+
+%%SELECTOR%%:hover .de-download-button {
+ fill: {{ design.download_icon.color_hover }};
+}
+
+%%SELECTOR%% .de-download-button .de-download-icon-arrow {
+ translate: 0 -20px;
+ transition-duration: {{ design.hover_effects.transition_duration_ms_ }}ms;
+}
+
+%%SELECTOR%%:hover .de-download-button .de-download-icon-arrow {
+ translate: 0 20px;
+}
+
+
+
+{% if design.button.button_style == 'burger' %}
+	
+%%SELECTOR%% .de-buttons-burger {
+  display: grid;
+  gap: {{ design.burger_style.gap.style }};
+  background-color: transparent;
+  appearance: none;
+  width: {{ design.burger_style.width ? design.burger_style.width.style : '70px' }};
+}
+
+%%SELECTOR%% .de-buttons-burger .de-btn-line:first-child {
+  background-color:  {{ design.burger_style.line_1.colour }};
+  width: {{ design.burger_style.line_1.width.style }};
+  height: {{ design.burger_style.line_1.height.style }};
+  transition-duration: {{ design.burger_style.active_styles.transition_duration.style }};
+  
+  {% if design.burger_style.active_styles.show_active %}
+      rotate: 45deg;
+ 	  width: {{ design.burger_style.active_styles.line_width.style }};
+      background-color: {{ design.burger_style.active_styles.line_colour }};
+      translate: {{ design.burger_style.active_styles.line_1_translate }};
+  {% endif %}
+}
+
+%%SELECTOR%% .de-buttons-burger .de-btn-line:nth-child(2) {
+  background-color:  {{ design.burger_style.line_2.colour }};
+  width: {{ design.burger_style.line_2.width.style }};
+  height: {{ design.burger_style.line_2.height.style }};
+  transition-duration: {{ design.burger_style.active_styles.transition_duration.style }};
+  {% if design.burger_style.active_styles.show_active %}
+      opacity: 0;
+  {% endif %}
+
+}
+
+%%SELECTOR%% .de-buttons-burger .de-btn-line:last-child {
+  background-color:  {{ design.burger_style.line_3.colour }};
+  width: {{ design.burger_style.line_3.width.style }};
+  height: {{ design.burger_style.line_3.height.style }};
+  transition-duration: {{ design.burger_style.active_styles.transition_duration.style }};
+  {% if design.burger_style.active_styles.show_active %}
+      rotate: -45deg;
+ 	  width: {{ design.burger_style.active_styles.line_width.style }};
+      background-color: {{ design.burger_style.active_styles.line_colour }};
+      translate: {{ design.burger_style.active_styles.line_2_translate }};
+  {% endif %}
+}
+
+%%SELECTOR%%.active .de-buttons-burger .de-btn-line:first-child,
+%%SELECTOR%%.active .de-buttons-burger .de-btn-line:nth-child(2),
+%%SELECTOR%% .de-buttons-burger .de-btn-line:last-child {
+  background-color: {{ design.burger_style.active_styles.line_colour }};
+}
+
+%%SELECTOR%%.active .de-buttons-burger .de-btn-line:first-child {
+  	rotate: 45deg;
+ 	width: {{ design.burger_style.active_styles.line_width.style }};
+    translate: {{ design.burger_style.active_styles.line_1_translate }};
+}
+
+%%SELECTOR%%.active .de-buttons-burger .de-btn-line:last-child {
+ 	width: {{ design.burger_style.active_styles.line_width.style }};
+  	rotate: -45deg;
+    translate: {{ design.burger_style.active_styles.line_2_translate }};
+}
+
+%%SELECTOR%%.active .de-buttons-burger .de-btn-line:nth-child(2) {
+ 	opacity: 0; 
+}
+
+{% endif %}

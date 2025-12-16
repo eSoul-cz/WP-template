@@ -1,0 +1,67 @@
+%%SELECTOR%% {
+ position: fixed;
+ bottom: -100%;
+ right: {{ design.button.position.right.style }};
+ opacity: 0;
+ transition-duration: {{ design.button.opacity_duration_s_.style }}s;
+ z-index: 10;
+ pointer-events: none;
+  
+}
+
+%%SELECTOR%%.show {
+ opacity: 1;
+ bottom: {{ design.button.position.bottom.style }};
+ pointer-events: auto;
+}
+
+%%SELECTOR%% .de-svg-icon {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+%%SELECTOR%% button {
+   position: relative;
+    {{ macros.border_radius(design.button.border.border_radius) }}
+    background-color:  {{ design.button.background_color }};
+    font-size: {{ design.icon.size.style }};
+    {{ macros.spacing_complex(design.button.padding, 'padding') }}
+ 	{{ macros.border_complex(design.button.border.border) }}
+  	transition-duration: {{ design.button.opacity_duration_s_.style }}s;
+   	cursor: pointer;
+}
+
+{% if content.options.enable_progress %}
+%%SELECTOR%% .de-bttb-progress{
+ position: absolute;
+ left: calc(-{{ design.progress.size.style }} / 2);
+ top: calc(-{{ design.progress.size.style }} / 2);;
+ width: calc(100% + {{ design.progress.size.style }});
+ height: calc(100% + {{ design.progress.size.style }});
+ background-color: white; 
+ {{ macros.border_radius(design.button.border.border_radius) }}
+ z-index: -1;
+}
+
+%%SELECTOR%% .de-bttb-progress.fill{
+ --hue: 220;
+ --track-bg: {{ design.progress.color }};
+ background: conic-gradient(
+      {{ design.progress.fill_color }} var(--progress, 0%),
+      var(--track-bg) var(--progress, 0%) 100%
+    );
+}
+{% endif %}
+
+%%SELECTOR%% button:hover {
+  background-color: {{ design.button.background_color_hover }};
+  {{ macros.border_radius(design.button.border.border_radius) }}
+}
+
+%%SELECTOR%% .destiny-bttb svg { /* also, prefix with element classname */
+    font-size: inherit;
+  	stroke: {{ design.icon.color }};
+    fill: {{ design.icon.color }};
+}

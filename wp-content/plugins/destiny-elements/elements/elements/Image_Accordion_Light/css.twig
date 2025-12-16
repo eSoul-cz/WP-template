@@ -1,0 +1,36 @@
+%%SELECTOR%% {
+  height: {{ design.container.height.style }};
+  gap:  {{ design.container.gap.style }};
+
+}
+%%SELECTOR%% .image-box {
+  transition-duration: {{ design.effects.duration_s_ }}s;
+} 
+
+%%SELECTOR%% .image-box h3 {
+  {{ macros.typography(design.caption.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.caption.margin, 'margin') }}
+}
+
+%%SELECTOR%% .image-box p{
+  {{ macros.typography(design.description.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.description.margin, 'margin') }}
+}
+
+.de-ia  .image-box .overlay{
+  height: {{ design.overlay.height.style }};
+  background:  {{ design.overlay.gradient.style }};
+  transition-duration: {{ design.effects.duration_s_ }}s;
+  {{ macros.spacing_complex(design.content.padding, 'padding') }}
+}
+
+.de-ia  .image-box:hover .overlay p, 
+.de-ia .image-box:hover .overlay h3{
+  opacity: 1;
+  transition-duration: {{ design.effects.duration_s_ }}s;
+  transition-delay: {{ design.effects.text_delay_s_ }}s;
+}
+
+.de-ia .image-box:hover{
+   flex: {{ design.effects.spread_width }};
+}

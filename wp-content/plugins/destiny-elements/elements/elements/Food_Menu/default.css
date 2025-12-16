@@ -1,0 +1,94 @@
+.breakdance .destiny-menu h3 {
+   margin: 10px 0;
+}
+
+.breakdance .destiny-menu h4 {
+   margin: 0;
+}
+
+.breakdance .destiny-menu .menu-price {
+   margin: 10px 0 0px 0;
+}
+
+.breakdance .destiny-menu .line {
+  width: 100%;
+  height: 1px;
+  background-color: #fc7904;
+  
+}
+
+.breakdance .destiny-menu .menu-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px 50px;
+  margin: 20px 0;
+}
+
+.breakdance .destiny-menu .menu-item {
+  display: flex;
+  width: 45%;
+  gap: 0 30px;
+}
+
+.breakdance .destiny-menu .menu-item img {
+ width: 100px;
+ height: 100px;;
+ border-radius: 3px;
+}
+
+.breakdance .destiny-menu .menu-item.fill img {
+ object-fit: fill;
+}
+
+.breakdance .destiny-menu .menu-item.contain img {
+ object-fit: contain;
+}
+
+.breakdance .destiny-menu .menu-item.cover img {
+ object-fit: cover;
+}
+
+.breakdance .destiny-menu .menu-item.none img {
+ object-fit: none;
+}
+
+.breakdance .destiny-menu .menu-item.scale img {
+ object-fit: scale-down;
+}
+
+.breakdance .destiny-menu .menu-text-content {
+ width: 100%; 
+}
+
+.breakdance .destiny-menu .img-active .menu-text-content {
+ width: 70%; 
+}
+
+.breakdance .destiny-menu .menu-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.breakdance .destiny-menu .menu-name {
+  display: inline;
+}
+
+.breakdance .destiny-menu .alergens {
+  margin: 0 0 5px 0;
+}
+
+.breakdance .destiny-menu .alergens-info {
+  padding: 15px 25px;
+}
+
+
+.breakdance .destiny-menu .alergen-info-blocks {
+  display: block;
+  padding: 5px 0;
+}
+
+.breakdance .destiny-menu .alergens-info p {
+  display: inline;
+}

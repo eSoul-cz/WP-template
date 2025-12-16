@@ -1,0 +1,280 @@
+{% if content.options.player == 'default' or content.options.player == 'custom' or content.options.player == ''  %}
+%%SELECTOR%% {
+   	display: flex;
+ 	gap: {{ design.player.gap.style }};
+    justify-content: space-between;
+  	background-color: {{ design.player.background_color }};
+	width: {{ design.player.size.width.style }};
+  	max-width: {{ design.player.size.max_width.style }};
+  	height: {{ design.player.size.height.style }};
+    {{ macros.borders(design.player.borders) }}
+    {{ macros.spacing_all(design.player.spacing) }}
+}
+{% elseif content.options.player == 'playlist' %}
+
+%%SELECTOR%% {
+   	display: flex;
+    flex-direction: column;
+ 	gap: {{ design.player.gap.style }};
+    justify-content: space-between;
+  	background-color: {{ design.player.background_color }};
+	width: {{ design.player.size.width.style }};
+  	max-width: {{ design.player.size.max_width.style }};
+  	height: {{ design.player.size.height.style }};
+    {{ macros.borders(design.player.borders) }}
+    {{ macros.spacing_all(design.player.spacing) }}
+}
+
+@media only screen and (max-width: 767px) {
+  %%SELECTOR%% .player-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  %%SELECTOR%%  .player-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+{% endif %}
+
+%%SELECTOR%% audio {
+	width: {{ design.player.size.width.style }};
+    max-width: {{ design.player.size.max_width.style }};
+    height: {{ design.player.size.height.style }};
+}
+
+%%SELECTOR%% .play-icon,
+%%SELECTOR%% .pause-icon {
+  position: relative;
+  {{ macros.borders(design.play_pause_button.borders) }}
+  {{ macros.spacing_all(design.play_pause_button.spacing) }}
+  width: 35px;
+}
+
+%%SELECTOR%% .play-icon-svg {
+    color: {{ design.play_pause_button.play_icon.color }};
+    font-size:  {{ design.play_pause_button.icon_size.style }};
+}
+
+%%SELECTOR%% .pause-icon-svg {
+    color: {{ design.play_pause_button.pause_icon.color }};
+    font-size: {{ design.play_pause_button.icon_size.style }};
+}
+.breakdance .de-audio-player .next-song,
+.breakdance .de-audio-player .prev-song {
+  color: {{ design.next_previous_button.icon_color }};
+  font-size: {{ design.next_previous_button.icon_size.style }};
+}
+
+.breakdance .de-audio-player .next-song:hover,
+.breakdance .de-audio-player .prev-song:hover {
+  background-color: {{ design.next_previous_button.icon_color_hover }};
+}
+
+
+
+%%SELECTOR%% .mute-icon {
+	{{ macros.borders(design.volume.borders) }}
+  	{{ macros.spacing_all(design.volume.spacing) }}
+}
+
+
+%%SELECTOR%% .mute-icon-svg, 
+%%SELECTOR%% .muted-icon-svg {
+    color: {{ design.volume.icon_color }};
+    font-size:  {{ design.volume.icon_size.style }};
+}
+
+%%SELECTOR%% .current-time, 
+%%SELECTOR%% .duration {
+	{{ macros.typography(design.duration.current_time_duration.typography, globalSettings) }}
+  	width: {{ design.duration.current_time_duration.time_width.style }};
+}
+
+%%SELECTOR%% .dur-seperator {
+   {{ macros.typography(design.duration.current_time_duration.typography, globalSettings) }}
+}
+
+{% if design.duration.hide_current_time %}
+%%SELECTOR%% .current-time {
+ display: none; 
+}
+{% endif %}
+
+{% if design.duration.hide_total_time %}
+%%SELECTOR%% .duration {
+ display: none; 
+}
+{% endif %}
+
+{% if design.duration.hide_seperator %}
+%%SELECTOR%% .dur-seperator {
+ display: none; 
+}
+{% endif %}
+
+
+{% if design.volume.hide_mute_button %}
+%%SELECTOR%% .mute-icon {
+ display: none; 
+}
+{% endif %}
+
+%%SELECTOR%% .time-wrapper {
+  display: flex;
+  align-items: center;
+  gap: {{ design.duration.gap.style }};
+}
+
+%%SELECTOR%% .player-wrapper .time-wrapper {
+ width: 100%; 
+}
+
+
+/* Range controller for duration */
+
+%%SELECTOR%% .seek-slider {
+  {% if design.duration.range_controller.hide_range_controller %}
+  display: none;
+  {% endif %}
+  background-color: transparent;
+  position: relative;
+  width: {{ design.duration.range_controller.width.style }};
+  margin: 0;
+  padding: 0;
+  height: {{ design.duration.range_controller.height.style }};
+  float: left;
+  outline: none;
+  transition: 1000ms;
+  {{ macros.borders(design.duration.range_controller.borders) }}
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+@-moz-document url-prefix() {
+  %%SELECTOR%% .seek-slider {
+     background-color: {{ design.duration.range_controller.background_color }};
+  }
+}
+
+
+%%SELECTOR%% .seek-slider::-moz-range-progress {
+  background-color: {{ design.duration.range_controller.progress_color }};
+  height:  {{ design.duration.range_controller.height.style }};
+  {{ macros.borders(design.duration.range_controller.borders) }}
+}
+
+
+%%SELECTOR%% .seek-slider::before {
+    position: absolute;
+  	top: 0;
+    left: 0;
+    content: "";
+    width: var(--seek-before-width);
+    min-width: 3%;
+    background-color: {{ design.duration.range_controller.progress_color }};
+ 	height:  {{ design.duration.range_controller.height.style }};
+  	{{ macros.borders(design.duration.range_controller.borders) }}
+    cursor: pointer;
+    z-index: 1;
+    pointer-events: none;
+}
+
+%%SELECTOR%% .seek-slider::after {
+    position: absolute;
+  	top: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    background-color: {{ design.duration.range_controller.background_color }};
+ 	height:  {{ design.duration.range_controller.height.style }};
+  	{{ macros.borders(design.duration.range_controller.borders) }}
+    cursor: pointer;
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+%%SELECTOR%% .seek-slider::-moz-range-thumb {
+  box-sizing: content-box;
+  height:  {{ design.duration.range_thumb.height.style }};
+  width:  {{ design.duration.range_thumb.width.style }};
+  {{ macros.borders(design.duration.range_thumb.borders) }}
+  background-color: {{ design.duration.range_thumb.background_color }};
+  cursor: pointer;
+  transition: {{ design.duration.range_thumb.active_transition.style }};
+  appearance: none;
+  -webkit-appearance: none;
+  z-index: 1;
+}
+
+%%SELECTOR%% .seek-slider::-webkit-slider-thumb {
+  position: relative;
+  box-sizing: content-box;
+  height:  {{ design.duration.range_thumb.height.style }};
+  width:  {{ design.duration.range_thumb.width.style }};
+  {{ macros.borders(design.duration.range_thumb.borders) }}
+  background-color: {{ design.duration.range_thumb.background_color }};
+  cursor: pointer;
+  transition: {{ design.duration.range_thumb.active_transition.style }};
+  appearance none;
+  -webkit-appearance: none;
+  z-index: 1;
+}
+
+%%SELECTOR%% .seek-slider:active::-moz-range-thumb {
+  transform: scale({{ design.duration.range_thumb.active_scale }});
+  background-color: {{ design.duration.range_thumb.active_background_color }};
+}
+
+%%SELECTOR%% input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale({{ design.duration.range_thumb.active_scale }});
+  background-color: {{ design.duration.range_thumb.active_background_color }};
+}
+
+
+%%SELECTOR%% .loading-indicator {
+ position: absolute;
+ border: 1px solid  {{ design.buffering.color }};
+ border-right: 4px solid  {{ design.buffering.color }};
+ border-radius: 100%;
+ width: {{ design.volume.icon_size.style }}; 
+ height: {{ design.volume.icon_size.style }};
+ box-sizing: border-box;
+  
+ -webkit-animation: spinner 500ms linear infinite;
+          animation: spinner 500ms linear infinite;
+}
+
+%%SELECTOR%% .player-wrapper .time-wrapper {
+ {{ macros.spacing_all(design.duration.spacing) }}
+}
+
+%%SELECTOR%% .playlist-item {
+  {{ macros.typography(design.playlist.single_item.typography, globalSettings) }}
+  background-color: {{ design.playlist.single_item.background_color }};
+  {{ macros.borders(design.playlist.single_item.borders) }}
+  {{ macros.spacing_all(design.playlist.single_item.spacing) }}
+}
+
+%%SELECTOR%% .playlist-item.active {
+  background-color: {{ design.playlist.single_item.active_color }};
+}
+
+%%SELECTOR%% .playlist-item:hover {
+  background-color: {{ design.playlist.single_item.background_color_hover }};
+}
+
+%%SELECTOR%% .main-song-name {
+  {{ macros.typography(design.playlist.song_heading.typography, globalSettings) }}
+  {{ macros.borders(design.playlist.song_heading.borders) }}
+  {{ macros.spacing_all(design.playlist.song_heading.spacing) }}
+}
+
+%%SELECTOR%% .download-icon{
+  color: {{ design.download.icon_color }};
+  font-size: {{ design.download.icon_size.style }};
+}

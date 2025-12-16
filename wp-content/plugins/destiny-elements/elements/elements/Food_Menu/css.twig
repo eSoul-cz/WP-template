@@ -1,0 +1,209 @@
+%%SELECTOR%% {
+  background-color: {{ design.container.background }};
+  width: {{ design.container.width.style }};
+   {{ macros.spacing_complex(design.container.spacing.margin, 'margin') }}
+   {{ macros.spacing_complex(design.container.spacing.padding, 'padding') }}
+   {{ macros.border_radius(design.container.border.border_radius) }}
+   {{ macros.border_complex(design.container.border.border) }}
+}
+
+/* category heading */
+%%SELECTOR%% h3 {
+	{{ macros.typography(design.category.typography, globalSettings) }}
+    {{ macros.spacing_complex(design.category.spacing.padding, 'padding') }}
+	{{ macros.spacing_complex(design.category.spacing.margin, 'margin') }}
+}
+
+
+%%SELECTOR%% .menu-heading {
+ {% if design.menu_heading.line.enable_line %}
+  	border-bottom: {{ design.menu_heading.line.height.style }} solid {{ design.menu_heading.line.color }};
+    padding-bottom: {{ design.menu_heading.line.space.style }};
+	{% else %}
+	{% endif %}
+}
+
+%%SELECTOR%% h4 {
+ 	{{ macros.typography(design.menu_heading.typography, globalSettings) }}
+    {{ macros.spacing_complex(design.menu_heading.spacing.padding, 'padding') }}
+    {{ macros.spacing_complex(design.menu_heading.spacing.margin, 'margin') }}
+}
+
+%%SELECTOR%% .menu-prices__drinks {
+ display: flex;
+ gap: {{ design.drink_sizes_heading.size_price_gap.style }};
+}
+
+%%SELECTOR%% .menu-price {
+   {{ macros.typography(design.price.typography, globalSettings) }}
+   {{ macros.spacing_complex(design.price.spacing.padding, 'padding') }}
+   {{ macros.spacing_complex(design.price.spacing.margin, 'margin') }}
+}
+%%SELECTOR%% .menu-price.menu-price__drinks {
+  width:  {{ design.drink_sizes_heading.price_width.style }};
+}
+
+%%SELECTOR%% .line {
+  width: {{ design.category.line.width.style }};
+  height:  {{ design.category.line.height.style }};
+  background-color:  {{ design.category.line.color }};
+  {{ macros.spacing_complex(design.category.line.margin, 'margin') }}
+}
+
+%%SELECTOR%% .menu-text-content p:not(.menu-price) {
+   {{ macros.typography(design.description.typography, globalSettings) }}
+   {{ macros.spacing_complex(design.description.spacing.padding, 'padding') }}
+   {{ macros.spacing_complex(design.description.spacing.margin, 'margin') }}
+}
+
+%%SELECTOR%% .menu-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap:  {{ design.menu_box_all.column_gap.style }};
+  row-gap:  {{ design.menu_box_all.row_gap.style }};
+  {{ macros.spacing_complex(design.menu_box_all.margin, 'margin') }}
+  {{ macros.spacing_complex(design.menu_box_all.padding, 'padding') }}
+}
+
+%%SELECTOR%% .menu-note {
+  background-color: {{ design.category_note.background_color }};
+  {{ macros.typography(design.category_note.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.category_note.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.category_note.spacing.margin, 'margin') }}
+  {{ macros.borders(design.category_note.borders) }}
+}
+
+%%SELECTOR%% .img-active .menu-text-content {
+   width: 100%;
+}
+
+%%SELECTOR%% .menu-item {
+  display: flex;
+  {% if design.menu_box_all.column_gap.style %}
+  width: calc({{ design.menu_box_single.width.style }} -  {{ design.menu_box_all.column_gap.style }});
+  {% else %}
+  width: {{ design.menu_box_single.width.style }};
+  {% endif %}
+  column-gap: {{ design.menu_box_single.column_gap.style }};
+  row-gap: {{ design.menu_box_single.row_gap.style }};
+  {{ macros.spacing_complex(design.menu_box_single.margin, 'margin') }}
+  {{ macros.spacing_complex(design.menu_box_single.padding, 'padding') }}
+}
+
+%%SELECTOR%% .menu-item img {
+   width: {{ design.image.width.style }};
+   min-width: {{ design.image.width.style }};
+   height: {{ design.image.height.style }};
+   border-radius: {{ design.image.border_radius.style }};
+}
+
+%%SELECTOR%% .alergens-info {
+  background-color: {{ design.alergens_info.container.background_color }};
+  {{ macros.spacing_complex(design.alergens_info.container.spacing.padding, 'padding') }}
+  {{ macros.spacing_complex(design.alergens_info.container.spacing.margin, 'margin') }}
+  {{ macros.border_radius(design.alergens_info.container.border.border_radius) }}
+  {{ macros.border_complex(design.alergens_info.container.border.border) }}
+}
+
+%%SELECTOR%% .alergens-info .allergen-title{
+ {{ macros.typography(design.alergens_info.info_box.heading_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .alergens-info p{
+  margin: 0;
+  {{ macros.typography(design.alergens_info.info_box.text_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .alergens {
+  {{ macros.typography(design.alergens_info.no_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .alergens-info .alergen-no {
+  {{ macros.typography(design.alergens_info.info_box.no_typography, globalSettings) }}
+}
+
+{% if design.alergens_info.display == 'row' %}
+    %%SELECTOR%% .alergens-info .alergens-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: {{ design.alergens_info.gap.style }};
+	}
+{% elseif design.alergens_info.display == 'column' %}
+   %%SELECTOR%% .alergens-info .alergens-info-block {
+   display: flex;
+   flex-wrap: wrap;
+   gap: {{ design.alergens_info.gap.style }};
+	}
+{% endif %}
+
+
+{% if content.options.enable_tabs %}
+%%SELECTOR%% .menu-tabs {
+  {% if design.menu_tabs.position == 'sticky' %}
+  position: sticky;
+  {% if design.menu_tabs.sticky_offset.style %}
+  top: {{ design.menu_tabs.sticky_offset.style }};
+  {% else %}
+  top: 0;
+  {% endif %}
+  {% endif %}
+  display: flex;
+  {% if design.menu_tabs.layout == 'vertical' %}
+  flex-direction: column;
+  {% endif %}
+  {% if design.menu_tabs.flex_wrap %}
+  flex-wrap: wrap;
+  {% endif %}
+  gap: {{ design.menu_tabs.gap.style }};
+  background-color: {{ design.menu_tabs.background_color }};
+  {{ macros.spacing_padding_all(design.menu_tabs.spacing.padding) }}
+  {{ macros.spacing_margin_all(design.menu_tabs.spacing.margin) }}
+  overflow: scroll;
+}
+%%SELECTOR%% .menu-tab {
+  background-color: {{ design.menu_tabs.single_tab.color }};
+  width: {{ design.menu_tabs.single_tab.width.style }};
+  {{ macros.border_radius(design.menu_tabs.single_tab.border_radius) }}
+  {{ macros.border_complex(design.menu_tabs.single_tab.border) }}
+  {{ macros.typography(design.menu_tabs.single_tab.typography, globalSettings) }}
+  {{ macros.spacing_complex(design.menu_tabs.single_tab.spacing.padding, 'padding') }}
+  cursor: pointer;
+  white-space:nowrap;
+  {% if design.menu_tabs.flex_grow %}
+  flex-grow: 1;
+  {% endif %}
+}
+
+%%SELECTOR%% .menu-tab:hover {
+   background-color: {{ design.menu_tabs.single_tab.color_hover }};
+   {{ macros.typographyWithHoverableColorAndEffects(design.menu_tabs.single_tab.typography) }}
+}
+
+%%SELECTOR%% .menu-tab.active {
+  background-color: {{ design.menu_tabs.single_tab.active_color }};
+  {{ macros.typography(design.menu_tabs.single_tab.active_typography, globalSettings) }}
+}
+{% endif %}
+
+%%SELECTOR%% .menu-sizes__heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+%%SELECTOR%% .menu-sizes__headings {
+  display: flex;
+  gap:  {{ design.drink_sizes_heading.size_category_gap.style }};
+}
+
+%%SELECTOR%% .menu-size__heading {
+  {{ macros.typography(design.drink_sizes_heading.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .category-des {
+  {{ macros.typography(design.category.category_description.typography, globalSettings) }}
+  {{ macros.spacing_all(design.category.category_description.spacing) }}
+}
+
+
