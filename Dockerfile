@@ -27,7 +27,7 @@ FROM composer:2.10 AS build
 COPY composer.json .
 RUN composer install --ignore-platform-reqs
 
-FROM wordpress:7.0.0-php8.4-fpm-alpine AS final
+FROM wordpress:7.0.2-php8.4-fpm-alpine AS final
 
 LABEL authors="Tomáš Vojík <vojik@esoul.cz>"
 LABEL maintainer="Tomáš Vojík <vojik@esoul.cz>"
@@ -49,7 +49,7 @@ COPY php.ini $PHP_INI_DIR/conf.d/wordpress.ini
 COPY fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # Copy all wordpress files from /usr/src/wordpress to /var/www/html
-COPY --chown=www-data:www-data --from=wordpress:7.0.0-php8.4-fpm-alpine /usr/src/wordpress /var/www/html
+COPY --chown=www-data:www-data --from=wordpress:7.0.2-php8.4-fpm-alpine /usr/src/wordpress /var/www/html
 
 # Copy preload file
 COPY preload.php /var/www/html/preload.php
