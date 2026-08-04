@@ -1,0 +1,17 @@
+.git
+.idea
+.env
+.env.*
+*.log
+*.sql
+.DS_Store
+
+vendor
+wp-admin
+wp-includes
+wp-content
+wp-*.php
+index.php
+license.txt
+readme.html
+xmlrpc.php

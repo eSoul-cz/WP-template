@@ -24,7 +24,6 @@ $preload_patterns = [
 
     // HTTP response / request
     'wp-includes/class-wp-http-response.php',
-    'wp-includes/class-wp-http-requests-hooks.php',
     'wp-includes/class-wp-http-proxy.php',
     'wp-includes/class-wp-http-requests-response.php',
     'wp-includes/class-wp-http-cookie.php',

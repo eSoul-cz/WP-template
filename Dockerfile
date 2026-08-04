@@ -1,46 +1,51 @@
-# Install additional PHP extensions into the official WordPress PHP-FPM Alpine image
-FROM wordpress:php8.4-fpm-alpine AS extension-installer
+ARG WP_VERSION=7.0.2
+ARG PHP_VERSION=8.4
 
-COPY --from=ghcr.io/mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+FROM wordpress:${WP_VERSION}-php${PHP_VERSION}-fpm-alpine AS wordpress-source
 
-RUN install-php-extensions  \
-    mysqli  \
-    zip  \
-    exif  \
-    intl  \
-    opcache  \
-    soap  \
-    bcmath  \
-    gd  \
-    imagick  \
-    gettext  \
-    redis  \
-    apcu  \
-    sockets  \
-    igbinary \
-    opentelemetry \
-    protobuf
+# This must be the base of the final image. The official WordPress image declares
+# /var/www/html as a volume, which would allow persisted files to hide a newer
+# WordPress release after an image update.
+FROM rg.fr-par.scw.cloud/esoul-starters/php-fpm:${PHP_VERSION} AS php-base
+
+# Extensions supplied by php-base are augmented with the WordPress-specific set.
+RUN install-php-extensions \
+    @composer \
+    apcu \
+    exif \
+    gd \
+    gettext \
+    imagick \
+    mysqli \
+    redis \
+    soap
 
 # Install instrumentation libraries via Composer
-FROM composer:2.10 AS build
+FROM php-base AS composer-dependencies
 
-COPY composer.json .
-RUN composer install --ignore-platform-reqs
+WORKDIR /app
 
-FROM wordpress:7.0.2-php8.4-fpm-alpine AS final
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-progress \
+    --optimize-autoloader
+
+FROM php-base AS final
+
+ARG WP_VERSION
 
 LABEL authors="Tomáš Vojík <vojik@esoul.cz>"
 LABEL maintainer="Tomáš Vojík <vojik@esoul.cz>"
+LABEL org.opencontainers.image.title="eSoul WordPress"
+LABEL org.opencontainers.image.version="${WP_VERSION}"
 
 WORKDIR /var/www/html
 
-# Copy installed extensions from the previous stage
-COPY --from=extension-installer /usr/local/lib/php/extensions/ /usr/local/lib/php/extensions/
-COPY --from=extension-installer /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
-
-# Copy Composer and vendor files from the previous stage
-COPY --from=build /usr/bin/composer /usr/bin/composer
-COPY --from=build /app/vendor /var/www/html/vendor
+# WordPress core is part of the image, not initialized into a runtime volume.
+COPY --chown=root:www-data --from=wordpress-source /usr/src/wordpress/ ./
+COPY --chown=root:www-data --from=composer-dependencies /app/vendor/ ./vendor/
 
 # Custom php.ini settings
 COPY php.ini $PHP_INI_DIR/conf.d/wordpress.ini
@@ -48,20 +53,38 @@ COPY php.ini $PHP_INI_DIR/conf.d/wordpress.ini
 # Optimized PHP-FPM pool configuration
 COPY fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Copy all wordpress files from /usr/src/wordpress to /var/www/html
-COPY --chown=www-data:www-data --from=wordpress:7.0.2-php8.4-fpm-alpine /usr/src/wordpress /var/www/html
-
 # Copy preload file
-COPY preload.php /var/www/html/preload.php
+COPY --chown=root:www-data preload.php ./preload.php
 
-# Setup healthcheck script
-RUN apk add --no-cache fcgi busybox grep lz4-libs
+# Install the process supervisor and healthcheck dependencies.
+RUN apk add --no-cache busybox fcgi grep lz4-libs supervisor
+
+COPY supervisord.conf /etc/supervisord.conf
+COPY wp-cron-runner.sh /usr/local/bin/wp-cron-runner
 COPY fpm-healthcheck.sh /usr/local/bin/fpm-healthcheck
-RUN chmod +x /usr/local/bin/fpm-healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD ["fpm-healthcheck"]
+COPY container-healthcheck.sh /usr/local/bin/container-healthcheck
+RUN chmod +x \
+    /usr/local/bin/container-healthcheck \
+    /usr/local/bin/fpm-healthcheck \
+    /usr/local/bin/wp-cron-runner
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD ["container-healthcheck"]
 
-# Ensure ownership
-RUN chown -R www-data:www-data /var/www
+# The external cron runner replaces WordPress's request-triggered cron spawning.
+COPY wordpress-runtime.php /usr/local/etc/wordpress/runtime.php
+
+# wp-config-docker.php reads the WORDPRESS_* environment variables at runtime.
+# Core remains root-owned so it can only be changed by deploying another image;
+# wp-content remains writable for installations that do not mount it separately.
+RUN cp wp-config-docker.php wp-config.php \
+    && sed -i "/\/\* That's all, stop editing! Happy publishing. \*\//i require_once '/usr/local/etc/wordpress/runtime.php';" wp-config.php \
+    && chown -R root:www-data /var/www/html \
+    && find /var/www/html -type d -exec chmod 0755 {} + \
+    && find /var/www/html -type f -exec chmod 0644 {} + \
+    && mkdir -p wp-content/uploads \
+    && chown -R www-data:www-data wp-content \
+    && test -f index.php \
+    && test -f wp-admin/index.php \
+    && test -f wp-includes/version.php
 
 USER www-data
 
@@ -73,8 +96,8 @@ ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
 ENV OTEL_PROPAGATORS=baggage,tracecontext
 
-# Copy wp-config
-RUN cp wp-config-docker.php wp-config.php
-
 # Expose FPM port
 EXPOSE 9000
+
+ENTRYPOINT ["/usr/bin/supervisord"]
+CMD ["-c", "/etc/supervisord.conf"]
