@@ -19,12 +19,17 @@ pipeline {
 	}
 
 	environment {
+		// Workspace directory
+		WORKSPACE = sh(script: 'pwd', returnStdout: true).trim()
+
+		// Docker repositories
 		REGISTRY = 'rg.fr-par.scw.cloud/esoul-starters'
 		REGISTRY_HOST = 'rg.fr-par.scw.cloud'
 
 		// Images
 		APP_IMAGE = 'esoul-wp'
 
+		// Deployment stack names (comma-separated)
 		DEPLOY_STACK_NAMES = 'wp1,wp2,wp3'
 	}
 
@@ -148,6 +153,10 @@ pipeline {
 	}
 
 	post {
+		always {
+			sh 'sudo /usr/local/sbin/jenkins-clean-workspace-perms "$WORKSPACE" || true'
+			cleanWs()
+		}
 		success {
 			echo 'Pipeline completed successfully!'
 		}
