@@ -6,13 +6,13 @@ pipeline {
 	parameters {
 		string(
 			name: 'WP_VERSION',
-			defaultValue: '',
+			defaultValue: '7.0.2',
 			description: 'Official WordPress image version; blank uses the Dockerfile default',
 			trim: true
 		)
 		string(
 			name: 'PHP_VERSION',
-			defaultValue: '',
+			defaultValue: '8.4',
 			description: 'PHP-FPM image version; blank uses the Dockerfile default',
 			trim: true
 		)
@@ -106,7 +106,6 @@ pipeline {
 						script {
 							echo 'Deploying the new Docker image to the server...'
 						}
-
 
 						// load komodo_deploy_api_key and komodo_deploy_api_secret
 						withCredentials([
