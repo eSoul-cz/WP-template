@@ -2,10 +2,8 @@
 
 namespace WebpConverter\Conversion\Method;
 
-use WebpConverter\Exception\FilesizeOversizeException;
+use WebpConverter\Exception\ExceptionInterface;
 use WebpConverter\Exception\LargerThanOriginalException;
-use WebpConverter\Exception\OutputPathException;
-use WebpConverter\Exception\SourcePathException;
 use WebpConverter\Settings\Option\OutputFormatsOption;
 
 /**
@@ -16,7 +14,7 @@ abstract class LibraryMethodAbstract extends MethodAbstract implements LibraryMe
 	/**
 	 * {@inheritdoc}
 	 */
-	public function convert_paths( array $paths, array $plugin_settings, bool $regenerate_force ) {
+	public function convert_paths( array $paths, array $plugin_settings, bool $regenerate_force ): void {
 		$output_formats = $plugin_settings[ OutputFormatsOption::OPTION_NAME ];
 		foreach ( $output_formats as $output_format ) {
 			foreach ( $paths as $path ) {
@@ -32,10 +30,8 @@ abstract class LibraryMethodAbstract extends MethodAbstract implements LibraryMe
 	 * @param string  $source_path     Server path of source image.
 	 * @param string  $output_format   Extension of output format.
 	 * @param mixed[] $plugin_settings .
-	 *
-	 * @return void
 	 */
-	private function convert_path( string $source_path, string $output_format, array $plugin_settings ) {
+	private function convert_path( string $source_path, string $output_format, array $plugin_settings ): void {
 		$this->server_configurator->set_memory_limit();
 		$this->server_configurator->set_execution_time();
 
@@ -52,13 +48,13 @@ abstract class LibraryMethodAbstract extends MethodAbstract implements LibraryMe
 			$this->update_conversion_stats( $source_path, $output_path, $output_format );
 
 			$this->files_statuses[ $output_format ][ $source_path ] = true;
-		} catch ( OutputPathException $e ) {
-			$this->save_conversion_error( $e->getMessage(), $plugin_settings );
-		} catch ( SourcePathException|FilesizeOversizeException $e ) {
-			$this->save_conversion_error( $e->getMessage(), $plugin_settings );
-			$this->skip_crashed->create_crashed_file( $output_path );
 		} catch ( LargerThanOriginalException $e ) {
 			return;
+		} catch ( ExceptionInterface $e ) {
+			$this->save_conversion_error( $e->getMessage(), $plugin_settings );
+			if ( isset( $output_path ) && $e->is_crashed_file_required() ) {
+				$this->skip_crashed->create_crashed_file( $output_path );
+			}
 		}
 	}
 }

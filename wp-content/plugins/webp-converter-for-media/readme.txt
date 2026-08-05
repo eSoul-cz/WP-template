@@ -3,9 +3,9 @@ Contributors: mateuszgbiorczyk
 Donate link: https://url.mattplugins.com/converter-readme-donate-link
 Tags: convert webp, webp, optimize images, image optimization, compress images
 Requires at least: 4.9
-Tested up to: 6.9
-Requires PHP: 7.1
-Stable tag: 6.4.0
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 6.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -309,60 +309,53 @@ Current list of supported CDN servers:
 
 == Changelog ==
 
-= 6.4.0 (2025-12-08) =
-* `[Security]` Added permission check to ensure the user can edit the post before manually converting an image in the Media Library (CVE-2025-13750)
-* `[Security]` Added stricter permission checks to REST API endpoints for authenticated users
+= 6.6.4 (2026-08-05) =
+* `[Fixed]` Fatal error during image conversion when encountering unhandled conversion errors
 
-= 6.3.2 (2025-11-24) =
-* `[Added]` Support for WordPress 6.9
+= 6.6.3 (2026-08-03) =
+* `[Fixed]` Fatal error with undefined constant CURLINFO_SIZE_DOWNLOAD_T on old versions of cURL library
 
-= 6.3.1 (2025-11-09) =
-* `[Fixed]` Support for Bunny CDN and BunnyCDN plugin
-* `[Fixed]` Support for QUIC.cloud CDN
+= 6.6.2 (2026-07-17) =
+* `[Changed]` Error detection of non-working redirects
 
-= 6.3.0 (2025-10-28) =
-* `[Changed]` Message about rewrites_uploads_blocked server configuration error
+= 6.6.1 (2026-06-03) =
+* `[Added]` Blocking of automatic image conversion when uploading images to Media Library during some server configuration errors
+* `[Added]` Blocking of automatic image conversion via WP-Cron during some server configuration errors
+* `[Added]` Blocking of `regenerate` command in WP-CLI during some server configuration errors
 
-= 6.2.4 (2025-09-09) =
-* `[Fixed]` Deprecated notice for implicitly nullable parameter when converting images
+= 6.6.0 (2026-05-19) =
+* `[Changed]` Minimum required PHP version from 7.1 to 7.4
+* `[Added]` Compatibility with PHP 8.5
+* `[Added]` Support for WordPress 7.0
 
-= 6.2.3 (2025-09-02) =
-* `[Fixed]` Unknown error when converting images when file is unavailable or file size verification failed
+= 6.5.6 (2026-05-07) =
+* `[Fixed]` Handling of trailing slashes in REST API endpoint URLs
 
-= 6.2.2 (2025-04-29) =
-* `[Security]` Update of Axios HTTP client
+= 6.5.5 (2026-04-02) =
+* `[Fixed]` Fatal error when source image is not a valid image file
 
-= 6.2.1 (2025-04-01) =
-* `[Fixed]` Handling of excluded directories when uploading new images
-* `[Added]` Error detection of required functions in disable_functions list in PHP configuration
-* `[Added]` Support for WordPress 6.8
+= 6.5.4 (2026-02-26) =
+* `[Fixed]` Displaying notification about Cloudflare cache
 
-= 6.2.0 (2024-12-18) =
-* `[Changed]` Minimum required PHP version from 7.0 to 7.1
-* `[Added]` Compatibility with PHP 8.4
+= 6.5.3 (2026-01-24) =
+* `[Changed]` The Pass Thru loading mode is now restricted to standard WordPress directory structures only
 
-= 6.1.3 (2024-11-19) =
-* `[Fixed]` Translations in command registration for WP-CLI
-* `[Added]` Support for WordPress 6.7
+= 6.5.2 (2026-01-24) =
+* `[Security]` Replaced cURL-based fetching with native readfile(), implemented a whitelist of trusted website URLs and stricter extension validation in the Pass Thru loading mode to prevent unauthorized server-side requests (CVE-2026-1356)
+* `[Security]` Implemented physical path identity verification for the Pass Thru loading mode using realpath() to provide extra protection against Directory Traversal
+* `[Security]` Added X-Content-Type-Options: nosniff header for browser-side protection in the Pass Thru loading mode
+* `[Fixed]` Priority logic for loading next-generation image formats (AVIF/WebP)
+* `[Added]` Automatic refresh of an image loading mode after a plugin update
+* `[Added]` Significant performance boost for the Pass Thru loading mode by direct filesystem access instead of cURL requests
+* `[Added]` Support for Content-Length headers to optimize image delivery in the Pass Thru loading mode
 
-= 6.1.2 (2024-10-26) =
-* `[Fixed]` Removing converted files after uninstalling plugin
+= 6.5.1 (2026-01-23) =
+* Version superseded by 6.5.2
 
-= 6.1.1 (2024-10-02) =
-* `[Changed]` Bulk Optimization of Images section
-
-= 6.1.0 (2024-09-13) =
-* `[Removed]` Filter `webpc_supported_source_directory`
-* `[Fixed]` Handling of excluded directories when uploading new images
-* `[Fixed]` Handling of excluded filenames when uploading new images
-* `[Fixed]` Adding support for custom directories using webpc_source_directories filter
-* `[Fixed]` Verification of rewrites_not_working server configuration error when HTTP referer is required
-
-= 6.0.0 (2024-08-28) =
-* `[Fixed]` Generating statistics on plugin settings page when WebP format is unchecked
-* `[Fixed]` Restoring original images in Media Library
-* `[Changed]` Optimization statistics in Media Library
-* `[Added]` Warnings with explanations in plugin settings field: Image loading mode
+= 6.5.0 (2026-01-11) =
+* `[Fixed]` Rewrite rules to handle environments where RewriteRule may receive an absolute filesystem path
+* `[Changed]` Field to select the format to which the images should be converted
+* `[Added]` Settings field to modify the prefix used in RewriteRule to fix the absolute filesystem path issue
 
 See [changelog.txt](https://url.mattplugins.com/converter-readme-changelog) for previous versions.
 

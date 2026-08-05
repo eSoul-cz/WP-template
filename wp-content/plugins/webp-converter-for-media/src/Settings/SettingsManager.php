@@ -24,20 +24,11 @@ class SettingsManager {
 	const NONCE_PARAM_KEY     = 'webpc_nonce';
 	const NONCE_PARAM_VALUE   = 'webpc-save';
 
-	/**
-	 * @var PluginData
-	 */
-	private $plugin_data;
+	private PluginData $plugin_data;
 
-	/**
-	 * @var FormatFactory
-	 */
-	private $format_factory;
+	private FormatFactory $format_factory;
 
-	/**
-	 * @var TokenValidator
-	 */
-	private $token_validator;
+	private TokenValidator $token_validator;
 
 	public function __construct(
 		PluginData $plugin_data,
@@ -50,10 +41,7 @@ class SettingsManager {
 		$this->token_validator = $token_validator ?: new TokenValidator( $token_repository );
 	}
 
-	/**
-	 * @return void
-	 */
-	public function save_settings() {
+	public function save_settings(): void {
 		$posted_settings = $this->plugin_data->get_validated_posted_data();
 		if ( $posted_settings === null ) {
 			return;
@@ -77,6 +65,9 @@ class SettingsManager {
 		} elseif ( ( $plugin_settings[ ConversionMethodOption::OPTION_NAME ] === RemoteMethod::METHOD_NAME )
 			&& ! $plugin_settings[ AccessTokenOption::OPTION_NAME ] ) {
 			$plugin_settings[ ConversionMethodOption::OPTION_NAME ] = null;
+			$plugin_settings[ OutputFormatsOption::OPTION_NAME ]    = [
+				WebpFormat::FORMAT_EXTENSION,
+			];
 		}
 
 		$plugin_settings = $this->plugin_data->get_validated_form_data( $plugin_settings );

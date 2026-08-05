@@ -35,30 +35,13 @@ class RewritesErrorsDetector implements DetectorInterface {
 	const PATH_OUTPUT_FILE_PLUGINS = '/webp-converter-for-media/assets/img/icon-test.png';
 	const URL_DEBUG_HTACCESS_FILE  = 'assets/img/debug-htaccess/icon-test.png2';
 
-	/**
-	 * @var PluginInfo
-	 */
-	private $plugin_info;
+	private PluginInfo $plugin_info;
 
-	/**
-	 * @var PluginData
-	 */
-	private $plugin_data;
+	private PluginData $plugin_data;
 
-	/**
-	 * @var FileLoader
-	 */
-	private $file_loader;
+	private FileLoader $file_loader;
 
-	/**
-	 * @var OutputPathGenerator
-	 */
-	private $output_path;
-
-	/**
-	 * @var string
-	 */
-	private $test_version;
+	private OutputPathGenerator $output_path;
 
 	public function __construct(
 		PluginInfo $plugin_info,
@@ -67,17 +50,13 @@ class RewritesErrorsDetector implements DetectorInterface {
 		?FileLoader $file_loader = null,
 		?OutputPathGenerator $output_path = null
 	) {
-		$this->plugin_info  = $plugin_info;
-		$this->plugin_data  = $plugin_data;
-		$this->file_loader  = $file_loader ?: new FileLoader();
-		$this->output_path  = $output_path ?: new OutputPathGenerator( $format_factory );
-		$this->test_version = uniqid();
+		$this->plugin_info = $plugin_info;
+		$this->plugin_data = $plugin_data;
+		$this->file_loader = $file_loader ?: new FileLoader();
+		$this->output_path = $output_path ?: new OutputPathGenerator( $format_factory );
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_error() {
+	public function get_error(): ?NoticeInterface {
 		$this->convert_images_for_debug();
 
 		do_action( LoaderAbstract::ACTION_NAME, true, true );
@@ -87,10 +66,7 @@ class RewritesErrorsDetector implements DetectorInterface {
 		return $error;
 	}
 
-	/**
-	 * @return NoticeInterface|null
-	 */
-	private function detect_rewrites_error() {
+	private function detect_rewrites_error(): ?NoticeInterface {
 		$settings    = $this->plugin_data->get_plugin_settings();
 		$loader_type = $settings[ LoaderTypeOption::OPTION_NAME ] ?? '';
 
@@ -118,7 +94,7 @@ class RewritesErrorsDetector implements DetectorInterface {
 				return new PassthruNotWorkingNotice();
 		}
 
-		$this->test_version = uniqid();
+		$this->file_loader->reset_test_version();
 		if ( $this->if_redirects_are_cached() === true ) {
 			return new RewritesCachedNotice();
 		}
@@ -128,10 +104,8 @@ class RewritesErrorsDetector implements DetectorInterface {
 
 	/**
 	 * Converts and saves files needed for testing.
-	 *
-	 * @return void
 	 */
-	private function convert_images_for_debug() {
+	private function convert_images_for_debug(): void {
 		$uploads_dir = apply_filters( 'webpc_dir_path', '', 'uploads' );
 		if ( ! is_writable( $uploads_dir ) ) {
 			return;
@@ -184,134 +158,98 @@ class RewritesErrorsDetector implements DetectorInterface {
 		}
 	}
 
-	/**
-	 * Checks if redirects to output images are works.
-	 *
-	 * @return bool
-	 */
 	private function if_redirects_are_works(): bool {
 		$uploads_dir = apply_filters( 'webpc_dir_path', '', 'uploads' );
 		$uploads_url = apply_filters( 'webpc_dir_url', '', 'uploads' );
 
-		$file_size = $this->file_loader->get_file_size_by_path(
+		$original_file_size    = $this->file_loader->get_file_size_by_path(
 			$uploads_dir . self::PATH_OUTPUT_FILE_PNG
 		);
-		$file_webp = $this->file_loader->get_file_size_by_url(
+		$file_png_as_converted = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
-		if ( $file_webp > 0 ) {
-			return ( $file_webp < $file_size );
+
+		if ( $file_png_as_converted->get_length() > 0 ) {
+			return ( $file_png_as_converted->get_length() < $original_file_size );
 		}
 
-		$file_png_status = $this->file_loader->get_file_status_by_url(
+		$file_png_as_original = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
 			false,
-			$this->test_version,
 			__FUNCTION__
 		);
-		if ( $file_png_status === 500 ) {
+
+		if ( $file_png_as_original->get_http_code() === 500 ) {
 			return false;
 		}
 
-		$file_webp_status = $this->file_loader->get_file_status_by_url(
-			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
-			true,
-			$this->test_version,
-			__FUNCTION__
-		);
-		if ( ( $file_png_status === 200 ) && ( $file_webp_status === 404 ) ) {
+		if ( ( $file_png_as_original->get_http_code() === 200 ) && ( $file_png_as_converted->get_http_code() === 404 ) ) {
 			return false;
 		}
 
 		return true;
 	}
 
-	/**
-	 * Checks if server supports using .htaccess files from custom locations.
-	 *
-	 * @return bool
-	 */
 	private function if_htaccess_can_be_overwritten(): bool {
-		$file_status = $this->file_loader->get_file_status_by_url(
+		$file_png2_as_converted = $this->file_loader->get_file_by_url(
 			$this->plugin_info->get_plugin_directory_url() . self::URL_DEBUG_HTACCESS_FILE,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
 
-		return ( in_array( $file_status, [ 403, 404 ] ) );
+		return ( in_array( $file_png2_as_converted->get_http_code(), [ 403, 404 ] ) );
 	}
 
-	/**
-	 * Checks if bypassing of redirects to output images is exists.
-	 *
-	 * @return bool
-	 */
 	private function if_bypassing_apache_is_active(): bool {
 		$uploads_url = apply_filters( 'webpc_dir_url', '', 'uploads' );
 
-		$file_png  = $this->file_loader->get_file_size_by_url(
+		$file_png_as_converted  = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
-		$file_png2 = $this->file_loader->get_file_size_by_url(
+		$file_png2_as_converted = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG2,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
 
-		return ( $file_png > $file_png2 );
+		return ( $file_png_as_converted->get_length() > $file_png2_as_converted->get_length() );
 	}
 
-	/**
-	 * Checks if redirects to output images from /plugins directory are works.
-	 *
-	 * @return bool
-	 */
 	private function if_redirects_for_plugins_are_works(): bool {
 		$uploads_dir = apply_filters( 'webpc_dir_path', '', 'plugins' );
 		$uploads_url = apply_filters( 'webpc_dir_url', '', 'plugins' );
 
-		$file_size = $this->file_loader->get_file_size_by_path(
+		$original_file_size    = $this->file_loader->get_file_size_by_path(
 			$uploads_dir . self::PATH_OUTPUT_FILE_PLUGINS
 		);
-		$file_webp = $this->file_loader->get_file_size_by_url(
+		$file_png_as_converted = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PLUGINS,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
 
-		return ( ( $file_webp < $file_size ) && ( $file_webp !== 0 ) );
+		return ( ( $file_png_as_converted->get_length() < $original_file_size ) && ( $file_png_as_converted->get_length() !== 0 ) );
 	}
 
-	/**
-	 * Checks if redirects to output images are cached.
-	 *
-	 * @return bool
-	 */
 	private function if_redirects_are_cached(): bool {
 		$uploads_url = apply_filters( 'webpc_dir_url', '', 'uploads' );
 
-		$file_webp     = $this->file_loader->get_file_size_by_url(
+		$file_png_as_converted = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
 			true,
-			$this->test_version,
 			__FUNCTION__
 		);
-		$file_original = $this->file_loader->get_file_size_by_url(
+		$file_png_as_original  = $this->file_loader->get_file_by_url(
 			$uploads_url . self::PATH_OUTPUT_FILE_PNG,
 			false,
-			$this->test_version,
 			__FUNCTION__
 		);
 
-		return ( ( $file_webp > 0 ) && ( $file_webp === $file_original ) );
+		return ( ( $file_png_as_original->get_length() > 0 )
+			&& ( $file_png_as_original->get_length() === $file_png_as_converted->get_length() ) );
 	}
 }

@@ -10,6 +10,7 @@ use WebpConverter\Notice\ThanksNotice;
 use WebpConverter\Notice\TokenInactiveNotice;
 use WebpConverter\Notice\UpgradeNotice;
 use WebpConverter\Notice\WelcomeNotice;
+use WebpConverter\Plugin\ActivationHandler;
 use WebpConverter\Repository\TokenRepository;
 use WebpConverter\Service\CloudflareConfigurator;
 use WebpConverter\Service\OptionsAccessManager;
@@ -24,10 +25,8 @@ class PluginSettingsManager {
 
 	/**
 	 * Removes options from wp_options table.
-	 *
-	 * @return void
 	 */
-	public static function remove_plugin_settings() {
+	public static function remove_plugin_settings(): void {
 		OptionsAccessManager::delete_option( WelcomeNotice::NOTICE_OPTION );
 		OptionsAccessManager::delete_option( ThanksNotice::NOTICE_OLD_OPTION );
 		OptionsAccessManager::delete_option( ThanksNotice::NOTICE_OPTION );
@@ -50,7 +49,7 @@ class PluginSettingsManager {
 		OptionsAccessManager::delete_option( TokenValidator::REQUEST_INFO_OPTION );
 		OptionsAccessManager::delete_option( CloudflareConfigurator::REQUEST_CACHE_CONFIG_OPTION );
 		OptionsAccessManager::delete_option( CloudflareConfigurator::REQUEST_CACHE_PURGE_OPTION );
-		OptionsAccessManager::delete_option( 'webpc_latest_version' );
+		OptionsAccessManager::delete_option( ActivationHandler::LATEST_VERSION_OPTION );
 
 		OptionsAccessManager::delete_option( StatsManager::STATS_INSTALLATION_DATE_OPTION );
 		OptionsAccessManager::delete_option( StatsManager::STATS_FIRST_VERSION_OPTION );

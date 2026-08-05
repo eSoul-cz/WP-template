@@ -11,10 +11,7 @@ class SupportedDirectoriesOption extends OptionAbstract {
 
 	const OPTION_NAME = 'dirs';
 
-	/**
-	 * @var DirectoryFactory
-	 */
-	private $directory_factory;
+	private DirectoryFactory $directory_factory;
 
 	public function __construct( DirectoryFactory $directory_factory ) {
 		$this->directory_factory = $directory_factory;
@@ -52,7 +49,7 @@ class SupportedDirectoriesOption extends OptionAbstract {
 	 * {@inheritdoc}
 	 */
 	public function get_info(): string {
-		return __( 'Files from these directories will be converted to output formats.', 'webp-converter-for-media' );
+		return __( 'Files from these directories will be converted to next-gen formats.', 'webp-converter-for-media' );
 	}
 
 	/**

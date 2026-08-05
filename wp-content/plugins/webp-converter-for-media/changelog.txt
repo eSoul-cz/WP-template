@@ -1,5 +1,53 @@
 == Changelog ==
 
+= 6.6.4 (2026-08-05) =
+* `[Fixed]` Fatal error during image conversion when encountering unhandled conversion errors
+
+= 6.6.3 (2026-08-03) =
+* `[Fixed]` Fatal error with undefined constant CURLINFO_SIZE_DOWNLOAD_T on old versions of cURL library
+
+= 6.6.2 (2026-07-17) =
+* `[Changed]` Error detection of non-working redirects
+
+= 6.6.1 (2026-06-03) =
+* `[Added]` Blocking of automatic image conversion when uploading images to Media Library during some server configuration errors
+* `[Added]` Blocking of automatic image conversion via WP-Cron during some server configuration errors
+* `[Added]` Blocking of `regenerate` command in WP-CLI during some server configuration errors
+
+= 6.6.0 (2026-05-19) =
+* `[Changed]` Minimum required PHP version from 7.1 to 7.4
+* `[Added]` Compatibility with PHP 8.5
+* `[Added]` Support for WordPress 7.0
+
+= 6.5.6 (2026-05-07) =
+* `[Fixed]` Handling of trailing slashes in REST API endpoint URLs
+
+= 6.5.5 (2026-04-02) =
+* `[Fixed]` Fatal error when source image is not a valid image file
+
+= 6.5.4 (2026-02-26) =
+* `[Fixed]` Displaying notification about Cloudflare cache
+
+= 6.5.3 (2026-01-24) =
+* `[Changed]` The Pass Thru loading mode is now restricted to standard WordPress directory structures only
+
+= 6.5.2 (2026-01-24) =
+* `[Security]` Replaced cURL-based fetching with native readfile(), implemented a whitelist of trusted website URLs and stricter extension validation in the Pass Thru loading mode to prevent unauthorized server-side requests (CVE-2026-1356)
+* `[Security]` Implemented physical path identity verification for the Pass Thru loading mode using realpath() to provide extra protection against Directory Traversal
+* `[Security]` Added X-Content-Type-Options: nosniff header for browser-side protection in the Pass Thru loading mode
+* `[Fixed]` Priority logic for loading next-generation image formats (AVIF/WebP)
+* `[Added]` Automatic refresh of an image loading mode after a plugin update
+* `[Added]` Significant performance boost for the Pass Thru loading mode by direct filesystem access instead of cURL requests
+* `[Added]` Support for Content-Length headers to optimize image delivery in the Pass Thru loading mode
+
+= 6.5.1 (2026-01-23) =
+* Version superseded by 6.5.2
+
+= 6.5.0 (2026-01-11) =
+* `[Fixed]` Rewrite rules to handle environments where RewriteRule may receive an absolute filesystem path
+* `[Changed]` Field to select the format to which the images should be converted
+* `[Added]` Settings field to modify the prefix used in RewriteRule to fix the absolute filesystem path issue
+
 = 6.4.0 (2025-12-08) =
 * `[Security]` Added permission check to ensure the user can edit the post before manually converting an image in the Media Library (CVE-2025-13750)
 * `[Security]` Added stricter permission checks to REST API endpoints for authenticated users

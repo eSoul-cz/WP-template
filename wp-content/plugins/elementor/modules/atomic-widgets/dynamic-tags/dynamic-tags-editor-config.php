@@ -3,6 +3,7 @@
 namespace Elementor\Modules\AtomicWidgets\DynamicTags;
 
 use Elementor\Modules\AtomicWidgets\Controls\Section;
+use Elementor\Modules\AtomicWidgets\Controls\Types\Date_Time_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Image_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Toggle_Control;
 use Elementor\Modules\AtomicWidgets\Controls\Types\Query_Control;
@@ -83,9 +84,10 @@ class Dynamic_Tags_Editor_Config {
 			'name'            => $tag['name'],
 			'categories'      => $tag['categories'],
 			'label'           => $tag['title'] ?? '',
-			'group'           => $tag['group'] ?? '',
+			'group'           => $tag['atomic_group'] ?? $tag['group'] ?? '',
 			'atomic_controls' => [],
 			'props_schema'    => $this->schemas->get( $tag['name'] ),
+			'meta'            => $tag['meta'] ?? [],
 		];
 
 		if ( ! isset( $tag['controls'] ) ) {
@@ -155,16 +157,16 @@ class Dynamic_Tags_Editor_Config {
 			'query'   => fn( $control ) => $this->convert_autocomplete_control_to_atomic( $control ),
 			'choose'   => fn( $control ) => $this->convert_choose_control_to_atomic( $control ),
 			'media'   => fn( $control ) => $this->convert_media_control_to_atomic( $control ),
-			'date_time' => fn( $control ) => $this->convert_text_control_to_atomic( $control ),
+			'date_time' => fn( $control ) => $this->convert_date_time_control_to_atomic( $control ),
 		];
 
 		if ( ! isset( $map[ $control['type'] ] ) ) {
 			return null;
 		}
 
-		$is_convertable = ! isset( $control['name'], $control['section'], $control['label'], $control['default'] );
+		$is_convertible = ! isset( $control['name'], $control['section'], $control['label'], $control['default'] );
 
-		if ( $is_convertable ) {
+		if ( $is_convertible ) {
 			throw new \Exception( 'Control must have name, section, label, and default' );
 		}
 
@@ -178,27 +180,29 @@ class Dynamic_Tags_Editor_Config {
 	 * @throws \Exception If control is missing options.
 	 */
 	private function convert_select_control_to_atomic( $control, $tag = [] ) {
-		$options = $this->extract_select_options_from_control( $control );
-
-		if ( empty( $options ) ) {
-			throw new \Exception( 'Select control must have options' );
-		}
-
-		$options = apply_filters( 'elementor/atomic/dynamic_tags/select_control_options', $options, $control, $tag );
-
-		$options = array_map(
-			fn( $key, $value ) => [
-				'value' => $key,
-				'label' => $value,
-			],
-			array_keys( $options ),
-			$options
-		);
-
 		$select_control = Select_Control::bind_to( $control['name'] )
 			->set_placeholder( $control['placeholder'] ?? '' )
-			->set_options( $options )
 			->set_label( $control['atomic_label'] ?? $control['label'] );
+
+		if ( $this->has_select_control_groups( $control ) ) {
+			$groups = $this->extract_select_groups_from_control( $control, $tag );
+
+			if ( empty( $groups ) ) {
+				throw new \Exception( 'Select control must have options' );
+			}
+
+			$select_control->set_groups( $groups );
+		} else {
+			$options = $this->extract_select_options_from_control( $control );
+
+			if ( empty( $options ) ) {
+				throw new \Exception( 'Select control must have options' );
+			}
+
+			$options = apply_filters( 'elementor/atomic/dynamic_tags/select_control_options', $options, $control, $tag );
+
+			$select_control->set_options( $this->map_select_options( $options ) );
+		}
 
 		if ( isset( $control['collection_id'] ) ) {
 			$select_control->set_collection_id( $control['collection_id'] );
@@ -207,23 +211,28 @@ class Dynamic_Tags_Editor_Config {
 		return $select_control;
 	}
 
+	private function has_select_control_groups( $control ): bool {
+		if ( ! empty( $control['options'] ) ) {
+			return false;
+		}
+
+		return ! empty( $control['groups'] ) && is_array( $control['groups'] );
+	}
+
 	private function extract_select_options_from_control( $control ): array {
-		$options = $control['options'] ?? [];
+		return $control['options'] ?? [];
+	}
 
-		if ( ! empty( $options ) ) {
-			return $options;
-		}
-
-		if ( empty( $control['groups'] ) || ! is_array( $control['groups'] ) ) {
-			return $options;
-		}
+	private function extract_select_groups_from_control( $control, $tag = [] ): array {
+		$sanitized_groups = [];
+		$flat_options = [];
 
 		foreach ( $control['groups'] as $group ) {
 			if ( empty( $group['options'] ) || ! is_array( $group['options'] ) ) {
 				continue;
 			}
 
-			$filtered = array_filter(
+			$options = array_filter(
 				$group['options'],
 				static function ( $label, $key ) {
 					return is_string( $key );
@@ -231,10 +240,47 @@ class Dynamic_Tags_Editor_Config {
 				ARRAY_FILTER_USE_BOTH
 			);
 
-			$options = array_merge( $options, $filtered );
+			if ( empty( $options ) ) {
+				continue;
+			}
+
+			$sanitized_groups[] = [
+				'label'   => $group['label'] ?? '',
+				'options' => $options,
+			];
+
+			$flat_options = array_merge( $flat_options, $options );
 		}
 
-		return $options;
+		$filtered_options = apply_filters( 'elementor/atomic/dynamic_tags/select_control_options', $flat_options, $control, $tag );
+
+		$groups = [];
+
+		foreach ( $sanitized_groups as $group ) {
+			$group_options = array_intersect_key( $filtered_options, $group['options'] );
+
+			if ( empty( $group_options ) ) {
+				continue;
+			}
+
+			$groups[] = [
+				'label'   => $group['label'],
+				'options' => $this->map_select_options( $group_options ),
+			];
+		}
+
+		return apply_filters( 'elementor/atomic/dynamic_tags/select_control_groups', $groups, $control, $tag );
+	}
+
+	private function map_select_options( array $options ): array {
+		return array_map(
+			fn( $key, $value ) => [
+				'value' => $key,
+				'label' => $value,
+			],
+			array_keys( $options ),
+			$options
+		);
 	}
 
 	/**
@@ -244,6 +290,11 @@ class Dynamic_Tags_Editor_Config {
 	 */
 	private function convert_text_control_to_atomic( $control ) {
 		return Text_Control::bind_to( $control['name'] )
+			->set_label( $control['label'] );
+	}
+
+	private function convert_date_time_control_to_atomic( $control ) {
+		return Date_Time_Control::bind_to( $control['name'] )
 			->set_label( $control['label'] );
 	}
 
@@ -358,7 +409,6 @@ class Dynamic_Tags_Editor_Config {
 
 	private function convert_media_control_to_atomic( $control ) {
 		return Image_Control::bind_to( $control['name'] )
-			->set_show_mode( 'media' )
 			->set_label( $control['label'] );
 	}
 

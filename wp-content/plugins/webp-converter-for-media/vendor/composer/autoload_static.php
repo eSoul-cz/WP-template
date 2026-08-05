@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit977a71a7bb63d9fc0c8d6b8913a12a29
 {
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WebpConverter\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'WebpConverter\\' => 
+        'WebpConverter\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -138,6 +138,7 @@ class ComposerStaticInit977a71a7bb63d9fc0c8d6b8913a12a29
         'WebpConverter\\Loader\\LoaderIntegrator' => __DIR__ . '/../..' . '/src/Loader/LoaderIntegrator.php',
         'WebpConverter\\Loader\\LoaderInterface' => __DIR__ . '/../..' . '/src/Loader/LoaderInterface.php',
         'WebpConverter\\Loader\\PassthruLoader' => __DIR__ . '/../..' . '/src/Loader/PassthruLoader.php',
+        'WebpConverter\\Model\\DebugCurl' => __DIR__ . '/../..' . '/src/Model/DebugCurl.php',
         'WebpConverter\\Model\\Token' => __DIR__ . '/../..' . '/src/Model/Token.php',
         'WebpConverter\\Notice\\BlackFridayNotice' => __DIR__ . '/../..' . '/src/Notice/BlackFridayNotice.php',
         'WebpConverter\\Notice\\CloudflareNotice' => __DIR__ . '/../..' . '/src/Notice/CloudflareNotice.php',
@@ -186,7 +187,9 @@ class ComposerStaticInit977a71a7bb63d9fc0c8d6b8913a12a29
         'WebpConverter\\Settings\\Option\\ConversionMethodOption' => __DIR__ . '/../..' . '/src/Settings/Option/ConversionMethodOption.php',
         'WebpConverter\\Settings\\Option\\ExcludedDirectoriesOption' => __DIR__ . '/../..' . '/src/Settings/Option/ExcludedDirectoriesOption.php',
         'WebpConverter\\Settings\\Option\\ExtraFeaturesOption' => __DIR__ . '/../..' . '/src/Settings/Option/ExtraFeaturesOption.php',
+        'WebpConverter\\Settings\\Option\\HtaccessRewriteFlagRedirectOption' => __DIR__ . '/../..' . '/src/Settings/Option/HtaccessRewriteFlagRedirectOption.php',
         'WebpConverter\\Settings\\Option\\HtaccessRewriteOutputOption' => __DIR__ . '/../..' . '/src/Settings/Option/HtaccessRewriteOutputOption.php',
+        'WebpConverter\\Settings\\Option\\HtaccessRewriteParentOption' => __DIR__ . '/../..' . '/src/Settings/Option/HtaccessRewriteParentOption.php',
         'WebpConverter\\Settings\\Option\\HtaccessRewritePathOption' => __DIR__ . '/../..' . '/src/Settings/Option/HtaccessRewritePathOption.php',
         'WebpConverter\\Settings\\Option\\HtaccessRewriteRootOption' => __DIR__ . '/../..' . '/src/Settings/Option/HtaccessRewriteRootOption.php',
         'WebpConverter\\Settings\\Option\\ImageResizeOption' => __DIR__ . '/../..' . '/src/Settings/Option/ImageResizeOption.php',
