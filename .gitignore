@@ -13,6 +13,7 @@ wp-config.php
 *.log
 /.env.wp-secrets
 /.reset-backups/
+/*_export_*.sql
 /.htaccess
 .idea
 *.iml

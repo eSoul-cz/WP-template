@@ -92,6 +92,25 @@ serialized plugin settings; use that plugin's migration tool or a WP-CLI
 serialization-aware `search-replace` when a baseline stores environment-specific
 URLs there.
 
+## Refreshing the database baseline
+
+Export the upgraded single-site database with explicit column names, then run:
+
+```bash
+php scripts/sanitize-db-export.php latest-export.sql db.sql
+```
+
+The sanitizer replaces the deployment URL with `http://wp-template.local`,
+removes users and user metadata, content, comments, scheduler history, form
+submissions, transients, caches, recovery/authentication material, account and
+license data, and plugin-generated secrets. It retains reusable WordPress and
+plugin configuration and creates a clean default category. The command refuses
+an unsafe placeholder length and validates the resulting baseline before
+atomically replacing `db.sql`.
+
+Raw `*_export_*.sql` files are ignored because they can contain password hashes,
+email addresses, session tokens, IP addresses, and third-party credentials.
+
 ## Generating WordPress secrets
 
 Generate a separate env file containing WordPress's eight authentication keys

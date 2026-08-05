@@ -348,8 +348,21 @@ generate_admin_sql() {
 # Replace domain and append admin SQL
 
 generate_sql() {
-  # Replace hardcoded domain in template. Assumes safe to replace.
-  php -d error_reporting=0 -r "echo str_replace('nginx.wp-template.orb.local', '$DOMAIN', file_get_contents('$DB_SQL_TEMPLATE'));" >"$DB_SQL_GENERATED" || error "Failed to generate SQL with updated domain"
+  # The sanitized baseline guarantees that this placeholder occurs only in the
+  # plain siteurl/home option values, never inside serialized plugin settings.
+  WP_TEMPLATE_SOURCE_URL="http://wp-template.local" \
+  WP_TEMPLATE_TARGET_URL="http://$DOMAIN" \
+    php -d error_reporting=0 -r '
+      $sql = file_get_contents($argv[1]);
+      if ($sql === false) {
+          exit(1);
+      }
+      echo str_replace(
+          getenv("WP_TEMPLATE_SOURCE_URL"),
+          getenv("WP_TEMPLATE_TARGET_URL"),
+          $sql,
+      );
+    ' "$DB_SQL_TEMPLATE" >"$DB_SQL_GENERATED" || error "Failed to generate SQL with updated domain"
 
   local admin_sql
   {

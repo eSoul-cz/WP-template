@@ -26,7 +26,7 @@ DB_NAME=""
 DB_USER=""
 DB_PASSWORD="${WP_RESET_DB_PASSWORD:-}"
 SITE_URL=""
-SOURCE_URL="http://nginx.wp-template.orb.local"
+SOURCE_URL="http://wp-template.local"
 ASSUME_YES=0
 ADMINS=()
 
