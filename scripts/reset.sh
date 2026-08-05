@@ -41,8 +41,8 @@ ADMIN_CREDENTIALS=""
 CONTAINER_STOPPED=0
 BACKUP_READY=0
 MUTATION_STARTED=0
-CONTENT_UID=""
-CONTENT_GID=""
+CONTENT_UID="82"
+CONTENT_GID="82"
 
 usage() {
   cat <<EOF
@@ -80,6 +80,7 @@ Example:
 
 Requirements:
   docker, git, php, rsync, tar, gzip, and mariadb/mysql client utilities.
+  Run as root so restored content can be owned by the container user 82:82.
   The DB user needs all normal WordPress schema privileges, including CREATE,
   DROP, ALTER, LOCK TABLES and SHOW VIEW, on its dedicated schema. Git
   authentication must already work for private repos. Multisite is unsupported.
@@ -195,6 +196,7 @@ find_requirements() {
 }
 
 validate_inputs() {
+  [[ "${EUID:-$(id -u)}" -eq 0 ]] || die "run this reset as root (for example with sudo) so wp-content can be owned by 82:82"
   [[ -n "$CONTAINER" ]] || die "container name cannot be empty"
   [[ "$CONTAINER" =~ ^[a-zA-Z0-9][a-zA-Z0-9_.-]*$ ]] || die "invalid container name"
   [[ "$DB_PORT" =~ ^[0-9]+$ ]] || die "DB port must be numeric"
@@ -236,12 +238,6 @@ validate_inputs() {
   mounted_source="$(CDPATH= cd -- "$mounted_source" && pwd -P)"
   [[ "$mounted_source" == "$CONTENT_DIR" ]] || die "$CONTAINER mounts $mounted_source, not requested $CONTENT_DIR"
 
-  # Linux server ownership is restored after rsync so new files retain the
-  # permissions expected by the existing deployment.
-  if stat -c '%u' "$CONTENT_DIR" >/dev/null 2>&1; then
-    CONTENT_UID="$(stat -c '%u' "$CONTENT_DIR")"
-    CONTENT_GID="$(stat -c '%g' "$CONTENT_DIR")"
-  fi
 }
 
 write_db_config() {
@@ -438,14 +434,13 @@ configure_site_and_admins() {
 restore_baseline_content() {
   echo "Replacing wp-content from repository baseline ..."
   rsync -a --delete --no-owner --no-group "$TMP_DIR/repository/wp-content/" "$CONTENT_DIR/"
+  normalize_content_permissions
+}
 
-  if [[ -n "$CONTENT_UID" && -n "$CONTENT_GID" ]]; then
-    if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
-      chown -R "$CONTENT_UID:$CONTENT_GID" "$CONTENT_DIR"
-    else
-      warn "not running as root; verify ownership of newly downloaded wp-content files"
-    fi
-  fi
+normalize_content_permissions() {
+  find "$CONTENT_DIR" -type d -exec chmod 0755 {} +
+  find "$CONTENT_DIR" -type f -exec chmod 0644 {} +
+  chown -R "$CONTENT_UID:$CONTENT_GID" "$CONTENT_DIR"
 }
 
 import_baseline() {
@@ -495,9 +490,7 @@ rollback() {
   if [[ "$rollback_status" -eq 0 ]]; then
     rsync -a --delete --no-owner --no-group "$rollback_dir/$(basename -- "$CONTENT_DIR")/" "$CONTENT_DIR/" || rollback_status=1
   fi
-  if [[ -n "$CONTENT_UID" && -n "$CONTENT_GID" && "${EUID:-$(id -u)}" -eq 0 ]]; then
-    chown -R "$CONTENT_UID:$CONTENT_GID" "$CONTENT_DIR" || rollback_status=1
-  fi
+  normalize_content_permissions || rollback_status=1
   [[ "$rollback_status" -eq 0 ]] || return 1
   echo "Rollback completed." >&2
 }

@@ -56,6 +56,11 @@ imports the baseline, creates new administrators, restores the repository
 content, and restarts the container. If a destructive step fails, the script
 attempts to restore both backups automatically.
 
+After either a reset or rollback, the complete `wp-content` tree is normalized
+to directories mode `0755`, files mode `0644`, and ownership `82:82` (the
+container's `www-data` user). For that reason, run the reset script with
+`sudo`/as root.
+
 Each WordPress installation must use its own database/schema. Separate users
 on a database shared by several WordPress installations are not sufficient.
 The application DB user must be allowed to create and drop tables in its own
