@@ -46,3 +46,69 @@ runtime-generated directories.
 `docker-compose.dev.yml` mounts the complete document root for local sharing
 with nginx. That volume must be recreated when testing a new WordPress core
 image; it is not the production deployment model.
+
+## Resetting a deployed installation
+
+`scripts/reset.sh` resets one single-site installation without replacing its
+container. It downloads `db.sql` and `wp-content` from a selected Git ref,
+backs up the current database and content, clears the dedicated site database,
+imports the baseline, creates new administrators, restores the repository
+content, and restarts the container. If a destructive step fails, the script
+attempts to restore both backups automatically.
+
+Each WordPress installation must use its own database/schema. Separate users
+on a database shared by several WordPress installations are not sufficient.
+The application DB user must be allowed to create and drop tables in its own
+schema. The reset script targets a single-site installation with the standard
+`wp_` table prefix; it does not support WordPress Multisite.
+
+Run it on the Docker host from the project directory:
+
+```bash
+sudo scripts/reset.sh \
+  --container wp1 \
+  --db-name wp1 \
+  --db-user wp1 \
+  --url https://wp1.example.com \
+  --admin admin:admin@example.com
+```
+
+The database password is requested without echoing it. Repeat `--admin` to
+create more administrators. Use `--repo` and `--ref` to select another GitHub
+repository or release. Run `scripts/reset.sh --help` for all options.
+
+The selected `db.sql` must be a valid, sanitized baseline containing the
+standard `siteurl` and `home` options. The reset preflight checks this before it
+stops the container or changes either persistent store.
+
+The script updates `siteurl`, `home`, the site administrator email, and plain
+post content. It deliberately does not perform a blind replacement inside
+serialized plugin settings; use that plugin's migration tool or a WP-CLI
+serialization-aware `search-replace` when a baseline stores environment-specific
+URLs there.
+
+## Generating WordPress secrets
+
+Generate a separate env file containing WordPress's eight authentication keys
+and salts on the deployment server:
+
+```bash
+scripts/generate-wp-secrets.sh
+```
+
+The default output is `.env.wp-secrets`. It is created atomically with mode
+`0600`, is ignored by Git, and is never overwritten unless `--force` is given.
+Each secret has 256 bits of randomness and contains only dotenv-safe hexadecimal
+characters. Add the file to the deployed WordPress service's `env_file` list:
+
+```yaml
+env_file:
+  - .env
+  - .env.secrets
+  - .env.wp-secrets
+```
+
+Keeping this file separate is intentional: the existing `.env.secrets` may
+also contain `WORDPRESS_DB_PASSWORD`, so a secrets rotation must not replace
+that file. Use `--output FILE` to choose another path or `--stdout` for output
+managed by an external secrets system.
