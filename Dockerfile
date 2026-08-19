@@ -62,10 +62,12 @@ RUN apk add --no-cache busybox fcgi grep lz4-libs supervisor
 COPY supervisord.conf /etc/supervisord.conf
 COPY wp-cron-runner.sh /usr/local/bin/wp-cron-runner
 COPY fpm-healthcheck.sh /usr/local/bin/fpm-healthcheck
+COPY fpm-watchdog.sh /usr/local/bin/fpm-watchdog
 COPY container-healthcheck.sh /usr/local/bin/container-healthcheck
 RUN chmod +x \
     /usr/local/bin/container-healthcheck \
     /usr/local/bin/fpm-healthcheck \
+    /usr/local/bin/fpm-watchdog \
     /usr/local/bin/wp-cron-runner
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s CMD ["container-healthcheck"]
 
