@@ -6,7 +6,7 @@ pipeline {
 	parameters {
 		string(
 			name: 'WP_VERSION',
-			defaultValue: '7.0.2',
+			defaultValue: '7.0.4',
 			description: 'Official WordPress image version; blank uses the Dockerfile default',
 			trim: true
 		)
