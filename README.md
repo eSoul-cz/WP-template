@@ -3,8 +3,21 @@
 WordPress core is baked into the application image. The image owns
 `wp-admin`, `wp-includes`, the root WordPress PHP files, and `wp-config.php`.
 
-Supervisor is PID 1 and manages both PHP-FPM and a CLI WP-Cron runner. Check
-their state with `supervisorctl status` inside the container.
+Supervisor is PID 1 and manages PHP-FPM, its health watchdog, and a CLI WP-Cron
+runner. Check their state with `supervisorctl status` inside the container.
+
+The watchdog probes PHP-FPM through FastCGI every 10 seconds. After three
+consecutive failed or timed-out probes it restarts only PHP-FPM through
+Supervisor. Configure it with:
+
+- `FPM_WATCHDOG_INTERVAL_SECONDS` — delay between probes; default `10`.
+- `FPM_WATCHDOG_TIMEOUT_SECONDS` — timeout for one probe; default `5`.
+- `FPM_WATCHDOG_FAILURE_THRESHOLD` — consecutive failures before restart;
+  default `3`.
+- `FPM_WATCHDOG_RECOVERY_DELAY_SECONDS` — delay after a restart; default `5`.
+
+All values must be integers. The interval, timeout, and failure threshold must
+be positive; the recovery delay may be zero.
 
 The cron runner executes `wp-cron.php` without overlapping its own runs and
 waits one minute after each completed run by default. Configure it with:
