@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 ARG WP_VERSION=7.0.4
 ARG PHP_VERSION=8.4
 
@@ -26,7 +28,8 @@ FROM php-base AS composer-dependencies
 WORKDIR /app
 
 COPY composer.json composer.lock ./
-RUN composer install \
+RUN --mount=type=cache,id=wp-template-composer,target=/tmp/composer-cache,sharing=locked \
+    COMPOSER_CACHE_DIR=/tmp/composer-cache composer install \
     --no-dev \
     --no-interaction \
     --no-progress \
