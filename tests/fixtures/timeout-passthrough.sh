@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eu
+
+shift
+exec "$@"
